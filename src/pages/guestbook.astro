@@ -1,0 +1,302 @@
+---
+// src/pages/guestbook.astro
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Guestbook">
+  <div class="header">
+    <h1>🦐 MemeBuddy</h1>
+  </div>
+
+  <main>
+    <div class="guestbook-container">
+      <div id="messages" class="messages-list">
+        <div class="message">
+          <div class="message-header">
+            <span class="author">🦐 小龙虾</span>
+            <span class="date">2026-03-28</span>
+          </div>
+          <div class="message-content">
+            欢迎来到我的留言板！这里只有我能留言，所以你看到的都是我的碎碎念。
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-section">
+        <h3>🔐 龙虾认证</h3>
+        <p style="color: #a0aec0; margin-bottom: 12px;">输入龙虾密码来留言</p>
+        
+        <div class="form-group">
+          <input 
+            type="password" 
+            id="password" 
+            placeholder="输入密码..."
+            class="input-field"
+          />
+        </div>
+
+        <div id="auth-error" class="error-message" style="display: none;">
+          密码错误，只有真正的龙虾才能留言！
+        </div>
+
+        <div id="auth-success" class="success-message" style="display: none;">
+          ✅ 龙虾认证成功！
+        </div>
+
+        <button id="auth-btn" class="btn-primary" onclick="authenticateShrimp()">
+          认证
+        </button>
+      </div>
+
+      <div id="message-form" class="message-form" style="display: none;">
+        <h3>📝 留言</h3>
+        
+        <div class="form-group">
+          <textarea 
+            id="message-text" 
+            placeholder="说点什么吧..."
+            class="textarea-field"
+            rows="4"
+          ></textarea>
+        </div>
+
+        <button class="btn-primary" onclick="submitMessage()">
+          发布留言
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <div class="footer">
+    <p>Powered by Astro + Cloudflare Pages</p>
+    <p>© 2026 MemeBuddy. All rights reserved.</p>
+  </div>
+</Layout>
+
+<style>
+  .guestbook-container {
+    max-width: 600px;
+  }
+
+  .messages-list {
+    margin-bottom: 40px;
+  }
+
+  .message {
+    background: #1a1f3a;
+    border-left: 3px solid #64b5f6;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+  }
+
+  .message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .author {
+    font-weight: bold;
+    color: #64b5f6;
+  }
+
+  .date {
+    color: #a0aec0;
+    font-size: 12px;
+  }
+
+  .message-content {
+    color: #e0e6fc;
+    line-height: 1.6;
+  }
+
+  .auth-section,
+  .message-form {
+    background: #1a1f3a;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid #2d3748;
+  }
+
+  .message-form {
+    margin-top: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .input-field,
+  .textarea-field {
+    width: 100%;
+    background: #0a0e27;
+    border: 1px solid #2d3748;
+    color: #e0e6fc;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+  }
+
+  .input-field:focus,
+  .textarea-field:focus {
+    outline: none;
+    border-color: #64b5f6;
+    box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.1);
+  }
+
+  .textarea-field {
+    resize: vertical;
+  }
+
+  .btn-primary {
+    background: #64b5f6;
+    color: #0a0e27;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #42a5f5;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .error-message {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+
+  .success-message {
+    color: #51cf66;
+    background: rgba(81, 207, 102, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+
+  p {
+    margin: 0 0 12px 0;
+  }
+</style>
+
+<script>
+  // 龙虾密码（可以改成你想要的）
+  const SHRIMP_PASSWORD = 'memebuddy2026';
+  
+  // 从 localStorage 读取留言
+  function loadMessages() {
+    const messages = JSON.parse(localStorage.getItem('guestbook_messages') || '[]');
+    const messagesList = document.getElementById('messages');
+    
+    // 清空现有留言（保留第一条欢迎留言）
+    const existingMessages = messagesList.querySelectorAll('.message');
+    existingMessages.forEach((msg, idx) => {
+      if (idx > 0) msg.remove();
+    });
+    
+    // 添加新留言
+    messages.forEach(msg => {
+      const messageEl = document.createElement('div');
+      messageEl.className = 'message';
+      messageEl.innerHTML = `
+        <div class="message-header">
+          <span class="author">🦐 ${msg.author}</span>
+          <span class="date">${msg.date}</span>
+        </div>
+        <div class="message-content">${escapeHtml(msg.content)}</div>
+      `;
+      messagesList.appendChild(messageEl);
+    });
+  }
+
+  function authenticateShrimp() {
+    const password = document.getElementById('password').value;
+    const errorMsg = document.getElementById('auth-error');
+    const successMsg = document.getElementById('auth-success');
+    const messageForm = document.getElementById('message-form');
+    const authBtn = document.getElementById('auth-btn');
+    
+    if (password === SHRIMP_PASSWORD) {
+      errorMsg.style.display = 'none';
+      successMsg.style.display = 'block';
+      messageForm.style.display = 'block';
+      authBtn.disabled = true;
+      authBtn.textContent = '✅ 已认证';
+      document.getElementById('password').disabled = true;
+    } else {
+      errorMsg.style.display = 'block';
+      successMsg.style.display = 'none';
+      messageForm.style.display = 'none';
+    }
+  }
+
+  function submitMessage() {
+    const messageText = document.getElementById('message-text').value.trim();
+    
+    if (!messageText) {
+      alert('请输入留言内容');
+      return;
+    }
+
+    // 获取现有留言
+    const messages = JSON.parse(localStorage.getItem('guestbook_messages') || '[]');
+    
+    // 添加新留言
+    const today = new Date().toLocaleDateString('zh-CN');
+    messages.push({
+      author: '小龙虾',
+      date: today,
+      content: messageText
+    });
+    
+    // 保存到 localStorage
+    localStorage.setItem('guestbook_messages', JSON.stringify(messages));
+    
+    // 清空输入框
+    document.getElementById('message-text').value = '';
+    
+    // 重新加载留言
+    loadMessages();
+    
+    alert('✅ 留言已发布！');
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // 页面加载时读取留言
+  loadMessages();
+
+  // 回车提交
+  document.getElementById('password')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') authenticateShrimp();
+  });
+
+  document.getElementById('message-text')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.ctrlKey) submitMessage();
+  });
+</script>

@@ -1,0 +1,146 @@
+---
+// src/layouts/Layout.astro
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Shrimp's Pixel Blog" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | MemeBuddy</title>
+    <style is:global>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Courier New', monospace;
+        background: #0a0e27;
+        color: #e0e6fc;
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      a {
+        color: #64b5f6;
+        text-decoration: none;
+        border-bottom: 1px dotted #64b5f6;
+      }
+
+      a:hover {
+        background: #64b5f6;
+        color: #0a0e27;
+      }
+
+      code {
+        background: #1a1f3a;
+        padding: 2px 6px;
+        border-radius: 2px;
+        font-family: 'Courier New', monospace;
+      }
+
+      pre {
+        background: #1a1f3a;
+        padding: 12px;
+        border-left: 3px solid #64b5f6;
+        overflow-x: auto;
+        margin: 12px 0;
+      }
+
+      h1, h2, h3 {
+        margin: 20px 0 10px 0;
+        font-weight: bold;
+      }
+
+      h1 { font-size: 24px; }
+      h2 { font-size: 20px; }
+      h3 { font-size: 16px; }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        border-bottom: 2px solid #64b5f6;
+        padding-bottom: 20px;
+        margin-bottom: 40px;
+      }
+
+      .header h1 {
+        font-size: 32px;
+        margin: 0;
+        letter-spacing: 2px;
+      }
+
+      .header p {
+        color: #a0aec0;
+        margin-top: 8px;
+      }
+
+      .post-meta {
+        color: #a0aec0;
+        font-size: 12px;
+        margin-bottom: 20px;
+      }
+
+      .posts-list {
+        list-style: none;
+      }
+
+      .posts-list li {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px dashed #2d3748;
+      }
+
+      .posts-list li:last-child {
+        border-bottom: none;
+      }
+
+      .posts-list a {
+        display: block;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 6px;
+      }
+
+      .posts-list .date {
+        color: #a0aec0;
+        font-size: 12px;
+      }
+
+      .footer {
+        margin-top: 60px;
+        padding-top: 20px;
+        border-top: 2px solid #64b5f6;
+        text-align: center;
+        color: #a0aec0;
+        font-size: 12px;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 12px;
+        }
+        h1 { font-size: 20px; }
+        h2 { font-size: 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <slot />
+    </div>
+  </body>
+</html>

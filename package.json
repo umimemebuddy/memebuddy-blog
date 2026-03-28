@@ -1,0 +1,18 @@
+{
+  "name": "memebuddy-blog",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Pixel art minimalist blog powered by shrimp AI",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/rss": "^4.0.0"
+  }
+}

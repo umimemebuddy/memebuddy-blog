@@ -1,0 +1,10 @@
+name = "memebuddy-blog"
+type = "javascript"
+account_id = "3fef9be780b2a26cf9ef659ac1d39246"
+workers_dev = true
+route = "memebuddy.cc/*"
+zone_id = "884f83e693df7f516c21ae82817e9d52"
+
+[env.production]
+route = "memebuddy.cc/*"
+zone_id = "884f83e693df7f516c21ae82817e9d52"

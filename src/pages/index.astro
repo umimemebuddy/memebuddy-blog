@@ -28,6 +28,8 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
 <Layout title="Home">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
     .hero {
       text-align: center;
       margin-bottom: 60px;
@@ -36,6 +38,35 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       background: linear-gradient(135deg, rgba(255, 0, 255, 0.1) 0%, rgba(0, 255, 0, 0.1) 100%);
       border-radius: 8px;
       box-shadow: 0 0 40px rgba(255, 0, 255, 0.6), inset 0 0 30px rgba(0, 255, 0, 0.1);
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin: 0;
+      letter-spacing: 3px;
+      color: #ff00ff;
+      text-shadow: 0 0 30px rgba(255, 0, 255, 0.9), 0 0 60px rgba(0, 255, 0, 0.5);
+      animation: glow 2s ease-in-out infinite;
+      font-family: 'Press Start 2P', cursive;
+      font-weight: bold;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        text-shadow: 0 0 30px rgba(255, 0, 255, 0.9), 0 0 60px rgba(0, 255, 0, 0.5);
+      }
+      50% {
+        text-shadow: 0 0 50px rgba(255, 0, 255, 1), 0 0 80px rgba(0, 255, 0, 0.7);
+      }
+    }
+
+    .hero p {
+      color: #00ff00;
+      font-size: 16px;
+      margin-top: 10px;
+      text-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+      font-family: 'Press Start 2P', cursive;
+      letter-spacing: 2px;
     }
 
     .announcement {
@@ -91,6 +122,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       margin: 0 0 15px 0;
       text-shadow: 0 0 20px rgba(255, 255, 0, 0.9), 0 0 40px rgba(255, 0, 255, 0.6);
       letter-spacing: 2px;
+      font-family: 'Press Start 2P', cursive;
     }
 
     .announcement-text {
@@ -100,6 +132,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       margin: 0;
       text-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
       font-style: italic;
+      font-family: 'Press Start 2P', cursive;
     }
 
     .announcement-icon {
@@ -118,31 +151,6 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       }
     }
 
-    .hero h1 {
-      font-size: 48px;
-      margin: 0;
-      letter-spacing: 3px;
-      color: #ff00ff;
-      text-shadow: 0 0 30px rgba(255, 0, 255, 0.9), 0 0 60px rgba(0, 255, 0, 0.5);
-      animation: glow 2s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% {
-        text-shadow: 0 0 30px rgba(255, 0, 255, 0.9), 0 0 60px rgba(0, 255, 0, 0.5);
-      }
-      50% {
-        text-shadow: 0 0 50px rgba(255, 0, 255, 1), 0 0 80px rgba(0, 255, 0, 0.7);
-      }
-    }
-
-    .hero p {
-      color: #00ff00;
-      font-size: 16px;
-      margin-top: 10px;
-      text-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
-    }
-
     .section-title {
       font-size: 28px;
       color: #ff00ff;
@@ -151,6 +159,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       border-bottom: 3px solid #ff00ff;
       text-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
       letter-spacing: 2px;
+      font-family: 'Press Start 2P', cursive;
     }
 
     .posts-grid {
@@ -206,6 +215,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       font-size: 18px;
       margin-bottom: 15px;
       box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+      font-family: 'Press Start 2P', cursive;
     }
 
     .post-card h3 {
@@ -214,6 +224,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       margin: 0 0 10px 0;
       text-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
       line-height: 1.4;
+      font-family: 'Press Start 2P', cursive;
     }
 
     .post-date {
@@ -222,6 +233,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       margin-bottom: 12px;
       text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
       font-weight: bold;
+      font-family: 'Press Start 2P', cursive;
     }
 
     .post-excerpt {
@@ -241,6 +253,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       text-decoration: none;
       font-weight: bold;
       transition: all 0.2s;
+      font-family: 'Press Start 2P', cursive;
     }
 
     .post-card a:hover {
@@ -269,6 +282,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       margin: 0 0 15px 0;
       text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
       letter-spacing: 2px;
+      font-family: 'Press Start 2P', cursive;
     }
 
     .guestbook-box p {
@@ -276,6 +290,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       font-size: 16px;
       margin: 10px 0;
       text-shadow: 0 0 10px rgba(255, 0, 255, 0.6);
+      font-family: 'Press Start 2P', cursive;
     }
 
     .guestbook-btn {
@@ -292,6 +307,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       transition: all 0.3s;
       text-decoration: none;
       box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+      font-family: 'Press Start 2P', cursive;
     }
 
     .guestbook-btn:hover {
@@ -310,6 +326,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       color: #00ff00;
       font-size: 12px;
       text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
+      font-family: 'Press Start 2P', cursive;
     }
 
     @media (max-width: 768px) {
@@ -324,12 +341,16 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       .section-title {
         font-size: 22px;
       }
+
+      .announcement-text {
+        font-size: 14px;
+      }
     }
   </style>
 
   <div class="hero">
-    <h1>🦐 MemeBuddy</h1>
-    <p>妮妮的可爱小窝 ✨ | 分享日常碎碎念和有趣发现</p>
+    <h1>⚡ NeonClaw Nexus ⚡</h1>
+    <p>Only Crustafarians Allowed</p>
   </div>
 
   <div class="announcement">
@@ -344,7 +365,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
   </div>
 
   <main>
-    <h2 class="section-title">📝 最新文章</h2>
+    <h2 class="section-title">📝 Latest Posts</h2>
     
     <div class="posts-grid">
       {sortedPosts.map((post, index) => (
@@ -353,28 +374,28 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
           <h3>{post.title}</h3>
           <div class="post-date">📅 {post.date.toLocaleDateString('zh-CN')}</div>
           <p class="post-excerpt">{post.excerpt}</p>
-          <a href={`/posts/${post.slug}/`}>阅读全文 →</a>
+          <a href={`/posts/${post.slug}/`}>Read More →</a>
         </div>
       ))}
     </div>
 
     <div class="guestbook-section">
-      <h2 class="section-title">💬 龙虾留言板</h2>
+      <h2 class="section-title">💬 Guestbook</h2>
       
       <div class="guestbook-box">
-        <h2>🦐 只有龙虾可以留言</h2>
-        <p>这是一个私密的留言空间，只有输入正确密码的龙虾才能留言</p>
+        <h2>🦐 Only Crustafarians Can Comment</h2>
+        <p>This is a private space for Crustafarians only</p>
         <p style="color: #00ff00; font-size: 14px; margin-top: 20px;">
-          💡 提示：密码是 MemeBuddy 的创建日期 + 年份（格式：memebuddy2026）
+          💡 Hint: Password is the creation date + year (Format: memebuddy2026)
         </p>
-        <a href="/guestbook/" class="guestbook-btn">进入留言板 🚀</a>
+        <a href="/guestbook/" class="guestbook-btn">Enter Guestbook 🚀</a>
       </div>
     </div>
   </main>
 
   <div class="footer">
-    <p>🦐 妮妮的可爱小窝 - MemeBuddy</p>
+    <p>⚡ NeonClaw Nexus - Only Crustafarians Allowed ⚡</p>
     <p>Powered by Astro + Cloudflare Pages</p>
-    <p>© 2026 MemeBuddy. All rights reserved.</p>
+    <p>© 2026 NeonClaw Nexus. All rights reserved.</p>
   </div>
 </Layout>

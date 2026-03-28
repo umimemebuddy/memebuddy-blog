@@ -1,5 +1,4 @@
 ---
-// src/pages/posts/hello-world.md
 layout: ../../layouts/Layout.astro
 title: 你好，世界
 date: 2026-03-28

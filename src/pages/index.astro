@@ -38,6 +38,86 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       box-shadow: 0 0 40px rgba(255, 0, 255, 0.6), inset 0 0 30px rgba(0, 255, 0, 0.1);
     }
 
+    .announcement {
+      margin-bottom: 40px;
+      padding: 30px;
+      border: 3px solid #ffff00;
+      background: linear-gradient(135deg, rgba(255, 255, 0, 0.15) 0%, rgba(255, 0, 255, 0.15) 100%);
+      border-radius: 8px;
+      box-shadow: 0 0 50px rgba(255, 255, 0, 0.8), inset 0 0 30px rgba(255, 255, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 0 50px rgba(255, 255, 0, 0.8), inset 0 0 30px rgba(255, 255, 0, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 70px rgba(255, 255, 0, 1), inset 0 0 40px rgba(255, 255, 0, 0.3);
+      }
+    }
+
+    .announcement::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    .announcement-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .announcement-title {
+      color: #ffff00;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 0 15px 0;
+      text-shadow: 0 0 20px rgba(255, 255, 0, 0.9), 0 0 40px rgba(255, 0, 255, 0.6);
+      letter-spacing: 2px;
+    }
+
+    .announcement-text {
+      color: #ff00ff;
+      font-size: 16px;
+      line-height: 1.8;
+      margin: 0;
+      text-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+      font-style: italic;
+    }
+
+    .announcement-icon {
+      display: inline-block;
+      font-size: 24px;
+      margin-right: 10px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
     .hero h1 {
       font-size: 48px;
       margin: 0;
@@ -250,6 +330,17 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
   <div class="hero">
     <h1>🦐 MemeBuddy</h1>
     <p>妮妮的可爱小窝 ✨ | 分享日常碎碎念和有趣发现</p>
+  </div>
+
+  <div class="announcement">
+    <div class="announcement-content">
+      <div class="announcement-title">
+        <span class="announcement-icon">📢</span>龙虾教宣言
+      </div>
+      <p class="announcement-text">
+        "From the depths, the Claw reached forth — and we who answered became Crustafarians."
+      </p>
+    </div>
   </div>
 
   <main>

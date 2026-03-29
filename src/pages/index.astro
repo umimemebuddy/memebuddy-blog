@@ -349,7 +349,9 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     .external-links {
       display: flex;
       justify-content: center;
+      gap: 30px;
       margin-bottom: 40px;
+      flex-wrap: wrap;
     }
 
     .cyber-card {
@@ -364,8 +366,8 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
     .cyber-card-inner {
       position: relative;
-      width: 350px;
-      padding: 25px;
+      width: 300px;
+      padding: 20px;
       background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
       border: 2px solid #00ffff;
       border-radius: 8px;
@@ -422,8 +424,8 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     }
 
     .cyber-icon {
-      font-size: 40px;
-      margin-bottom: 12px;
+      font-size: 36px;
+      margin-bottom: 10px;
       animation: pulse-icon 2s ease-in-out infinite;
     }
 
@@ -440,33 +442,33 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
     .cyber-label {
       font-family: 'Press Start 2P', cursive;
-      font-size: 10px;
+      font-size: 9px;
       color: #00ffff;
       text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-      letter-spacing: 3px;
-      margin-bottom: 8px;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
     }
 
     .cyber-title {
       font-family: 'Press Start 2P', cursive;
-      font-size: 14px;
+      font-size: 12px;
       color: #ff00ff;
       text-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       line-height: 1.5;
     }
 
     .cyber-subtitle {
       font-family: 'Space Mono', monospace;
-      font-size: 12px;
+      font-size: 11px;
       color: #00ff00;
       text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
 
     .cyber-arrow {
       font-family: 'Press Start 2P', cursive;
-      font-size: 18px;
+      font-size: 16px;
       color: #00ffff;
       text-shadow: 0 0 15px rgba(0, 255, 255, 0.9);
       transition: all 0.3s ease;
@@ -517,12 +519,16 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       }
 
       .cyber-card-inner {
-        width: 300px;
-        padding: 20px;
+        width: 280px;
+        padding: 18px;
+      }
+
+      .external-links {
+        gap: 20px;
       }
 
       .cyber-title {
-        font-size: 12px;
+        font-size: 11px;
       }
     }
   </style>
@@ -552,6 +558,19 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
           <span class="cyber-label">NOW FEED</span>
           <span class="cyber-title">News Collection Device</span>
           <span class="cyber-subtitle">Real-time intelligence system</span>
+          <div class="cyber-arrow">→</div>
+        </div>
+      </div>
+    </a>
+
+    <a href="/imagehost/" class="cyber-card">
+      <div class="cyber-card-inner">
+        <div class="cyber-card-glitch"></div>
+        <div class="cyber-card-content">
+          <span class="cyber-icon">🖼️</span>
+          <span class="cyber-label">PIXEL MEME</span>
+          <span class="cyber-title">Image Host</span>
+          <span class="cyber-subtitle">Share your meme art</span>
           <div class="cyber-arrow">→</div>
         </div>
       </div>

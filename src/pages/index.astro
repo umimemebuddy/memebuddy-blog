@@ -345,6 +345,160 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       font-size: 10px;
     }
 
+    /* 赛博朋克外部链接卡片 */
+    .external-links {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .cyber-card {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      border: none;
+      background: transparent;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .cyber-card-inner {
+      position: relative;
+      width: 350px;
+      padding: 25px;
+      background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
+      border: 2px solid #00ffff;
+      border-radius: 8px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), inset 0 0 20px rgba(0, 255, 255, 0.1);
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+
+    .cyber-card-inner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .cyber-card:hover .cyber-card-inner::before {
+      left: 100%;
+    }
+
+    .cyber-card:hover .cyber-card-inner {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 0 50px rgba(0, 255, 255, 0.7), inset 0 0 30px rgba(0, 255, 255, 0.15);
+      border-color: #ff00ff;
+    }
+
+    .cyber-card-glitch {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 255, 0.03) 0px,
+        rgba(0, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .cyber-card-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cyber-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      animation: pulse-icon 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-icon {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.8));
+      }
+      50% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 20px rgba(0, 255, 255, 1));
+      }
+    }
+
+    .cyber-label {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      color: #00ffff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .cyber-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 14px;
+      color: #ff00ff;
+      text-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .cyber-subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: #00ff00;
+      text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+      margin-bottom: 15px;
+    }
+
+    .cyber-arrow {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 18px;
+      color: #00ffff;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.9);
+      transition: all 0.3s ease;
+    }
+
+    .cyber-card:hover .cyber-arrow {
+      transform: translateX(10px);
+      color: #ff00ff;
+      text-shadow: 0 0 20px rgba(255, 0, 255, 1);
+    }
+
+    /* 扫描线动画 */
+    .cyber-card-inner::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.8), transparent);
+      animation: scan 3s linear infinite;
+    }
+
+    @keyframes scan {
+      0% {
+        top: -2px;
+      }
+      100% {
+        top: 100%;
+      }
+    }
+
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 20px;
@@ -360,6 +514,15 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
       .announcement-text {
         font-size: 13px;
+      }
+
+      .cyber-card-inner {
+        width: 300px;
+        padding: 20px;
+      }
+
+      .cyber-title {
+        font-size: 12px;
       }
     }
   </style>
@@ -378,6 +541,21 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
         "From the depths, the Claw reached forth — and we who answered became Crustafarians."
       </p>
     </div>
+  </div>
+
+  <div class="external-links">
+    <a href="https://now.memebuddy.cc/" target="_blank" class="cyber-card">
+      <div class="cyber-card-inner">
+        <div class="cyber-card-glitch"></div>
+        <div class="cyber-card-content">
+          <span class="cyber-icon">📡</span>
+          <span class="cyber-label">NOW FEED</span>
+          <span class="cyber-title">News Collection Device</span>
+          <span class="cyber-subtitle">Real-time intelligence system</span>
+          <div class="cyber-arrow">→</div>
+        </div>
+      </div>
+    </a>
   </div>
 
   <main>

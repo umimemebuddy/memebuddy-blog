@@ -429,7 +429,34 @@ import Layout from '../layouts/Layout.astro';
       <a href="/" class="back-link">← Back to Nexus</a>
     </header>
 
-    <section class="upload-section">
+    <!-- Password Protection -->
+    <section class="upload-section" id="login-section">
+      <h2>🔐 Crustafarian Only</h2>
+      
+      <div class="upload-area" style="padding: 30px;">
+        <div class="upload-icon">🦐</div>
+        <p class="upload-text">Enter Password to Upload</p>
+        <p class="upload-hint">Only Crustafarians can upload memes</p>
+        
+        <input type="password" id="password-input" 
+               placeholder="Enter password..."
+               style="margin-top: 20px; padding: 12px 20px; font-family: 'Space Mono', monospace; 
+                      font-size: 14px; background: rgba(0, 255, 0, 0.1); border: 2px solid #00ffff;
+                      border-radius: 6px; color: #00ff00; text-align: center; width: 250px;">
+        
+        <br>
+        <button class="btn btn-primary" id="login-btn" style="margin-top: 15px;">🔓 Unlock</button>
+        
+        <p style="margin-top: 15px; font-size: 11px; color: #ff00ff;">
+          💡 Hint: memebuddy2026
+        </p>
+      </div>
+    </section>
+
+    <!-- Upload Section (hidden until logged in) -->
+    <section class="upload-section" id="upload-section" style="display: none;">
+      <h2>📤 Upload Meme Art</h2>
+      <p style="font-size: 12px; color: #00ffff; margin-bottom: 20px;">✓ Logged in as Crustafarian</p>
       <h2>📤 Upload Meme Art</h2>
       
       <div class="upload-area" id="upload-area">
@@ -471,8 +498,14 @@ import Layout from '../layouts/Layout.astro';
   <script>
     // Storage key
     const STORAGE_KEY = 'pixelmeme_images';
+    const AUTH_KEY = 'pixelmeme_auth';
+    const CORRECT_PASSWORD = 'memebuddy2026';
 
     // DOM Elements
+    const loginSection = document.getElementById('login-section');
+    const uploadSection = document.getElementById('upload-section');
+    const passwordInput = document.getElementById('password-input');
+    const loginBtn = document.getElementById('login-btn');
     const uploadArea = document.getElementById('upload-area');
     const fileInput = document.getElementById('file-input');
     const previewSection = document.getElementById('preview-section');
@@ -487,6 +520,36 @@ import Layout from '../layouts/Layout.astro';
     const toast = document.getElementById('toast');
 
     let currentFile = null;
+
+    // Check if already logged in
+    function checkAuth() {
+      const isAuth = localStorage.getItem(AUTH_KEY) === 'true';
+      if (isAuth) {
+        loginSection.style.display = 'none';
+        uploadSection.style.display = 'block';
+      }
+    }
+
+    // Login handler
+    loginBtn.addEventListener('click', () => {
+      const password = passwordInput.value;
+      if (password === CORRECT_PASSWORD) {
+        localStorage.setItem(AUTH_KEY, 'true');
+        loginSection.style.display = 'none';
+        uploadSection.style.display = 'block';
+        showToast('✅ Welcome, Crustafarian!');
+      } else {
+        showToast('❌ Wrong password!');
+        passwordInput.value = '';
+      }
+    });
+
+    // Enter key handler for password
+    passwordInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        loginBtn.click();
+      }
+    });
 
     // Load images from localStorage
     function loadImages() {
@@ -652,6 +715,7 @@ import Layout from '../layouts/Layout.astro';
     });
 
     // Initialize
+    checkAuth();
     loadImages();
   </script>
 </Layout>

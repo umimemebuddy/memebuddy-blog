@@ -554,6 +554,7 @@ import Layout from '../layouts/Layout.astro';
     // Load images from localStorage
     function loadImages() {
       const images = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const isAuth = localStorage.getItem(AUTH_KEY) === 'true';
       galleryCount.textContent = images.length;
       
       if (images.length === 0) {
@@ -571,13 +572,38 @@ import Layout from '../layouts/Layout.astro';
           <div class="gallery-item-overlay">
             <p class="gallery-item-title">${img.name}</p>
             <div class="gallery-item-actions">
-              <button class="gallery-item-btn" onclick="copyUrl('${img.data}')">📋 Copy</button>
-              <button class="gallery-item-btn" onclick="viewImage('${img.data}')">👁️ View</button>
-              <button class="gallery-item-btn delete" onclick="deleteImage(${index})">🗑️ Delete</button>
+              <button class="gallery-item-btn" data-action="copy" data-url="${img.data}">📋 Copy</button>
+              <button class="gallery-item-btn" data-action="view" data-url="${img.data}">👁️ View</button>
+              ${isAuth ? `<button class="gallery-item-btn delete" data-action="delete" data-index="${index}">🗑️ Delete</button>` : ''}
             </div>
           </div>
         </div>
       `).join('');
+      
+      // Add event listeners to buttons
+      document.querySelectorAll('.gallery-item-btn').forEach(btn => {
+        btn.addEventListener('click', handleGalleryAction);
+      });
+    }
+
+    // Handle gallery button actions
+    function handleGalleryAction(e) {
+      const action = e.target.dataset.action;
+      const url = e.target.dataset.url;
+      const index = parseInt(e.target.dataset.index);
+      
+      if (action === 'copy') {
+        copyUrl(url);
+      } else if (action === 'view') {
+        viewImage(url);
+      } else if (action === 'delete') {
+        const isAuth = localStorage.getItem(AUTH_KEY) === 'true';
+        if (!isAuth) {
+          showToast('❌ Please login to delete');
+          return;
+        }
+        deleteImage(index);
+      }
     }
 
     // Show toast notification

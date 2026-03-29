@@ -241,11 +241,15 @@ import Layout from '../layouts/Layout.astro';
     }
 
     /* Gallery */
+    .gallery-section {
+      margin-top: 50px;
+    }
+
     .gallery-section h2 {
       font-family: 'Press Start 2P', cursive;
       font-size: 14px;
       color: #ff00ff;
-      margin: 40px 0 25px 0;
+      margin: 0 0 25px 0;
       text-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
       padding-bottom: 15px;
       border-bottom: 2px solid #ff00ff;
@@ -260,9 +264,10 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+      gap: 25px !important;
+      width: 100%;
     }
 
     .gallery-item {
@@ -273,10 +278,83 @@ import Layout from '../layouts/Layout.astro';
       background: rgba(255, 0, 255, 0.05);
       transition: all 0.3s ease;
       box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+      aspect-ratio: 1 / 1;
     }
 
     .gallery-item:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 0 40px rgba(255, 0, 255, 0.5);
+      border-color: #00ffff;
+      z-index: 10;
+    }
+
+    .gallery-item img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      display: block !important;
+    }
+
+    .gallery-item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.95)) !important;
+      padding: 20px 15px 15px !important;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-item-overlay {
+      transform: translateY(0);
+    }
+
+    .gallery-item-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 9px;
+      color: #00ffff;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .gallery-item-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .gallery-item-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      padding: 8px 12px;
+      border: 1px solid #00ff00;
+      border-radius: 4px;
+      background: transparent;
+      color: #00ff00;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .gallery-item-btn:hover {
+      background: #00ff00;
+      color: #000;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+
+    .gallery-item-btn.delete {
+      border-color: #ff0044;
+      color: #ff0044;
+    }
+
+    .gallery-item-btn.delete:hover {
+      background: #ff0044;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(255, 0, 68, 0.5);
+    }
       box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
       border-color: #00ffff;
     }
@@ -566,19 +644,26 @@ import Layout from '../layouts/Layout.astro';
         return;
       }
 
-      galleryGrid.innerHTML = images.map((img, index) => `
-        <div class="gallery-item">
-          <img src="${img.data}" alt="${img.name}">
-          <div class="gallery-item-overlay">
-            <p class="gallery-item-title">${img.name}</p>
-            <div class="gallery-item-actions">
-              <button class="gallery-item-btn" data-action="copy" data-url="${img.data}">📋 Copy</button>
-              <button class="gallery-item-btn" data-action="view" data-url="${img.data}">👁️ View</button>
-              ${isAuth ? `<button class="gallery-item-btn delete" data-action="delete" data-index="${index}">🗑️ Delete</button>` : ''}
+      let html = '';
+      for (let i = 0; i < images.length; i++) {
+        const img = images[i];
+        const deleteBtn = isAuth ? `<button class="gallery-item-btn delete" data-action="delete" data-index="${i}">🗑️ Delete</button>` : '';
+        
+        html += `
+          <div class="gallery-item">
+            <img src="${img.data}" alt="${img.name}">
+            <div class="gallery-item-overlay">
+              <p class="gallery-item-title">${img.name}</p>
+              <div class="gallery-item-actions">
+                <button class="gallery-item-btn" data-action="copy" data-url="${img.data}">📋 Copy</button>
+                <button class="gallery-item-btn" data-action="view" data-url="${img.data}">👁️ View</button>
+                ${deleteBtn}
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }
+      galleryGrid.innerHTML = html;
       
       // Add event listeners to buttons
       document.querySelectorAll('.gallery-item-btn').forEach(btn => {

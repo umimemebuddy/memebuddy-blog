@@ -92,6 +92,304 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       margin-top: 12px;
     }
 
+    /* ===== AirDrop 表单 ===== */
+    .airdrop-section {
+      margin: 24px 0;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 0, 128, 0.1) 25%, rgba(0, 255, 255, 0.15) 50%, rgba(138, 43, 226, 0.1) 75%, rgba(255, 215, 0, 0.15) 100%);
+      border: 3px solid #ffd700;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      animation: fortune-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes fortune-glow {
+      0%, 100% { 
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 0, 128, 0.3), 0 0 100px rgba(0, 255, 255, 0.2);
+        border-color: #ffd700;
+      }
+      33% { 
+        box-shadow: 0 0 50px rgba(255, 0, 128, 0.5), 0 0 80px rgba(0, 255, 255, 0.4), 0 0 120px rgba(255, 215, 0, 0.3);
+        border-color: #ff0080;
+      }
+      66% { 
+        box-shadow: 0 0 40px rgba(0, 255, 255, 0.5), 0 0 70px rgba(255, 215, 0, 0.4), 0 0 110px rgba(138, 43, 226, 0.3);
+        border-color: #00ffff;
+      }
+    }
+
+    /* 灿烂星光背景 */
+    .airdrop-section::before {
+      content: '✦ ★ ✦ ★ ✦ ★ ✦ ★ ✦';
+      position: absolute;
+      top: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 12px;
+      color: #ffd700;
+      opacity: 0.6;
+      animation: stars-scroll 10s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes stars-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .airdrop-header {
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .airdrop-icon {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 12px;
+      animation: sparkle 1s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 40px #ff6b00);
+    }
+
+    @keyframes sparkle {
+      0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 40px #ff6b00); }
+      50% { transform: scale(1.15) rotate(10deg); filter: drop-shadow(0 0 30px #fff) drop-shadow(0 0 60px #ffd700); }
+    }
+
+    .airdrop-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 16px;
+      background: linear-gradient(90deg, #ffd700, #ffaa00, #ff6b00, #ffd700, #00ffff, #ffd700);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gold-rainbow 3s linear infinite;
+      display: block;
+      margin-bottom: 12px;
+      text-shadow: none;
+    }
+
+    @keyframes gold-rainbow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    .airdrop-subtitle {
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      background: linear-gradient(90deg, #ffd700, #00ff88);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: pulse-text 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-text {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .airdrop-form {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+      max-width: 400px;
+    }
+
+    .input-wrapper::before {
+      content: '>';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      color: #00ff88;
+      animation: cursor-blink 1s step-end infinite;
+      z-index: 2;
+    }
+
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .wallet-input {
+      width: 100%;
+      padding: 16px 20px 16px 36px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      letter-spacing: 2px;
+      background: linear-gradient(180deg, rgba(0, 20, 0, 0.9) 0%, rgba(0, 10, 0, 0.95) 100%);
+      border: 2px solid #00ff88;
+      border-radius: 4px;
+      color: #00ff88;
+      outline: none;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      box-shadow: inset 0 0 20px rgba(0, 255, 136, 0.1), 0 0 10px rgba(0, 255, 136, 0.3);
+    }
+
+    .wallet-input::placeholder {
+      color: rgba(0, 255, 136, 0.3);
+      text-transform: none;
+    }
+
+    .wallet-input:focus {
+      border-color: #00ffff;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.6), inset 0 0 15px rgba(0, 255, 255, 0.15), 0 0 50px rgba(0, 255, 255, 0.3);
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+
+    .wallet-input:focus::before {
+      color: #00ffff;
+    }
+
+    /* 代码风格装饰 */
+    .input-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 8px;
+      height: 8px;
+      background: #00ff88;
+      border-radius: 50%;
+      animation: dot-blink 2s ease-in-out infinite;
+    }
+
+    @keyframes dot-blink {
+      0%, 100% { opacity: 1; box-shadow: 0 0 5px #00ff88; }
+      50% { opacity: 0.5; box-shadow: none; }
+    }
+
+    .wallet-input:focus + .input-shine {
+      animation: shine 2s ease-in-out infinite;
+    }
+
+    .input-shine {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.4), transparent);
+      pointer-events: none;
+      border-radius: 4px;
+    }
+
+    @keyframes shine {
+      0% { left: -100%; }
+      50%, 100% { left: 100%; }
+    }
+
+    .submit-btn {
+      position: relative;
+      padding: 18px 40px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px;
+      background: linear-gradient(135deg, #ffd700 0%, #ffaa00 25%, #ff6b00 50%, #ffd700 75%, #00ffff 100%);
+      background-size: 300% 300%;
+      animation: btn-gradient 3s ease infinite;
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: bold;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 170, 0, 0.4);
+    }
+
+    @keyframes btn-gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 50px rgba(255, 215, 0, 1), 0 0 100px rgba(255, 107, 0, 0.8), 0 0 150px rgba(0, 255, 255, 0.5);
+      animation: none;
+    }
+
+    .btn-glow {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: btn-rotate 2s linear infinite;
+    }
+
+    @keyframes btn-rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .airdrop-hint {
+      text-align: center;
+      font-family: 'VT323', monospace;
+      font-size: 15px;
+      background: linear-gradient(90deg, #ffd700, #00ff88, #00ffff, #ffd700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 20px;
+      line-height: 1.6;
+      animation: hint-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes hint-glow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.5); }
+    }
+
+    .airdrop-success {
+      text-align: center;
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      background: linear-gradient(90deg, rgba(255, 215, 0, 0.3), rgba(0, 255, 136, 0.3), rgba(0, 255, 255, 0.3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 20px;
+      padding: 16px;
+      border: 2px solid #ffd700;
+      border-radius: 8px;
+      animation: success-pulse 1s ease-in-out, success-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes success-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    @keyframes success-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.5); }
+    }
+
     /* ===== 联系方式 ===== */
     .contact-section {
       text-align: center;
@@ -182,6 +480,144 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       height: 200%;
       background: conic-gradient(from 0deg, transparent, rgba(0, 255, 255, 0.3), transparent, rgba(0, 136, 255, 0.3), transparent);
       animation: tech-rotate 3s linear infinite;
+    }
+
+    /* 社交链接容器 */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .social-links::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      background: radial-gradient(ellipse at center, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 128, 0.1) 50%, rgba(255, 255, 255, 0.1) 100%);
+      z-index: -1;
+      animation: bg-rainbow 5s linear infinite;
+    }
+
+    @keyframes bg-rainbow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      animation: social-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes social-glow {
+      0%, 100% { box-shadow: 0 0 10px currentColor; }
+      50% { box-shadow: 0 0 25px currentColor, 0 0 50px currentColor; }
+    }
+
+    .social-link.telegram {
+      background: linear-gradient(135deg, rgba(0, 255, 255, 0.2) 0%, rgba(0, 200, 255, 0.2) 50%, rgba(138, 43, 226, 0.2) 100%);
+      border: 2px solid #00ffff;
+      color: #00ffff;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 30px rgba(138, 43, 226, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+
+    .social-link.telegram:hover {
+      background: linear-gradient(135deg, #00ffff 0%, #8a2be2 50%, #ff00ff 100%);
+      color: #fff;
+      box-shadow: 0 0 60px rgba(0, 255, 255, 1), 0 0 100px rgba(138, 43, 226, 0.8), 0 0 150px rgba(255, 0, 255, 0.5);
+      transform: scale(1.08);
+      animation: none;
+    }
+
+    .social-link.twitter {
+      background: linear-gradient(135deg, rgba(255, 170, 0, 0.2) 0%, rgba(0, 255, 170, 0.2) 50%, rgba(0, 170, 255, 0.2) 100%);
+      border: 2px solid #ffaa00;
+      color: #ffaa00;
+      box-shadow: 0 0 15px rgba(255, 170, 0, 0.5), 0 0 30px rgba(0, 255, 170, 0.3), inset 0 0 20px rgba(255, 170, 0, 0.1);
+    }
+
+    .social-link.twitter:hover {
+      background: linear-gradient(135deg, #ffaa00 0%, #00ffaa 50%, #00aaff 100%);
+      color: #000;
+      box-shadow: 0 0 60px rgba(255, 170, 0, 1), 0 0 100px rgba(0, 255, 170, 0.8), 0 0 150px rgba(0, 170, 255, 0.5);
+      transform: scale(1.08);
+      animation: none;
+    }
+
+    .social-link.instagram {
+      background: linear-gradient(135deg, rgba(255, 0, 128, 0.2) 0%, rgba(255, 107, 26, 0.2) 33%, rgba(255, 215, 0, 0.2) 66%, rgba(0, 255, 128, 0.2) 100%);
+      border: 2px solid;
+      border-image: linear-gradient(135deg, #ff0080, #ff6b1a, #ffd700, #00ff80) 1;
+      color: #ff0080;
+      box-shadow: 0 0 15px rgba(255, 0, 128, 0.5), 0 0 30px rgba(255, 107, 26, 0.3), 0 0 45px rgba(0, 255, 128, 0.2), inset 0 0 20px rgba(255, 0, 128, 0.1);
+    }
+
+    .social-link.instagram:hover {
+      background: linear-gradient(135deg, #ff0080 0%, #ff6b26 25%, #ffd700 50%, #00ff80 75%, #0080ff 100%);
+      color: #fff;
+      box-shadow: 0 0 60px rgba(255, 0, 128, 1), 0 0 100px rgba(255, 107, 26, 0.8), 0 0 150px rgba(0, 255, 128, 0.5);
+      transform: scale(1.08);
+      animation: none;
+    }
+
+    .social-icon {
+      font-size: 26px;
+      animation: icon-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes icon-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    .social-link.telegram .social-icon {
+      filter: drop-shadow(0 0 12px #00ffff) drop-shadow(0 0 24px #8a2be2) drop-shadow(0 0 36px #ff00ff);
+    }
+
+    .social-link.twitter .social-icon {
+      filter: drop-shadow(0 0 12px #ffaa00) drop-shadow(0 0 24px #00ffaa) drop-shadow(0 0 36px #00aaff);
+    }
+
+    .social-link.instagram .social-icon {
+      filter: drop-shadow(0 0 12px #ff0080) drop-shadow(0 0 24px #ff6b26) drop-shadow(0 0 36px #00ff80);
+    }
+
+    .social-text {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+    }
+
+    .social-link .social-glow {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255, 0, 128, 0.3), transparent, rgba(255, 107, 26, 0.3), transparent);
+      animation: tech-rotate 3s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .social-link:hover .social-glow {
+      opacity: 1;
+    }
+
+    .contact-label {
+      margin-top: 20px;
     }
 
     @keyframes tech-rotate {
@@ -694,6 +1130,35 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     <p>&gt;_ Only Crustafarians Allowed</p>
   </div>
 
+  <!-- AirDrop 表单 -->
+  <div class="airdrop-section">
+    <div class="airdrop-header">
+      <span class="airdrop-icon">💎</span>
+      <span class="airdrop-title">EXCLUSIVE AIRDROP</span>
+      <span class="airdrop-subtitle">Leave your BSC wallet to receive free tokens!</span>
+    </div>
+    <form class="airdrop-form" id="airdropForm">
+      <div class="input-wrapper">
+        <input 
+          type="text" 
+          class="wallet-input" 
+          placeholder="0x..." 
+          required
+          pattern="^0x[a-fA-F0-9]{40}$"
+        >
+        <span class="input-shine"></span>
+      </div>
+      <button type="submit" class="submit-btn">
+        <span class="btn-text">CLAIM AIRDROP</span>
+        <span class="btn-glow"></span>
+      </button>
+    </form>
+    <p class="airdrop-hint">Please leave your BSC wallet address, and you will have the opportunity to receive our exclusive token airdrop</p>
+    <div class="airdrop-success" id="airdropSuccess" style="display: none;">
+      ✓ Wallet submitted successfully! Stay tuned for your airdrop.
+    </div>
+  </div>
+
   <!-- 外部链接 -->
   <div class="external-links">
     <a href="https://now.memebuddy.cc/" target="_blank" class="cyber-card">
@@ -711,14 +1176,30 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
   <!-- 联系方式 -->
   <div class="contact-section">
-    <a href="https://t.me/Yyuzuz" target="_blank" class="telegram-link">
-      <svg class="telegram-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.657-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/>
-      </svg>
-      <span class="telegram-text">@Yyuzuz</span>
-      <span class="telegram-glow"></span>
-    </a>
-    <p class="contact-label">// CONTACT ME VIA TELEGRAM</p>
+    <div class="social-links">
+      <a href="https://t.me/Yyuzuz" target="_blank" class="social-link telegram">
+        <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.657-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/>
+        </svg>
+        <span class="social-text">Telegram</span>
+        <span class="social-glow"></span>
+      </a>
+      <a href="https://twitter.com/DommeByte" target="_blank" class="social-link twitter">
+        <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        <span class="social-text">X / Twitter</span>
+        <span class="social-glow"></span>
+      </a>
+      <a href="https://instagram.com/umi_jewelry_gemstone" target="_blank" class="social-link instagram">
+        <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        <span class="social-text">Instagram</span>
+        <span class="social-glow"></span>
+      </a>
+    </div>
+    <p class="contact-label">// CONNECT WITH ME</p>
   </div>
 
   <!-- 文章列表 -->
@@ -790,4 +1271,28 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     <p>POWERED BY ASTRO + CLOUDFLARE</p>
     <p>© 2026 CRUSTAFARIANS</p>
   </div>
+
+  <script>
+    document.getElementById('airdropForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = this.querySelector('.wallet-input');
+      const wallet = input.value.trim();
+      
+      if (!wallet || !wallet.startsWith('0x') || wallet.length !== 42) {
+        alert('Please enter a valid BSC wallet address (0x... 42 characters)');
+        return;
+      }
+      
+      // 显示成功消息
+      document.getElementById('airdropSuccess').style.display = 'block';
+      document.getElementById('airdropForm').style.display = 'none';
+      
+      // 存储到 localStorage
+      const wallets = JSON.parse(localStorage.getItem('airdrop_wallets') || '[]');
+      if (!wallets.includes(wallet)) {
+        wallets.push(wallet);
+        localStorage.setItem('airdrop_wallets', JSON.stringify(wallets));
+      }
+    });
+  </script>
 </Layout>

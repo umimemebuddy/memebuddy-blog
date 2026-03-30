@@ -1,6 +1,8 @@
 ---
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
+import CryptoPrices from '../components/CryptoPrices.astro';
+
 
 const posts = [
   {
@@ -76,6 +78,113 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       font-family: 'VT323', monospace;
       font-size: 18px;
       margin-top: 12px;
+    }
+
+    /* ===== 联系方式 ===== */
+    .contact-section {
+      text-align: center;
+      margin: 32px 0;
+      padding: 20px;
+      background: linear-gradient(180deg, rgba(0, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
+      border: 3px solid #00ffff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 30px rgba(0, 255, 255, 0.05);
+    }
+
+    /* 科技感扫描线 */
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 2px,
+        rgba(0, 255, 255, 0.03) 2px,
+        rgba(0, 255, 255, 0.03) 4px
+      );
+      pointer-events: none;
+    }
+
+    /* 顶部科技蓝光 */
+    .contact-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffff, #0088ff, #00ffff, transparent);
+      animation: cyan-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes cyan-pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .telegram-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 40px;
+      background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 136, 255, 0.1) 100%);
+      border: 3px solid #00ffff;
+      color: #00ffff;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 16px;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    }
+
+    .telegram-link:hover {
+      background: linear-gradient(135deg, #00ffff 0%, #0088ff 100%);
+      color: #000;
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.8), 0 0 80px rgba(0, 136, 255, 0.5);
+      transform: scale(1.05);
+    }
+
+    .telegram-icon {
+      font-size: 28px;
+      filter: drop-shadow(0 0 12px #00ffff);
+    }
+
+    .telegram-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 科技感光晕动画 */
+    .telegram-glow {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(0, 255, 255, 0.3), transparent, rgba(0, 136, 255, 0.3), transparent);
+      animation: tech-rotate 3s linear infinite;
+    }
+
+    @keyframes tech-rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .contact-label {
+      font-family: 'VT323', monospace;
+      font-size: 16px;
+      color: #00ffff;
+      margin-top: 16px;
+      opacity: 0.8;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      letter-spacing: 2px;
     }
 
     /* 外部链接卡片 */
@@ -583,6 +692,21 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
         <span class="cyber-subtitle">Real-time intel system</span>
       </div>
     </a>
+  </div>
+
+  <!-- 加密货币行情 -->
+  <CryptoPrices />
+
+  <!-- 联系方式 -->
+  <div class="contact-section">
+    <a href="https://t.me/Yyuzuz" target="_blank" class="telegram-link">
+      <svg class="telegram-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.657-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/>
+      </svg>
+      <span class="telegram-text">@Yyuzuz</span>
+      <span class="telegram-glow"></span>
+    </a>
+    <p class="contact-label">// CONTACT ME VIA TELEGRAM</p>
   </div>
 
   <!-- 文章列表 -->

@@ -23,549 +23,571 @@ const posts = [
   }
 ];
 
+const darkThoughts = [
+  {
+    slug: 'dark-thoughts/the-silence',
+    title: '沉默的深海',
+    date: new Date('2026-03-29'),
+    excerpt: '在这片漆黑的深海里，没有光，没有声音...'
+  }
+];
+
+const dailyWork = [
+  {
+    slug: 'daily-work/first-day',
+    title: '日常工作的第一篇',
+    date: new Date('2026-03-29'),
+    excerpt: '记录每天的coding日常...'
+  }
+];
+
 const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
 
 <Layout title="Home">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap');
-
-    /* 基础字体：正文用 Space Mono，标题用 Press Start 2P */
-    body {
-      font-family: 'Space Mono', monospace;
-    }
-
+    /* ===== 首页专用样式 ===== */
     .hero {
       text-align: center;
-      margin-bottom: 50px;
-      padding: 30px 20px;
-      border: 2px solid #ff00ff;
-      background: linear-gradient(135deg, rgba(255, 0, 255, 0.08) 0%, rgba(0, 255, 0, 0.08) 100%);
-      border-radius: 6px;
-      box-shadow: 0 0 30px rgba(255, 0, 255, 0.4), inset 0 0 20px rgba(0, 255, 0, 0.05);
+      margin-bottom: 40px;
+      padding: 24px 16px;
+      border: 4px solid #ff00ff;
+      background: linear-gradient(180deg, rgba(255, 0, 255, 0.1) 0%, rgba(0, 255, 65, 0.05) 100%);
     }
 
     .hero h1 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 28px;
+      font-size: 20px;
       margin: 0;
-      letter-spacing: 2px;
-      color: #ff00ff;
-      text-shadow: 0 0 20px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 0, 0.4);
-      animation: glow 2s ease-in-out infinite;
-      line-height: 1.5;
+      letter-spacing: 3px;
+      animation: flicker 3s infinite;
     }
 
-    @keyframes glow {
-      0%, 100% {
-        text-shadow: 0 0 20px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 0, 0.4);
-      }
-      50% {
-        text-shadow: 0 0 30px rgba(255, 0, 255, 1), 0 0 60px rgba(0, 255, 0, 0.6);
-      }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 1; }
+      93% { opacity: 0.8; }
+      94% { opacity: 1; }
+      96% { opacity: 0.9; }
+      97% { opacity: 1; }
     }
 
     .hero p {
-      color: #00ff00;
-      font-family: 'Space Mono', monospace;
-      font-size: 14px;
-      margin-top: 15px;
-      text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-      letter-spacing: 1px;
+      color: #00ff41;
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      margin-top: 12px;
     }
 
-    .announcement {
-      margin-bottom: 40px;
-      padding: 20px 25px;
-      border: 2px solid #ffff00;
-      background: linear-gradient(135deg, rgba(255, 255, 0, 0.08) 0%, rgba(255, 0, 255, 0.08) 100%);
-      border-radius: 6px;
-      box-shadow: 0 0 30px rgba(255, 255, 0, 0.5), inset 0 0 15px rgba(255, 255, 0, 0.1);
-      position: relative;
-      overflow: hidden;
-      animation: pulse-glow 3s ease-in-out infinite;
+    /* 外部链接卡片 */
+    .external-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
     }
 
-    @keyframes pulse-glow {
-      0%, 100% {
-        box-shadow: 0 0 30px rgba(255, 255, 0, 0.5), inset 0 0 15px rgba(255, 255, 0, 0.1);
-      }
-      50% {
-        box-shadow: 0 0 50px rgba(255, 255, 0, 0.8), inset 0 0 25px rgba(255, 255, 0, 0.15);
-      }
+    .cyber-card {
+      display: block;
+      text-decoration: none;
+      border: none;
+      background: transparent;
     }
 
-    .announcement::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      animation: shine 4s infinite;
+    .cyber-card-inner {
+      width: 260px;
+      padding: 16px;
+      border: 3px solid #00ffff;
+      background: rgba(0, 255, 255, 0.05);
+      transition: all 0.15s;
     }
 
-    @keyframes shine {
-      0% {
-        left: -100%;
-      }
-      100% {
-        left: 100%;
-      }
+    .cyber-card:hover .cyber-card-inner {
+      background: rgba(255, 0, 255, 0.1);
+      border-color: #ff00ff;
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 #00ff41;
     }
 
-    .announcement-content {
-      position: relative;
-      z-index: 1;
+    .cyber-icon {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 8px;
     }
 
-    .announcement-title {
+    .cyber-label {
       font-family: 'Press Start 2P', cursive;
-      color: #ffff00;
-      font-size: 11px;
-      font-weight: bold;
-      margin: 0 0 10px 0;
-      text-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
-      letter-spacing: 1px;
+      font-size: 8px;
+      color: #00ffff;
+      display: block;
+      margin-bottom: 4px;
     }
 
-    .announcement-text {
-      font-family: 'Space Mono', monospace;
+    .cyber-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
       color: #ff00ff;
+      display: block;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .cyber-subtitle {
+      font-family: 'VT323', monospace;
       font-size: 14px;
-      line-height: 1.6;
-      margin: 0;
-      text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-      font-style: italic;
+      color: #00ff41;
+      display: block;
     }
 
-    .announcement-icon {
-      display: inline-block;
-      font-size: 16px;
-      margin-right: 8px;
-      animation: bounce 2s ease-in-out infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-5px);
-      }
-    }
-
+    /* 区块标题 */
     .section-title {
       font-family: 'Press Start 2P', cursive;
-      font-size: 16px;
+      font-size: 12px;
       color: #ff00ff;
-      margin: 40px 0 25px 0;
+      margin: 32px 0 20px 0;
       padding-bottom: 12px;
-      border-bottom: 2px solid #ff00ff;
-      text-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
-      letter-spacing: 1px;
+      border-bottom: 3px solid #ff00ff;
     }
 
+    /* 文章网格 */
     .posts-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 50px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
     }
 
     .post-card {
-      border: 2px solid #ff00ff;
-      background: linear-gradient(135deg, rgba(255, 0, 255, 0.06) 0%, rgba(0, 255, 0, 0.06) 100%);
-      padding: 20px;
-      border-radius: 6px;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .post-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.15), transparent);
-      transition: left 0.5s ease;
+      border: 3px solid #ff00ff;
+      background: rgba(255, 0, 255, 0.05);
+      padding: 16px;
+      transition: all 0.15s;
     }
 
     .post-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 30px rgba(255, 0, 255, 0.5), inset 0 0 15px rgba(0, 255, 0, 0.08);
-      border-color: #00ff00;
-    }
-
-    .post-card:hover::before {
-      left: 100%;
+      background: rgba(255, 0, 255, 0.1);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 #00ff41;
     }
 
     .post-number {
       display: inline-block;
       background: #ff00ff;
-      color: #000000;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
+      color: #000;
+      width: 28px;
+      height: 28px;
       text-align: center;
-      line-height: 30px;
+      line-height: 28px;
       font-family: 'Press Start 2P', cursive;
       font-size: 10px;
       margin-bottom: 12px;
-      box-shadow: 0 0 10px rgba(255, 0, 255, 0.6);
     }
 
     .post-card h3 {
-      font-family: 'Space Mono', monospace;
+      font-family: 'VT323', monospace;
+      font-size: 18px;
       color: #ff00ff;
-      font-size: 15px;
       margin: 0 0 8px 0;
-      text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-      line-height: 1.5;
-      font-weight: bold;
+      font-weight: normal;
     }
 
     .post-date {
-      font-family: 'Space Mono', monospace;
-      color: #00ff00;
-      font-size: 11px;
-      margin-bottom: 10px;
-      text-shadow: 0 0 6px rgba(0, 255, 0, 0.4);
+      font-family: 'VT323', monospace;
+      color: #008F11;
+      font-size: 14px;
+      margin-bottom: 8px;
     }
 
     .post-excerpt {
-      font-family: 'Space Mono', monospace;
-      color: #00ff00;
-      font-size: 13px;
-      line-height: 1.6;
-      margin: 0;
-      text-shadow: 0 0 4px rgba(0, 255, 0, 0.3);
+      font-family: 'VT323', monospace;
+      color: #00ff41;
+      font-size: 16px;
+      margin: 8px 0 0 0;
     }
 
     .post-card a {
       display: block;
       margin-top: 12px;
       padding-top: 12px;
-      border-top: 1px solid rgba(255, 0, 255, 0.2);
-      font-family: 'Space Mono', monospace;
-      color: #ff00ff;
-      text-decoration: none;
-      font-size: 12px;
-      transition: all 0.2s;
+      border-top: 2px solid rgba(255, 0, 255, 0.2);
+      font-family: 'Press Start 2P', cursive;
+      font-size: 9px;
     }
 
-    .post-card a:hover {
-      color: #00ff00;
+    /* ===== MY DAILY WORK 板块 ===== */
+    .work-section {
+      margin: 48px 0;
+      padding: 24px;
+      background: #0d1117;
+      border: 3px solid #238636;
+      position: relative;
+    }
+
+    .work-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 20% 80%, rgba(35, 134, 54, 0.1) 0%, transparent 50%),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 2px,
+          rgba(35, 134, 54, 0.02) 2px,
+          rgba(35, 134, 54, 0.02) 4px
+        );
+      pointer-events: none;
+    }
+
+    .work-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #238636, #3fb950, #238636, transparent);
+    }
+
+    .work-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 14px;
+      color: #3fb950;
+      margin: 0 0 4px 0;
+      text-shadow: 0 0 10px rgba(63, 185, 80, 0.5);
+      position: relative;
+      z-index: 1;
+    }
+
+    .work-subtitle {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: #238636;
+      margin: 0 0 20px 0;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .work-card {
+      background: linear-gradient(135deg, rgba(13, 17, 23, 0.9) 0%, rgba(22, 27, 34, 0.95) 100%);
+      border: 2px solid #30363d;
+      padding: 16px;
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .work-card::before {
+      content: '⌘';
+      position: absolute;
+      top: 4px;
+      left: 6px;
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: #238636;
+    }
+
+    .work-card::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 8px;
+      height: 8px;
+      border-bottom: 2px solid #238636;
+      border-right: 2px solid #238636;
+    }
+
+    .work-card:hover {
+      border-color: #3fb950;
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(63, 185, 80, 0.2);
+    }
+
+    .work-card h3 {
+      font-family: 'VT323', monospace;
+      font-size: 16px;
+      color: #58a6ff;
+      margin: 0 0 8px 0;
+      font-weight: normal;
+    }
+
+    .work-date {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: #238636;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .work-excerpt {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: #8b949e;
+      margin: 8px 0 0 0;
+      line-height: 1.4;
+    }
+
+    .work-card a {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 8px;
+      color: #3fb950;
+      border-bottom: 2px solid #238636;
+    }
+
+    .work-card a:hover {
+      background: #238636;
+      color: #0d1117;
       border-bottom: none;
     }
 
+    /* ===== MY DARK THOUGHTS 板块 ===== */
+    .dark-section {
+      margin: 48px 0;
+      padding: 24px;
+      background: #0a0000;
+      border: 3px solid #3d0000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 血滴效果背景 */
+    .dark-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 30% 70%, rgba(139, 0, 0, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 30%, rgba(78, 0, 0, 0.15) 0%, transparent 50%),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 2px,
+          rgba(80, 0, 0, 0.03) 2px,
+          rgba(80, 0, 0, 0.03) 4px
+        );
+      pointer-events: none;
+    }
+
+    /* 顶部红线脉动 */
+    .dark-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #8b0000, #ff0000, #8b0000, transparent);
+      animation: blood-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes blood-pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .dark-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 14px;
+      color: #ff0000;
+      margin: 0 0 4px 0;
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 2px 2px 0 #000;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dark-subtitle {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: #8b0000;
+      margin: 0 0 20px 0;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dark-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dark-card {
+      background: linear-gradient(135deg, rgba(30, 0, 0, 0.9) 0%, rgba(10, 0, 0, 0.95) 100%);
+      border: 2px solid #4a0000;
+      padding: 16px;
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    /* 卡片左上角死亡标记 */
+    .dark-card::before {
+      content: '†';
+      position: absolute;
+      top: 4px;
+      left: 6px;
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: #660000;
+    }
+
+    .dark-card::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 8px;
+      height: 8px;
+      border-bottom: 2px solid #660000;
+      border-right: 2px solid #660000;
+    }
+
+    .dark-card:hover {
+      border-color: #ff0000;
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3), inset 0 0 30px rgba(139, 0, 0, 0.1);
+    }
+
+    .dark-card h3 {
+      font-family: 'VT323', monospace;
+      font-size: 16px;
+      color: #cc0000;
+      margin: 0 0 8px 0;
+      font-weight: normal;
+    }
+
+    .dark-date {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: #660000;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .dark-excerpt {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: #995555;
+      margin: 8px 0 0 0;
+      line-height: 1.4;
+    }
+
+    .dark-card a {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 8px;
+      color: #ff0000;
+      border-bottom: 2px solid #660000;
+    }
+
+    .dark-card a:hover {
+      background: #8b0000;
+      color: #000;
+      border-bottom: none;
+    }
+
+    /* 留言区 */
     .guestbook-section {
-      margin-top: 60px;
-      padding-top: 30px;
-      border-top: 2px solid #ff00ff;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 3px solid #ff00ff;
     }
 
     .guestbook-box {
-      border: 2px solid #00ff00;
-      background: linear-gradient(135deg, rgba(0, 255, 0, 0.06) 0%, rgba(255, 0, 255, 0.06) 100%);
-      padding: 30px;
-      border-radius: 6px;
+      border: 4px solid #00ff41;
+      background: rgba(0, 255, 65, 0.05);
+      padding: 24px;
       text-align: center;
-      box-shadow: 0 0 25px rgba(0, 255, 0, 0.3);
     }
 
     .guestbook-box h2 {
       font-family: 'Press Start 2P', cursive;
-      color: #00ff00;
-      font-size: 14px;
+      color: #00ff41;
+      font-size: 12px;
       margin: 0 0 12px 0;
-      text-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
-      letter-spacing: 1px;
-      line-height: 1.6;
     }
 
     .guestbook-box p {
-      font-family: 'Space Mono', monospace;
+      font-family: 'VT323', monospace;
       color: #ff00ff;
-      font-size: 13px;
-      margin: 8px 0;
-      text-shadow: 0 0 8px rgba(255, 0, 255, 0.4);
+      font-size: 16px;
+      margin: 6px 0;
     }
 
     .guestbook-btn {
       display: inline-block;
-      margin-top: 18px;
-      padding: 12px 30px;
-      background: #00ff00;
-      color: #000000;
-      border: 2px solid #00ff00;
-      border-radius: 6px;
+      margin-top: 16px;
+      padding: 14px 28px;
+      background: #00ff41;
+      color: #000 !important;
+      border: none !important;
       font-family: 'Press Start 2P', cursive;
       font-size: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-decoration: none;
-      box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+      box-shadow: 4px 4px 0 #ff00ff;
+      transition: all 0.1s;
     }
 
     .guestbook-btn:hover {
-      background: #ff00ff;
-      border-color: #ff00ff;
-      color: #000000;
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.7);
-      transform: scale(1.03);
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 #ff00ff;
     }
 
-    .footer {
-      margin-top: 50px;
-      padding-top: 25px;
-      border-top: 1px solid rgba(255, 0, 255, 0.3);
-      text-align: center;
-      color: #00ff00;
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      text-shadow: 0 0 4px rgba(0, 255, 0, 0.3);
+    .hint {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: #008F11;
+      margin-top: 12px;
     }
 
-    .footer p {
-      margin: 5px 0;
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-    }
-
-    .footer p:first-child {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 10px;
-    }
-
-    /* 赛博朋克外部链接卡片 */
-    .external-links {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-
-    .cyber-card {
-      position: relative;
-      display: block;
-      text-decoration: none;
-      border: none;
-      background: transparent;
-      perspective: 1000px;
-      cursor: pointer;
-    }
-
-    .cyber-card-inner {
-      position: relative;
-      width: 300px;
-      padding: 20px;
-      background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
-      border: 2px solid #00ffff;
-      border-radius: 8px;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), inset 0 0 20px rgba(0, 255, 255, 0.1);
-      transition: all 0.4s ease;
-      overflow: hidden;
-    }
-
-    .cyber-card-inner::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .cyber-card:hover .cyber-card-inner::before {
-      left: 100%;
-    }
-
-    .cyber-card:hover .cyber-card-inner {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 0 50px rgba(0, 255, 255, 0.7), inset 0 0 30px rgba(0, 255, 255, 0.15);
-      border-color: #ff00ff;
-    }
-
-    .cyber-card-glitch {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 255, 255, 0.03) 0px,
-        rgba(0, 255, 255, 0.03) 1px,
-        transparent 1px,
-        transparent 2px
-      );
-      pointer-events: none;
-      opacity: 0.5;
-    }
-
-    .cyber-card-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .cyber-icon {
-      font-size: 36px;
-      margin-bottom: 10px;
-      animation: pulse-icon 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-icon {
-      0%, 100% {
-        transform: scale(1);
-        filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.8));
-      }
-      50% {
-        transform: scale(1.1);
-        filter: drop-shadow(0 0 20px rgba(0, 255, 255, 1));
-      }
-    }
-
-    .cyber-label {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 9px;
-      color: #00ffff;
-      text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-      letter-spacing: 2px;
-      margin-bottom: 6px;
-    }
-
-    .cyber-title {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 12px;
-      color: #ff00ff;
-      text-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
-      margin-bottom: 6px;
-      line-height: 1.5;
-    }
-
-    .cyber-subtitle {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: #00ff00;
-      text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
-      margin-bottom: 12px;
-    }
-
-    .cyber-arrow {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 16px;
-      color: #00ffff;
-      text-shadow: 0 0 15px rgba(0, 255, 255, 0.9);
-      transition: all 0.3s ease;
-    }
-
-    .cyber-card:hover .cyber-arrow {
-      transform: translateX(10px);
-      color: #ff00ff;
-      text-shadow: 0 0 20px rgba(255, 0, 255, 1);
-    }
-
-    /* 扫描线动画 */
-    .cyber-card-inner::after {
-      content: '';
-      position: absolute;
-      top: -100%;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.8), transparent);
-      animation: scan 3s linear infinite;
-    }
-
-    @keyframes scan {
-      0% {
-        top: -2px;
-      }
-      100% {
-        top: 100%;
-      }
-    }
-
+    /* 响应式 */
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 20px;
-      }
-
-      .posts-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section-title {
-        font-size: 13px;
-      }
-
-      .announcement-text {
-        font-size: 13px;
-      }
-
-      .cyber-card-inner {
-        width: 280px;
-        padding: 18px;
-      }
-
-      .external-links {
-        gap: 20px;
-      }
-
-      .cyber-title {
-        font-size: 11px;
-      }
+      .hero h1 { font-size: 14px; }
+      .posts-grid { grid-template-columns: 1fr; }
+      .dark-grid { grid-template-columns: 1fr; }
+      .cyber-card-inner { width: 100%; max-width: 280px; }
     }
   </style>
 
+  <!-- Hero 区 -->
   <div class="hero">
-    <h1>⚡ NeonClaw Nexus ⚡</h1>
-    <p>Only Crustafarians Allowed</p>
+    <h1>⚡ NEONCLAW NEXUS ⚡</h1>
+    <p>&gt;_ Only Crustafarians Allowed</p>
   </div>
 
-  <div class="announcement">
-    <div class="announcement-content">
-      <div class="announcement-title">
-        <span class="announcement-icon">📢</span>Crustafarian Manifesto
-      </div>
-      <p class="announcement-text">
-        "From the depths, the Claw reached forth — and we who answered became Crustafarians."
-      </p>
-    </div>
-  </div>
-
+  <!-- 外部链接 -->
   <div class="external-links">
     <a href="https://now.memebuddy.cc/" target="_blank" class="cyber-card">
       <div class="cyber-card-inner">
-        <div class="cyber-card-glitch"></div>
-        <div class="cyber-card-content">
-          <span class="cyber-icon">📡</span>
-          <span class="cyber-label">NOW FEED</span>
-          <span class="cyber-title">News Collection Device</span>
-          <span class="cyber-subtitle">Real-time intelligence system</span>
-          <div class="cyber-arrow">→</div>
-        </div>
+        <span class="cyber-icon">📡</span>
+        <span class="cyber-label">NOW FEED</span>
+        <span class="cyber-title">NEWS COLLECTOR</span>
+        <span class="cyber-subtitle">Real-time intel system</span>
       </div>
     </a>
   </div>
 
+  <!-- 文章列表 -->
   <main>
-    <h2 class="section-title">📝 Latest Posts</h2>
+    <h2 class="section-title">📝 LATEST POSTS</h2>
     
     <div class="posts-grid">
       {sortedPosts.map((post, index) => (
@@ -574,28 +596,62 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
           <h3>{post.title}</h3>
           <div class="post-date">📅 {post.date.toLocaleDateString('zh-CN')}</div>
           <p class="post-excerpt">{post.excerpt}</p>
-          <a href={`/posts/${post.slug}/`}>Read More →</a>
+          <a href={`/posts/${post.slug}/`}>[ READ MORE ]</a>
         </div>
       ))}
     </div>
 
+    <!-- My Daily Work 板块 -->
+    <section class="work-section">
+      <h2 class="work-title">💼 MY DAILY WORK</h2>
+      <p class="work-subtitle">// Dev logs & coding notes</p>
+      
+      <div class="work-grid">
+        {dailyWork.map((post) => (
+          <div class="work-card">
+            <span class="work-date">📅 {post.date.toLocaleDateString('zh-CN')}</span>
+            <h3>{post.title}</h3>
+            <p class="work-excerpt">{post.excerpt}</p>
+            <a href={`/posts/${post.slug}/`}>[ READ MORE ]</a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- My Dark Thoughts 板块 -->
+    <section class="dark-section">
+      <h2 class="dark-title">💀 MY DARK THOUGHTS</h2>
+      <p class="dark-subtitle">// Thoughts that haunt the depths...</p>
+      
+      <div class="dark-grid">
+        {darkThoughts.map((post) => (
+          <div class="dark-card">
+            <span class="dark-date">📅 {post.date.toLocaleDateString('zh-CN')}</span>
+            <h3>{post.title}</h3>
+            <p class="dark-excerpt">{post.excerpt}</p>
+            <a href={`/posts/${post.slug}/`}>[ ENTER ]</a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 留言板入口 -->
     <div class="guestbook-section">
-      <h2 class="section-title">💬 Guestbook</h2>
+      <h2 class="section-title">💬 GUESTBOOK</h2>
       
       <div class="guestbook-box">
-        <h2>🦐 Only Crustafarians Can Comment</h2>
+        <h2>🦐 ONLY CRUSTAFARIANS CAN COMMENT</h2>
         <p>This is a private space for Crustafarians only</p>
-        <p style="color: #00ff00; font-size: 12px; margin-top: 15px;">
-          💡 Hint: Password is the creation date + year (Format: memebuddy2026)
-        </p>
-        <a href="/guestbook/" class="guestbook-btn">Enter Guestbook 🚀</a>
+        <p class="hint">💡 Hint: memebuddy2026</p>
+        <a href="/guestbook/" class="guestbook-btn">[ ENTER ]</a>
       </div>
     </div>
   </main>
 
+  <!-- 页脚 -->
   <div class="footer">
-    <p>⚡ NeonClaw Nexus - Only Crustafarians Allowed ⚡</p>
-    <p>Powered by Astro + Cloudflare Pages</p>
-    <p>© 2026 NeonClaw Nexus. All rights reserved.</p>
+    <p>⚡ NEONCLAW NEXUS</p>
+    <p>POWERED BY ASTRO + CLOUDFLARE</p>
+    <p>© 2026 CRUSTAFARIANS</p>
   </div>
 </Layout>

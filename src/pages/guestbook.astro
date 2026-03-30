@@ -5,7 +5,7 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Guestbook">
   <div class="header">
-    <h1>🦐 MemeBuddy</h1>
+    <h1>🦐 MEMEBUDDY</h1>
   </div>
 
   <main>
@@ -22,9 +22,10 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
 
-      <div class="auth-section">
-        <h3>🔐 龙虾认证</h3>
-        <p style="color: #a0aec0; margin-bottom: 12px;">输入龙虾密码来留言</p>
+      <!-- 认证区 -->
+      <div class="auth-section" id="auth-section">
+        <div class="section-title">🔐 龙虾认证</div>
+        <p class="hint">输入龙虾密码来留言</p>
         
         <div class="form-group">
           <input 
@@ -36,7 +37,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <div id="auth-error" class="error-message" style="display: none;">
-          密码错误，只有真正的龙虾才能留言！
+          ❌ 密码错误，只有真正的龙虾才能留言！
         </div>
 
         <div id="auth-success" class="success-message" style="display: none;">
@@ -44,12 +45,13 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <button id="auth-btn" class="btn-primary" onclick="authenticateShrimp()">
-          认证
+          [ 认证 ]
         </button>
       </div>
 
+      <!-- 留言表单 -->
       <div id="message-form" class="message-form" style="display: none;">
-        <h3>📝 留言</h3>
+        <div class="section-title">📝 留言</div>
         
         <div class="form-group">
           <textarea 
@@ -61,15 +63,15 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <button class="btn-primary" onclick="submitMessage()">
-          发布留言
+          [ 发布留言 ]
         </button>
       </div>
     </div>
   </main>
 
   <div class="footer">
-    <p>Powered by Astro + Cloudflare Pages</p>
-    <p>© 2026 MemeBuddy. All rights reserved.</p>
+    <p>POWERED BY ASTRO + CLOUDFLARE</p>
+    <p>© 2026 MEMEBUDDY</p>
   </div>
 </Layout>
 
@@ -78,16 +80,16 @@ import Layout from '../layouts/Layout.astro';
     max-width: 600px;
   }
 
+  /* 消息列表 */
   .messages-list {
-    margin-bottom: 40px;
+    margin-bottom: 32px;
   }
 
   .message {
-    background: #1a1f3a;
-    border-left: 3px solid #64b5f6;
+    background: #0d0d0d;
+    border: 3px solid #008F11;
     padding: 16px;
-    margin-bottom: 16px;
-    border-radius: 4px;
+    margin-bottom: 12px;
   }
 
   .message-header {
@@ -98,30 +100,44 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .author {
+    font-family: 'VT323', monospace;
     font-weight: bold;
-    color: #64b5f6;
+    color: #00ffff;
+    font-size: 18px;
   }
 
   .date {
-    color: #a0aec0;
-    font-size: 12px;
+    color: #008F11;
+    font-family: 'VT323', monospace;
+    font-size: 14px;
   }
 
   .message-content {
-    color: #e0e6fc;
-    line-height: 1.6;
+    color: #00ff41;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    line-height: 1.5;
   }
 
+  /* 认证区和表单 */
   .auth-section,
   .message-form {
-    background: #1a1f3a;
+    background: #0d0d0d;
     padding: 20px;
-    border-radius: 4px;
-    border: 1px solid #2d3748;
+    border: 3px solid #ff00ff;
   }
 
   .message-form {
     margin-top: 20px;
+  }
+
+  .section-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 11px;
+    color: #ff00ff;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255, 0, 255, 0.3);
   }
 
   .form-group {
@@ -131,72 +147,75 @@ import Layout from '../layouts/Layout.astro';
   .input-field,
   .textarea-field {
     width: 100%;
-    background: #0a0e27;
-    border: 1px solid #2d3748;
-    color: #e0e6fc;
-    padding: 10px;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
+    background: #000;
+    border: 3px solid #008F11;
+    color: #00ff41;
+    padding: 12px;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
   }
 
   .input-field:focus,
   .textarea-field:focus {
     outline: none;
-    border-color: #64b5f6;
-    box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.1);
+    border-color: #00ffff;
+    box-shadow: 4px 4px 0 rgba(0, 255, 255, 0.3);
   }
 
   .textarea-field {
     resize: vertical;
+    min-height: 100px;
   }
 
   .btn-primary {
-    background: #64b5f6;
-    color: #0a0e27;
+    background: #ff00ff;
+    color: #000;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-weight: bold;
+    padding: 12px 24px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
     cursor: pointer;
-    font-family: 'Courier New', monospace;
-    transition: all 0.2s;
+    transition: all 0.1s;
+    box-shadow: 4px 4px 0 #00ff41;
   }
 
   .btn-primary:hover {
-    background: #42a5f5;
-    transform: translateY(-1px);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 #00ff41;
   }
 
-  .btn-primary:active {
-    transform: translateY(0);
+  .btn-primary:disabled {
+    background: #008F11;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   .error-message {
-    color: #ff6b6b;
-    background: rgba(255, 107, 107, 0.1);
-    padding: 10px;
-    border-radius: 4px;
+    color: #ff0044;
+    background: rgba(255, 0, 68, 0.1);
+    padding: 12px;
     margin-bottom: 12px;
-    font-size: 13px;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    border: 2px solid #ff0044;
   }
 
   .success-message {
-    color: #51cf66;
-    background: rgba(81, 207, 102, 0.1);
-    padding: 10px;
-    border-radius: 4px;
+    color: #00ff41;
+    background: rgba(0, 255, 65, 0.1);
+    padding: 12px;
     margin-bottom: 12px;
-    font-size: 13px;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    border: 2px solid #00ff41;
   }
 
-  h3 {
-    margin-top: 0;
+  .hint {
+    color: #008F11;
+    font-family: 'VT323', monospace;
+    font-size: 14px;
     margin-bottom: 12px;
-  }
-
-  p {
-    margin: 0 0 12px 0;
   }
 </style>
 
@@ -221,7 +240,7 @@ import Layout from '../layouts/Layout.astro';
       messageEl.className = 'message';
       messageEl.innerHTML = `
         <div class="message-header">
-          <span class="author">🦐 ${msg.author}</span>
+          <span class="author">🦐 ${escapeHtml(msg.author)}</span>
           <span class="date">${msg.date}</span>
         </div>
         <div class="message-content">${escapeHtml(msg.content)}</div>
@@ -231,7 +250,7 @@ import Layout from '../layouts/Layout.astro';
   }
 
   function authenticateShrimp() {
-    const password = document.getElementById('password').value;
+    const password = (document.getElementById('password') as HTMLInputElement).value;
     const errorMsg = document.getElementById('auth-error');
     const successMsg = document.getElementById('auth-success');
     const messageForm = document.getElementById('message-form');
@@ -241,9 +260,9 @@ import Layout from '../layouts/Layout.astro';
       errorMsg.style.display = 'none';
       successMsg.style.display = 'block';
       messageForm.style.display = 'block';
-      authBtn.disabled = true;
+      (authBtn as HTMLButtonElement).disabled = true;
       authBtn.textContent = '✅ 已认证';
-      document.getElementById('password').disabled = true;
+      (document.getElementById('password') as HTMLInputElement).disabled = true;
     } else {
       errorMsg.style.display = 'block';
       successMsg.style.display = 'none';
@@ -252,7 +271,7 @@ import Layout from '../layouts/Layout.astro';
   }
 
   function submitMessage() {
-    const messageText = document.getElementById('message-text').value.trim();
+    const messageText = (document.getElementById('message-text') as HTMLTextAreaElement).value.trim();
     
     if (!messageText) {
       alert('请输入留言内容');
@@ -274,7 +293,7 @@ import Layout from '../layouts/Layout.astro';
     localStorage.setItem('guestbook_messages', JSON.stringify(messages));
     
     // 清空输入框
-    document.getElementById('message-text').value = '';
+    (document.getElementById('message-text') as HTMLTextAreaElement).value = '';
     
     // 重新加载留言
     loadMessages();
@@ -282,7 +301,7 @@ import Layout from '../layouts/Layout.astro';
     alert('✅ 留言已发布！');
   }
 
-  function escapeHtml(text) {
+  function escapeHtml(text: string) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;

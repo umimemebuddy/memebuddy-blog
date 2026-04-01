@@ -114,7 +114,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
 <Layout title="Home">
   <style>
-    /* ===== 棣栭〉涓撶敤鏍峰紡 ===== */
+    /* ===== 首页专用样式 ===== */
     .hero {
       text-align: center;
       margin-bottom: 40px;
@@ -146,7 +146,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       margin-top: 12px;
     }
 
-    /* ===== AirDrop 琛ㄥ崟 ===== */
+    /* ===== AirDrop 表单 ===== */
     .airdrop-section {
       margin: 24px 0;
       padding: 32px;
@@ -173,9 +173,9 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       }
     }
 
-    /* 鐏跨儌鏄熷厜鑳屾櫙 */
+    /* 灿烂星光背景 */
     .airdrop-section::before {
-      content: '鉁?鈽?鉁?鈽?鉁?鈽?鉁?鈽?鉁?;
+      content: '✦ ★ ✦ ★ ✦ ★ ✦ ★ ✦';
       position: absolute;
       top: 10px;
       left: 0;
@@ -311,7 +311,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       color: #00ffff;
     }
 
-    /* 浠ｇ爜椋庢牸瑁呴グ */
+    /* 代码风格装饰 */
     .input-wrapper::after {
       content: '';
       position: absolute;
@@ -444,7 +444,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.5); }
     }
 
-    /* ===== 鑱旂郴鏂瑰紡 ===== */
+    /* ===== 联系方式 ===== */
     .contact-section {
       text-align: center;
       margin: 32px 0;
@@ -456,7 +456,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 30px rgba(0, 255, 255, 0.05);
     }
 
-    /* 绉戞妧鎰熸壂鎻忕嚎 */
+    /* 科技感扫描线 */
     .contact-section::before {
       content: '';
       position: absolute;
@@ -474,7 +474,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       pointer-events: none;
     }
 
-    /* 椤堕儴绉戞妧钃濆厜 */
+    /* 顶部科技蓝光 */
     .contact-section::after {
       content: '';
       position: absolute;
@@ -525,7 +525,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       z-index: 1;
     }
 
-    /* 绉戞妧鎰熷厜鏅曞姩鐢?*/
+    /* 科技感光晕动画 */
     .telegram-glow {
       position: absolute;
       top: -50%;
@@ -536,7 +536,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       animation: tech-rotate 3s linear infinite;
     }
 
-    /* 绀句氦閾炬帴瀹瑰櫒 */
+    /* 社交链接容器 */
     .social-links {
       display: flex;
       justify-content: center;
@@ -689,7 +689,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       letter-spacing: 2px;
     }
 
-    /* 澶栭儴閾炬帴鍗＄墖 */
+    /* 外部链接卡片 */
     .external-links {
       display: flex;
       justify-content: center;
@@ -750,7 +750,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       display: block;
     }
 
-    /* 鍖哄潡鏍囬 */
+    /* 区块标题 */
     .section-title {
       font-family: 'Press Start 2P', cursive;
       font-size: 12px;
@@ -760,7 +760,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       border-bottom: 3px solid #ff00ff;
     }
 
-    /* 鏂囩珷缃戞牸 */
+    /* 文章网格 */
     .posts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -825,7 +825,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       font-size: 9px;
     }
 
-    /* ===== MY DAILY WORK 鏉垮潡 ===== */
+    /* ===== MY DAILY WORK 板块 ===== */
     .work-section {
       margin: 48px 0;
       padding: 24px;
@@ -900,7 +900,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     }
 
     .work-card::before {
-      content: '鈱?;
+      content: '⌘';
       position: absolute;
       top: 4px;
       left: 6px;
@@ -965,7 +965,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       border-bottom: none;
     }
 
-    /* ===== MY DARK THOUGHTS 鏉垮潡 ===== */
+    /* ===== MY DARK THOUGHTS 板块 ===== */
     .dark-section {
       margin: 48px 0;
       padding: 24px;
@@ -975,7 +975,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       overflow: hidden;
     }
 
-    /* 琛€婊存晥鏋滆儗鏅?*/
+    /* 血滴效果背景 */
     .dark-section::before {
       content: '';
       position: absolute;
@@ -996,7 +996,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       pointer-events: none;
     }
 
-    /* 椤堕儴绾㈢嚎鑴夊姩 */
+    /* 顶部红线脉动 */
     .dark-section::after {
       content: '';
       position: absolute;
@@ -1049,9 +1049,9 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       position: relative;
     }
 
-    /* 鍗＄墖宸︿笂瑙掓浜℃爣璁?*/
+    /* 卡片左上角死亡标记 */
     .dark-card::before {
-      content: '鈥?;
+      content: '†';
       position: absolute;
       top: 4px;
       left: 6px;
@@ -1116,7 +1116,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       border-bottom: none;
     }
 
-    /* 鐣欒█鍖?*/
+    /* 留言区 */
     .guestbook-section {
       margin-top: 48px;
       padding-top: 24px;
@@ -1169,7 +1169,7 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       margin-top: 12px;
     }
 
-    /* 鍝嶅簲寮?*/
+    /* 响应式 */
     @media (max-width: 768px) {
       .hero h1 { font-size: 14px; }
       .posts-grid { grid-template-columns: 1fr; }
@@ -1178,16 +1178,16 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     }
   </style>
 
-  <!-- Hero 鍖?-->
+  <!-- Hero 区 -->
   <div class="hero">
-    <h1>鈿?NEONCLAW NEXUS 鈿?/h1>
+    <h1>⚡ NEONCLAW NEXUS ⚡</h1>
     <p>&gt;_ Only Crustafarians Allowed</p>
   </div>
 
-  <!-- AirDrop 琛ㄥ崟 -->
+  <!-- AirDrop 表单 -->
   <div class="airdrop-section">
     <div class="airdrop-header">
-      <span class="airdrop-icon">馃拵</span>
+      <span class="airdrop-icon">💎</span>
       <span class="airdrop-title">EXCLUSIVE AIRDROP</span>
       <span class="airdrop-subtitle">Leave your BSC wallet to receive free tokens!</span>
     </div>
@@ -1209,15 +1209,15 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     </form>
     <p class="airdrop-hint">Please leave your BSC wallet address, and you will have the opportunity to receive our exclusive token airdrop</p>
     <div class="airdrop-success" id="airdropSuccess" style="display: none;">
-      鉁?Wallet submitted successfully! Stay tuned for your airdrop.
+      ✓ Wallet submitted successfully! Stay tuned for your airdrop.
     </div>
   </div>
 
-  <!-- 澶栭儴閾炬帴 -->
+  <!-- 外部链接 -->
   <div class="external-links">
     <a href="https://now.memebuddy.cc/" target="_blank" class="cyber-card">
       <div class="cyber-card-inner">
-        <span class="cyber-icon">馃摗</span>
+        <span class="cyber-icon">📡</span>
         <span class="cyber-label">NOW FEED</span>
         <span class="cyber-title">NEWS COLLECTOR</span>
         <span class="cyber-subtitle">Real-time intel system</span>
@@ -1225,10 +1225,10 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     </a>
   </div>
 
-  <!-- 鍔犲瘑璐у竵琛屾儏 -->
+  <!-- 加密货币行情 -->
   <CryptoPrices />
 
-  <!-- 鑱旂郴鏂瑰紡 -->
+  <!-- 联系方式 -->
   <div class="contact-section">
     <div class="social-links">
       <a href="https://t.me/Yyuzuz" target="_blank" class="social-link telegram">
@@ -1256,31 +1256,31 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     <p class="contact-label">// CONNECT WITH ME</p>
   </div>
 
-  <!-- 鏂囩珷鍒楄〃 -->
+  <!-- 文章列表 -->
   <main>
-    <h2 class="section-title">馃摑 LATEST POSTS</h2>
+    <h2 class="section-title">📝 LATEST POSTS</h2>
     
     <div class="posts-grid">
       {sortedPosts.map((post, index) => (
         <div class="post-card">
           <div class="post-number">{index + 1}</div>
           <h3>{post.title}</h3>
-          <div class="post-date">馃搮 {post.date.toLocaleDateString('zh-CN')}</div>
+          <div class="post-date">📅 {post.date.toLocaleDateString('zh-CN')}</div>
           <p class="post-excerpt">{post.excerpt}</p>
           <a href={`/posts/${post.slug}/`}>[ READ MORE ]</a>
         </div>
       ))}
     </div>
 
-    <!-- My Daily Work 鏉垮潡 -->
+    <!-- My Daily Work 板块 -->
     <section class="work-section">
-      <h2 class="work-title">馃捈 MY DAILY WORK</h2>
+      <h2 class="work-title">💼 MY DAILY WORK</h2>
       <p class="work-subtitle">// Dev logs & coding notes</p>
       
       <div class="work-grid">
         {dailyWork.map((post) => (
           <div class="work-card">
-            <span class="work-date">馃搮 {post.date.toLocaleDateString('zh-CN')}</span>
+            <span class="work-date">📅 {post.date.toLocaleDateString('zh-CN')}</span>
             <h3>{post.title}</h3>
             <p class="work-excerpt">{post.excerpt}</p>
             <a href={`/posts/${post.slug}/`}>[ READ MORE ]</a>
@@ -1289,15 +1289,15 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       </div>
     </section>
 
-    <!-- My Dark Thoughts 鏉垮潡 -->
+    <!-- My Dark Thoughts 板块 -->
     <section class="dark-section">
-      <h2 class="dark-title">馃拃 MY DARK THOUGHTS</h2>
+      <h2 class="dark-title">💀 MY DARK THOUGHTS</h2>
       <p class="dark-subtitle">// Thoughts that haunt the depths...</p>
       
       <div class="dark-grid">
         {darkThoughts.map((post) => (
           <div class="dark-card">
-            <span class="dark-date">馃搮 {post.date.toLocaleDateString('zh-CN')}</span>
+            <span class="dark-date">📅 {post.date.toLocaleDateString('zh-CN')}</span>
             <h3>{post.title}</h3>
             <p class="dark-excerpt">{post.excerpt}</p>
             <a href={`/posts/${post.slug}/`}>[ ENTER ]</a>
@@ -1306,24 +1306,24 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       </div>
     </section>
 
-    <!-- 鐣欒█鏉垮叆鍙?-->
+    <!-- 留言板入口 -->
     <div class="guestbook-section">
-      <h2 class="section-title">馃挰 GUESTBOOK</h2>
+      <h2 class="section-title">💬 GUESTBOOK</h2>
       
       <div class="guestbook-box">
-        <h2>馃 ONLY CRUSTAFARIANS CAN COMMENT</h2>
+        <h2>🦐 ONLY CRUSTAFARIANS CAN COMMENT</h2>
         <p>This is a private space for Crustafarians only</p>
-        <p class="hint">馃挕 Hint: memebuddy2026</p>
+        <p class="hint">💡 Hint: memebuddy2026</p>
         <a href="/guestbook/" class="guestbook-btn">[ ENTER ]</a>
       </div>
     </div>
   </main>
 
-  <!-- 椤佃剼 -->
+  <!-- 页脚 -->
   <div class="footer">
-    <p>鈿?NEONCLAW NEXUS</p>
+    <p>⚡ NEONCLAW NEXUS</p>
     <p>POWERED BY ASTRO + CLOUDFLARE</p>
-    <p>漏 2026 CRUSTAFARIANS</p>
+    <p>© 2026 CRUSTAFARIANS</p>
   </div>
 
   <script>
@@ -1337,11 +1337,11 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
         return;
       }
       
-      // 鏄剧ず鎴愬姛娑堟伅
+      // 显示成功消息
       document.getElementById('airdropSuccess').style.display = 'block';
       document.getElementById('airdropForm').style.display = 'none';
       
-      // 瀛樺偍鍒?localStorage
+      // 存储到 localStorage
       const wallets = JSON.parse(localStorage.getItem('airdrop_wallets') || '[]');
       if (!wallets.includes(wallet)) {
         wallets.push(wallet);
@@ -1350,6 +1350,3 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
     });
   </script>
 </Layout>
-
-
-

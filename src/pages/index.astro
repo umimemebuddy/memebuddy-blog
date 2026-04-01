@@ -1018,6 +1018,21 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
   <!-- 文章列表 -->
   <main>
+    <!-- 全部文章列表 -->
+    <section class="all-posts-section">
+      <h2 class="section-title">📚 ALL POSTS</h2>
+      <p class="section-subtitle">// Every article in one place</p>
+      
+      <div class="all-posts-list">
+        {sortedPosts.concat(dailyWork).concat(darkThoughts).sort((a, b) => b.date.getTime() - a.date.getTime()).map((post) => (
+          <a href={`/posts/${post.slug}/`} class="all-posts-item">
+            <span class="all-posts-date">📅 {post.date.toLocaleDateString('zh-CN')}</span>
+            <span class="all-posts-title">{post.title}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
     <h2 class="section-title">📝 LATEST POSTS</h2>
     
     <div class="posts-grid">
@@ -1045,21 +1060,6 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
             <p class="work-excerpt">{post.excerpt}</p>
             <a href={`/posts/${post.slug}/`}>[ READ MORE ]</a>
           </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- 全部文章列表 -->
-    <section class="all-posts-section">
-      <h2 class="section-title">📚 ALL POSTS</h2>
-      <p class="section-subtitle">// Every article in one place</p>
-      
-      <div class="all-posts-list">
-        {sortedPosts.concat(dailyWork).concat(darkThoughts).sort((a, b) => b.date.getTime() - a.date.getTime()).map((post) => (
-          <a href={`/posts/${post.slug}/`} class="all-posts-item">
-            <span class="all-posts-date">📅 {post.date.toLocaleDateString('zh-CN')}</span>
-            <span class="all-posts-title">{post.title}</span>
-          </a>
         ))}
       </div>
     </section>

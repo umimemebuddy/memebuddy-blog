@@ -872,6 +872,89 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       margin-top: 12px;
     }
 
+    /* 全部文章列表 */
+    .all-posts-section {
+      margin-top: 48px;
+      padding: 24px;
+      border: 3px solid #ffd700;
+      background: rgba(255, 215, 0, 0.05);
+    }
+
+    .all-posts-section .section-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 14px;
+      color: #ffd700;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .all-posts-section .section-subtitle {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: #888;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .all-posts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .all-posts-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .all-posts-list::-webkit-scrollbar-track {
+      background: #111;
+    }
+
+    .all-posts-list::-webkit-scrollbar-thumb {
+      background: #ffd700;
+    }
+
+    .all-posts-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid #333;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .all-posts-item:hover {
+      background: rgba(255, 215, 0, 0.1);
+      border-color: #ffd700;
+      transform: translateX(4px);
+    }
+
+    .all-posts-date {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    .all-posts-title {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: #00ff41;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .all-posts-item:hover .all-posts-title {
+      color: #ffd700;
+    }
+
     /* 响应式 */
     @media (max-width: 768px) {
       .hero h1 { font-size: 14px; }
@@ -898,9 +981,6 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
       </div>
     </a>
   </div>
-
-  <!-- 加密货币行情 -->
-  <CryptoPrices />
 
   <!-- 联系方式 -->
   <div class="contact-section">
@@ -959,6 +1039,21 @@ const sortedPosts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
             <p class="work-excerpt">{post.excerpt}</p>
             <a href={`/posts/${post.slug}/`}>[ READ MORE ]</a>
           </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 全部文章列表 -->
+    <section class="all-posts-section">
+      <h2 class="section-title">📚 ALL POSTS</h2>
+      <p class="section-subtitle">// Every article in one place</p>
+      
+      <div class="all-posts-list">
+        {sortedPosts.concat(dailyWork).concat(darkThoughts).sort((a, b) => b.date.getTime() - a.date.getTime()).map((post) => (
+          <a href={`/posts/${post.slug}/`} class="all-posts-item">
+            <span class="all-posts-date">📅 {post.date.toLocaleDateString('zh-CN')}</span>
+            <span class="all-posts-title">{post.title}</span>
+          </a>
         ))}
       </div>
     </section>

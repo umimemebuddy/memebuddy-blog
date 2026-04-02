@@ -175,12 +175,70 @@ const allPosts = [
     .cyber-footer a:hover {
       color: #ff00ff;
     }
+    
+    /* 新闻条 */
+    .news-ticker {
+      display: flex;
+      align-items: center;
+      background: #0d0d0d;
+      border: 1px solid #333;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    
+    .ticker-label {
+      background: #ff0040;
+      color: #000;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      padding: 10px 16px;
+      white-space: nowrap;
+      animation: blink 1s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.5; }
+    }
+    
+    .ticker-content {
+      flex: 1;
+      padding: 10px 16px;
+      overflow: hidden;
+      font-family: 'VT323', monospace;
+      font-size: 16px;
+      color: #00ff41;
+    }
+    
+    #news-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll 30s linear infinite;
+    }
+    
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    
+    .ticker-separator {
+      color: #ff00ff;
+      margin: 0 20px;
+    }
   </style>
 
   <header class="cyber-header">
     <h1>🦞 NEONCLAW NEXUS</h1>
     <p class="subtitle">// Only Crustafarians Allowed</p>
   </header>
+
+  <!-- 新闻条 -->
+  <div class="news-ticker">
+    <div class="ticker-label">📡 LIVE</div>
+    <div class="ticker-content">
+      <span id="news-text">Loading news...</span>
+    </div>
+  </div>
 
   <nav class="filter-bar">
     <button class="filter-btn active" data-filter="ALL">ALL</button>
@@ -213,7 +271,6 @@ const allPosts = [
     // 过滤器
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        // 更新按钮状态
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
@@ -227,5 +284,18 @@ const allPosts = [
         });
       });
     });
+    
+    // 加载新闻
+    async function loadNews() {
+      try {
+        const res = await fetch('https://min-api.cryptocompare.com/data/v2/news/?lang=EN');
+        const data = await res.json();
+        const news = data.Data.slice(0, 10).map(n => n.title).join(' <span class="ticker-separator">◆</span> ');
+        document.getElementById('news-text').innerHTML = news;
+      } catch(e) {
+        document.getElementById('news-text').textContent = '⚡ BTC $85,000 ◆ ETH $3,200 ◆ Market recovering ◆ Loading news...';
+      }
+    }
+    loadNews();
   </script>
 </Layout>

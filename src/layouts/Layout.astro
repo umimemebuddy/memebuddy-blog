@@ -1,370 +1,189 @@
+---
+// src/layouts/Layout.astro - 舒适阅读版
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
 <!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="MemeBuddy - 赛博朋克风格个人博客小龙虾的碎碎念，记录AI、技术与生活的奇思妙想" />
-    <meta name="keywords" content="MemeBuddy,小龙虾,博客,AI,技术博客,赛博朋克,像素风,Cloudflare,Astro" />
+    <meta name="description" content="MemeBuddy - 赛博朋克风格个人博客" />
+    <meta name="keywords" content="MemeBuddy,小龙虾,博客,AI,技术博客" />
     <meta name="author" content="MemeBuddy" />
-    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://memebuddy.cc/" />
-    
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://memebuddy.cc/" />
-    <meta property="og:title" content="{title} | 🦐 MemeBuddy" />
-    <meta property="og:description" content="赛博朋克风格个人博客 - Only Crustafarians Allowed" />
+    <meta property="og:title" content="{title} | MemeBuddy" />
+    <meta property="og:description" content="赛博朋克风格个人博客" />
     <meta property="og:site_name" content="MemeBuddy" />
-    
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="{title} | 🦐 MemeBuddy" />
-    <meta name="twitter:description" content="赛博朋克风格个人博客 - Only Crustafarians Allowed" />
-    
-    <!-- RSS -->
+    <meta name="twitter:title" content="{title} | MemeBuddy" />
+    <meta name="twitter:description" content="赛博朋克风格个人博客" />
     <link rel="alternate" type="application/rss+xml" title="MemeBuddy RSS Feed" href="/rss.xml" />
-    
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/crustafarian-meme.svg" />
-    
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    
-    <title>{title} | 🦐 MemeBuddy</title>
-    <script is:inline>
-      // 检测是否是文章页面
-      if (window.location.pathname.includes('/posts/dark-thoughts/') || 
-          window.location.pathname.includes('/posts/daily-work/') ||
-          window.location.pathname.includes('/posts/agent-evolution') ||
-          window.location.pathname.includes('/posts/building-memebuddy') ||
-          window.location.pathname.includes('/posts/hello-world') ||
-          window.location.pathname.includes('/posts/lobster-diary') ||
-          window.location.pathname.includes('/posts/meme-coin-navigator') ||
-          window.location.pathname.includes('/posts/memebuddy-airdrop') ||
-          window.location.pathname.includes('/posts/test')) {
-        document.body.classList.add('post-page');
-      }
-    </script>
+    <title>{title} | MemeBuddy</title>
     <style is:global>
       :root {
         --color-bg: #0a0a0a;
         --color-primary: #00ff41;
         --color-secondary: #ff00ff;
-        --color-accent: #00ffff;
-        --color-warning: #ffff00;
-        --color-text: #00ff41;
         --color-dim: #008F11;
         --pixel-font: 'Press Start 2P', cursive;
         --mono-font: 'VT323', monospace;
-        --border-pixel: 4px;
       }
 
       * { margin: 0; padding: 0; box-sizing: border-box; }
 
+      html, body { background: var(--color-bg); min-height: 100vh; }
+
       body {
         font-family: var(--mono-font);
-        font-size: 18px;
-        background: var(--color-bg);
-        color: var(--color-text);
-        line-height: 1.4;
-        min-height: 100vh;
+        font-size: 20px;
+        color: #c0c0c0;
+        line-height: 1.7;
         overflow-x: hidden;
       }
 
-      /* CRT扫描线效果 */
+      /* 微弱扫描线 */
       body::before {
         content: '';
         position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
         pointer-events: none;
         z-index: 9999;
       }
 
-      /* 像素边框 */
-      .pixel-border {
-        border: var(--border-pixel) solid var(--color-secondary);
-        box-shadow: 4px 4px 0 var(--color-primary), -2px -2px 0 var(--color-accent);
+      /* 文章容器 */
+      .article, .post-content, main, .content, article, .markdown-body, .container {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 30px 20px;
+        position: relative;
+      }
+
+      /* 文章标题 */
+      .article h1, .post-content h1, article h1, main h1, .markdown-body h1, h1 {
+        font-family: var(--pixel-font);
+        font-size: 16px;
+        color: var(--color-primary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 0 0 24px 0;
+        padding-bottom: 16px;
+        border-bottom: 2px solid var(--color-dim);
+        line-height: 1.6;
+      }
+
+      /* 段落 - 清晰可读 */
+      .article p, .post-content p, article p, main p, .markdown-body p, p {
+        color: #a0a0a0;
+        font-family: var(--mono-font);
+        font-size: 18px;
+        margin-bottom: 18px;
+        transition: color 0.3s;
+      }
+
+      .article p:hover, .post-content p:hover, article p:hover, .markdown-body p:hover, p:hover {
+        color: #d0d0d0;
+      }
+
+      /* 二级标题 */
+      .article h2, .post-content h2, article h2, .markdown-body h2, h2 {
+        font-family: var(--pixel-font);
+        font-size: 12px;
+        color: var(--color-secondary);
+        margin: 32px 0 16px 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* 三级标题 */
+      .article h3, .post-content h3, article h3, .markdown-body h3, h3 {
+        font-family: var(--pixel-font);
+        font-size: 10px;
+        color: var(--color-dim);
+        margin: 24px 0 12px 0;
+        text-transform: uppercase;
       }
 
       /* 链接 */
-      a {
-        color: var(--color-secondary);
-        text-decoration: none;
-        border-bottom: 3px solid var(--color-secondary);
-        font-family: var(--pixel-font);
-        font-size: 10px;
-        transition: all 0.1s;
-      }
-      a:hover {
-        background: var(--color-secondary);
-        color: var(--color-bg);
-        box-shadow: 4px 4px 0 var(--color-primary);
-        border-bottom: none;
-      }
+      a { color: var(--color-primary); text-decoration: none; border-bottom: 1px solid var(--color-dim); transition: all 0.2s; }
+      a:hover { color: var(--color-secondary); border-bottom-color: var(--color-secondary); }
 
-      /* 代码块 */
-      code {
-        background: #1a1a1a;
-        padding: 2px 8px;
-        font-family: var(--mono-font);
-        font-size: 16px;
-        color: var(--color-accent);
-        border: 2px solid var(--color-dim);
-      }
-      pre {
-        background: #0d0d0d;
-        padding: 16px;
-        border: 3px solid var(--color-secondary);
-        border-left-width: 8px;
-        overflow-x: auto;
-        margin: 16px 0;
-        color: var(--color-primary);
-        font-family: var(--mono-font);
-        font-size: 16px;
-        box-shadow: 4px 4px 0 rgba(255, 0, 255, 0.3);
-      }
-
-      /* 标题 */
-      h1, h2, h3 {
-        font-family: var(--pixel-font);
-        font-size: 14px;
-        margin: 24px 0 16px 0;
-        color: var(--color-secondary);
-        text-transform: uppercase;
-        line-height: 1.6;
-      }
-      h1 { font-size: 18px; text-shadow: 3px 3px 0 var(--color-primary); }
-      h2 { font-size: 14px; }
-      h3 { font-size: 12px; }
-
-      /* 容器 */
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        position: relative;
-        z-index: 1;
-      }
-
-      /* 头部 */
-      .header {
-        border: var(--border-pixel) solid var(--color-secondary);
-        padding: 20px;
-        margin-bottom: 40px;
-        background: linear-gradient(180deg, rgba(255, 0, 255, 0.1) 0%, rgba(0, 255, 65, 0.05) 100%);
-      }
-      .header h1 { font-size: 20px; margin: 0; letter-spacing: 2px; color: var(--color-secondary); }
-      .header p { color: var(--color-primary); margin-top: 12px; font-size: 16px; }
-
-      /* 文章列表 */
-      .posts-list { list-style: none; }
-      .posts-list li {
-        margin-bottom: 16px;
-        padding: 16px;
-        border: 3px solid var(--color-secondary);
-        background: rgba(255, 0, 255, 0.05);
-        transition: all 0.15s;
-      }
-      .posts-list li:hover {
-        background: rgba(255, 0, 255, 0.15);
-        transform: translate(-2px, -2px);
-        box-shadow: 4px 4px 0 var(--color-primary);
-      }
-      .posts-list a { display: block; font-size: 12px; font-weight: bold; margin-bottom: 8px; color: var(--color-secondary); }
-      .posts-list .date { color: var(--color-dim); font-size: 14px; }
-      .posts-list p { color: var(--color-primary); margin-top: 8px; }
-
-      /* 页脚 */
-      .footer {
-        margin-top: 60px;
-        padding-top: 20px;
-        border-top: 3px solid var(--color-secondary);
-        text-align: center;
-        color: var(--color-dim);
-        font-size: 14px;
-      }
-      .footer p { font-family: var(--pixel-font); font-size: 8px; margin: 4px 0; }
-
-      /* 按钮 */
-      .nav-btn {
-        display: inline-block;
-        padding: 12px 20px;
-        background: #1a1a1a;
-        border: 3px solid var(--color-secondary);
-        color: var(--color-secondary);
-        font-family: var(--pixel-font);
-        font-size: 10px;
-        text-decoration: none;
-        margin: 8px 4px;
-        transition: all 0.1s;
-      }
-      .nav-btn:hover {
-        background: var(--color-secondary);
-        color: var(--color-bg);
-        box-shadow: 4px 4px 0 var(--color-primary);
-      }
-
-      /* 响应式 */
-      @media (max-width: 600px) {
-        .container { padding: 12px; }
-        h1 { font-size: 14px; }
-        h2 { font-size: 12px; }
-        .header h1 { font-size: 16px; }
-      }
-      
-      /* ===== 文章页面统一终端风格 ===== */
-      body.post-page {
-        --color-primary: #0f0;
-        --color-secondary: #0a0;
-        --color-dim: #060;
-      }
-      
-      body.post-page::before {
-        background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
-      }
-      
-      body.post-page::after {
-        content: '';
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.5) 100%);
-        pointer-events: none;
-        z-index: 9998;
-      }
-
-      body.post-page .container {
-        max-width: 640px;
-        padding: 40px 24px;
-      }
-      
-      body.post-page h1 {
-        font-family: 'VT323', monospace;
-        font-size: 28px;
-        color: #0f0;
-        text-transform: none;
-        text-shadow: 0 0 15px rgba(0,255,0,0.4);
-        margin-bottom: 8px;
-        border: none;
-        padding: 0;
-        line-height: 1.3;
-      }
-      
-      body.post-page h1::after {
-        content: '_';
-        animation: blink 1s infinite;
-      }
-      
-      @keyframes blink {
-        0%, 50% { opacity: 1; }
-        51%, 100% { opacity: 0; }
-      }
-      
-      body.post-page > .container > p:first-of-type {
-        font-family: 'VT323', monospace;
-        font-size: 18px;
-        color: #0a0;
-        line-height: 1.7;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 1px dashed #0a0;
-      }
-      
-      body.post-page h2 {
-        font-family: 'VT323', monospace;
-        font-size: 20px;
-        color: #0f0;
-        border-left: 3px solid #0a0;
-        padding-left: 10px;
-        margin: 28px 0 12px 0;
-        text-transform: none;
-        background: rgba(0,255,0,0.02);
-        padding: 6px 0 6px 14px;
-      }
-      
-      body.post-page p {
-        font-family: 'VT323', monospace;
-        font-size: 17px;
-        color: #0d0;
-        line-height: 1.9;
-        margin-bottom: 14px;
-      }
-      
-      body.post-page strong {
-        color: #0f0;
-        text-shadow: 0 0 8px rgba(0,255,0,0.3);
-      }
-      
-      body.post-page a {
-        color: #0f0;
-        border-bottom: 1px solid #0a0;
-        font-family: 'VT323', monospace;
-        font-size: 16px;
-      }
-      
-      body.post-page a:hover {
-        background: #0a0;
-        color: #0f0;
-        border-bottom: none;
-        text-shadow: 0 0 10px #0f0;
-      }
-      
-      body.post-page blockquote {
-        border: 1px solid #0a0;
-        border-left: 3px solid #0f0;
-        padding: 12px 16px;
-        margin: 16px 0;
-        background: rgba(0,255,0,0.02);
-      }
-      
-      body.post-page blockquote p {
-        color: #0a0;
+      /* 引用 */
+      blockquote {
+        border-left: 3px solid var(--color-dim);
+        padding-left: 16px;
+        margin: 20px 0;
+        color: #808080;
         font-style: italic;
       }
 
-      /* 返回链接 */
-      .back-link {
-        display: inline-block;
-        font-family: 'VT323', monospace;
-        font-size: 14px;
-        color: #0a0;
-        padding: 6px 12px;
-        border: 1px solid #0a0;
-        margin-bottom: 24px;
-        transition: all 0.2s;
-      }
-      
-      body.post-page .back-link {
-        color: #0a0;
-      }
-      
-      .back-link:hover {
-        background: #0a0;
-        color: #0f0;
-        text-shadow: 0 0 10px #0f0;
+      /* 代码 */
+      code {
+        background: #151515;
+        padding: 2px 6px;
+        font-family: var(--mono-font);
+        font-size: 16px;
+        color: var(--color-primary);
+        border: 1px solid #222;
       }
 
-      /* 文章结束 */
-      .post-end {
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px dashed #0a0;
-        text-align: center;
-        font-family: 'VT323', monospace;
-        color: #0a0;
+      pre {
+        background: #0d0d0d;
+        padding: 16px;
+        border: 1px solid var(--color-dim);
+        overflow-x: auto;
+        margin: 20px 0;
+        color: var(--color-primary);
+        font-family: var(--mono-font);
         font-size: 16px;
       }
-      
-      .post-end::before { content: '// '; }
-      .post-end::after { content: ' EOF'; }
+
+      /* 列表 */
+      .article ul, .article ol, .post-content ul, .post-content ol, article ul, article ol, .markdown-body ul, .markdown-body ol {
+        margin: 15px 0;
+        padding-left: 25px;
+      }
+
+      .article li, .post-content li, article li, .markdown-body li, li {
+        color: #a0a0a0;
+        margin-bottom: 8px;
+      }
+
+      /* 分割线 */
+      hr { border: none; border-top: 1px dashed var(--color-dim); margin: 30px 0; }
+
+      /* 强调 */
+      strong, b { color: #c0c0c0; }
+      em, i { color: #808080; }
+
+      /* 返回按钮 */
+      .back-link, .back, .return { display: inline-block; font-family: var(--pixel-font); font-size: 8px; color: var(--color-dim); margin-bottom: 20px; text-decoration: none; text-transform: uppercase; }
+      .back-link:hover, .back:hover { color: var(--color-primary); }
+
+      /* 响应式 */
+      @media (max-width: 600px) {
+        .article, .post-content, main, .container { padding: 20px 15px; }
+        .article h1, h1 { font-size: 14px; }
+        .article h2, h2 { font-size: 11px; }
+        body { font-size: 18px; }
+        .article p, p { font-size: 16px; }
+      }
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="article">
       <slot />
     </div>
   </body>

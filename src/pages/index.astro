@@ -73,33 +73,33 @@ const allPosts = [
     
     .cyber-header h1 {
       font-family: 'Press Start 2P', monospace;
-      font-size: 10px;
-      color: #1a1;
+      font-size: 12px;
+      color: #00ff41;
       letter-spacing: 4px;
       text-transform: uppercase;
-      opacity: 0.4;
+      opacity: 1;
       transition: all 0.5s;
-      text-shadow: none;
+      text-shadow: 0 0 10px rgba(0,255,65,0.5);
     }
     
     .cyber-header:hover h1 {
       color: #00ff41;
-      opacity: 0.9;
-      text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+      opacity: 1;
+      text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
     }
     
     .cyber-header .subtitle {
       font-family: 'VT323', monospace;
-      color: #0a0;
-      font-size: 11px;
-      margin-top: 6px;
-      opacity: 0.2;
+      color: #ff00ff;
+      font-size: 14px;
+      margin-top: 8px;
+      opacity: 0.8;
       transition: all 0.5s;
     }
     
     .cyber-header:hover .subtitle {
-      color: #0f0;
-      opacity: 0.6;
+      color: #ff00ff;
+      opacity: 1;
     }
     
     /* 分类过滤器 - 终端风格 */
@@ -109,21 +109,17 @@ const allPosts = [
       gap: 4px;
       flex-wrap: wrap;
       margin-bottom: 12px;
-      padding: 6px;
-      border-bottom: 1px solid #111;
-      opacity: 0.5;
-      transition: opacity 0.3s;
-    }
-    
-    .filter-bar:hover {
+      padding: 8px;
+      border-bottom: 1px solid #00ff41;
       opacity: 1;
+      transition: opacity 0.3s;
     }
     
     .filter-btn {
       background: transparent;
       border: none;
-      color: #2a2;
-      padding: 3px 8px;
+      color: #00ff41;
+      padding: 4px 10px;
       font-family: 'Press Start 2P', monospace;
       font-size: 8px;
       cursor: pointer;
@@ -132,8 +128,8 @@ const allPosts = [
     }
     
     .filter-btn:hover, .filter-btn.active {
-      color: #0f0;
-      text-shadow: 0 0 5px #0f0;
+      color: #ff00ff;
+      text-shadow: 0 0 10px #ff00ff;
     }
     
     .filter-btn::before {
@@ -157,62 +153,61 @@ const allPosts = [
     .post-item {
       display: flex;
       align-items: center;
-      padding: 6px 12px;
+      padding: 8px 12px;
       background: transparent;
       border: none;
       border-left: 2px solid transparent;
       transition: all 0.1s;
       text-decoration: none;
-      gap: 8px;
-      opacity: 0.35;
+      gap: 10px;
+      opacity: 1;
     }
     
     .post-item:hover {
-      background: rgba(0,40,0,0.3);
-      border-left-color: #0f0;
-      opacity: 1;
+      background: rgba(0,255,65,0.08);
+      border-left-color: #00ff41;
     }
     
     .post-date {
       font-family: 'VT323', monospace;
-      font-size: 12px;
-      color: #1a1;
-      min-width: 70px;
+      font-size: 13px;
+      color: #008F11;
+      min-width: 75px;
     }
     
     .post-item:hover .post-date {
-      color: #0f0;
+      color: #00ff41;
     }
     
     .post-category {
       font-family: 'Press Start 2P', monospace;
-      font-size: 6px;
-      padding: 2px 4px;
+      font-size: 7px;
+      padding: 2px 5px;
       background: transparent;
-      border: 1px solid #222;
-      color: #333;
-      min-width: 40px;
+      border: 1px solid #333;
+      color: #666;
+      min-width: 45px;
       text-align: center;
     }
     
-    .post-item:hover .post-category.DARK { border-color: #f0f; color: #f0f; text-shadow: 0 0 5px #f0f; }
-    .post-item:hover .post-category.BLOG { border-color: #0f0; color: #0f0; }
-    .post-item:hover .post-category.PROJECT { border-color: #fd0; color: #fd0; }
-    .post-item:hover .post-category.TECH { border-color: #0ff; color: #0ff; }
-    .post-item:hover .post-category.DEVLOG { border-color: #f66; color: #f66; }
+    .post-item:hover .post-category.DARK { border-color: #ff00ff; color: #ff00ff; text-shadow: 0 0 5px #ff00ff; }
+    .post-item:hover .post-category.BLOG { border-color: #00ff41; color: #00ff41; }
+    .post-item:hover .post-category.PROJECT { border-color: #ffd700; color: #ffd700; }
+    .post-item:hover .post-category.TECH { border-color: #00ffff; color: #00ffff; }
+    .post-item:hover .post-category.DEVLOG { border-color: #ff6b6b; color: #ff6b6b; }
     
     .post-title {
       font-family: 'VT323', monospace;
-      font-size: 13px;
-      color: #2a2;
+      font-size: 15px;
+      color: #888;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     
     .post-item:hover .post-title {
-      color: #0f0;
-      text-shadow: 0 0 5px #0f0;
+      color: #00ff41;
+      text-shadow: 0 0 8px rgba(0,255,65,0.5);
     }
     
     /* 响应式 */
@@ -228,28 +223,28 @@ const allPosts = [
     /* Footer - 终端风格 */
     .cyber-footer {
       text-align: center;
-      padding: 20px 16px;
+      padding: 24px 16px;
       margin-top: 30px;
-      color: #0a0;
+      color: #00ff41;
       font-family: 'VT323', monospace;
-      font-size: 11px;
-      opacity: 0.3;
+      font-size: 14px;
+      opacity: 1;
       transition: opacity 0.3s;
-      border-top: 1px solid #0a0;
+      border-top: 1px solid #00ff41;
     }
     
     .cyber-footer:hover {
-      opacity: 0.7;
+      opacity: 1;
     }
     
     .cyber-footer a {
-      color: #0a0;
+      color: #ff00ff;
       text-decoration: none;
     }
     
     .cyber-footer a:hover {
-      color: #0f0;
-      text-shadow: 0 0 5px #0f0;
+      color: #00ff41;
+      text-shadow: 0 0 10px #00ff41;
     }
     
     /* 新闻条 - 终端风格 */
@@ -257,10 +252,10 @@ const allPosts = [
       display: flex;
       align-items: center;
       background: transparent;
-      border-bottom: 1px solid #0a0;
-      margin-bottom: 8px;
+      border-bottom: 1px solid #00ff41;
+      margin-bottom: 12px;
       overflow: hidden;
-      opacity: 0.4;
+      opacity: 1;
       transition: opacity 0.3s;
     }
     
@@ -270,21 +265,22 @@ const allPosts = [
     
     .ticker-label {
       background: transparent;
-      color: #0a0;
+      color: #ff0040;
       font-family: 'Press Start 2P', monospace;
-      font-size: 7px;
-      padding: 6px 10px;
+      font-size: 8px;
+      padding: 8px 12px;
       white-space: nowrap;
-      border-right: 1px solid #0a0;
+      border-right: 1px solid #00ff41;
+      animation: none;
     }
     
     .ticker-content {
       flex: 1;
-      padding: 6px 10px;
+      padding: 8px 12px;
       overflow: hidden;
       font-family: 'VT323', monospace;
-      font-size: 11px;
-      color: #0f0;
+      font-size: 13px;
+      color: #00ff41;
     }
     
     #news-text {
@@ -294,81 +290,77 @@ const allPosts = [
     }
     
     .ticker-separator {
-      color: #0a0;
+      color: #ff00ff;
       margin: 0 15px;
     }
     
     .ticker-link {
       background: transparent;
-      color: #0a0;
+      color: #ff00ff;
       font-family: 'Press Start 2P', monospace;
-      font-size: 7px;
-      padding: 6px 10px;
+      font-size: 8px;
+      padding: 8px 12px;
       text-decoration: none;
       white-space: nowrap;
-      border-left: 1px solid #0a0;
+      border-left: 1px solid #00ff41;
     }
     
     .ticker-link:hover {
-      color: #0f0;
-      text-shadow: 0 0 5px #0f0;
+      color: #00ff41;
+      text-shadow: 0 0 10px #00ff41;
     }
     
     /* 媒体聚合入口 - 终端风格 */
     .media-hub {
       margin-bottom: 12px;
-      opacity: 0.35;
-      transition: opacity 0.3s;
-    }
-    
-    .media-hub:hover {
       opacity: 1;
+      transition: opacity 0.3s;
     }
     
     .hub-card {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 10px 14px;
+      padding: 12px 16px;
       background: transparent;
-      border: 1px solid #0a0;
+      border: 1px solid #00ff41;
       text-decoration: none;
       transition: all 0.2s;
     }
     
     .hub-card:hover {
-      border-color: #0f0;
-      background: rgba(0,40,0,0.2);
-      box-shadow: 0 0 10px rgba(0,255,0,0.1);
+      border-color: #ff00ff;
+      background: rgba(0,255,65,0.1);
+      box-shadow: 0 0 15px rgba(0,255,65,0.3);
     }
     
     .hub-icon {
-      font-size: 20px;
-      opacity: 0.5;
+      font-size: 24px;
+      color: #ff00ff;
     }
     
     .hub-info {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
     }
     
     .hub-title {
       font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
-      color: #0a0;
+      font-size: 10px;
+      color: #00ff41;
     }
     
     .hub-card:hover .hub-title {
-      color: #0f0;
-      text-shadow: 0 0 5px #0f0;
+      color: #ff00ff;
+      text-shadow: 0 0 10px #ff00ff;
     }
     
     .hub-desc {
       font-family: 'VT323', monospace;
-      font-size: 11px;
-      color: #1a1;
+      font-size: 14px;
+      color: #888;
     }
     
     .hub-arrow {

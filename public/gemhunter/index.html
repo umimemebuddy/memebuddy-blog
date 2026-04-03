@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GemHunter · 天津</title>
+  <style>
+    :root {
+      --bg: #f5f5f3;
+      --text: #5a5a5a;
+      --accent: #6b8e7a;
+      --line: #e5e5e0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 50px 20px;
+    }
+    header {
+      margin-bottom: 40px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1 {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 5px;
+      color: var(--text);
+      text-transform: uppercase;
+    }
+    .subtitle {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+    nav {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 35px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      font-size: 12px;
+      color: #999;
+      text-decoration: none;
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .post {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .post:first-child {
+      border-top: 1px solid var(--line);
+    }
+    .post-date {
+      font-size: 11px;
+      color: #bbb;
+      margin-bottom: 6px;
+    }
+    .post-title {
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .post-title:hover {
+      color: var(--accent);
+    }
+    .post-excerpt {
+      font-size: 13px;
+      color: #888;
+    }
+    .tag {
+      font-size: 10px;
+      color: #999;
+      margin-right: 8px;
+    }
+    footer {
+      margin-top: 50px;
+      padding-top: 25px;
+      border-top: 1px solid var(--line);
+      font-size: 11px;
+      color: #ccc;
+      text-align: center;
+    }
+    footer a {
+      color: #bbb;
+      text-decoration: none;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 40px 16px; }
+      h1 { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>GEMHUNTER</h1>
+      <p class="subtitle">FGA · 天津</p>
+    </header>
+
+    <nav>
+      <a href="#" class="active">全部</a>
+      <a href="#">新货</a>
+      <a href="#">旅行见闻</a>
+      <a href="#">精选藏品</a>
+    </nav>
+
+    <div class="posts">
+      <article class="post">
+        <p class="post-date">2026-04-03</p>
+        <a href="#" class="post-title">一颗霓虹蓝磷灰石</a>
+        <p class="post-excerpt">墨西哥产地，强荧光，3.2ct。典型的帕拉伊巴蓝色调... <span class="tag">[新货]</span></p>
+      </article>
+
+      <article class="post">
+        <p class="post-date">2026-04-02</p>
+        <a href="#" class="post-title">曼谷珠宝展</a>
+        <p class="post-excerpt">第67届曼谷珠宝展，彩色宝石热度不减，帕拉伊巴价格继续上涨... <span class="tag">[旅行见闻]</span></p>
+      </article>
+
+      <article class="post">
+        <p class="post-date">2026-04-01</p>
+        <a href="#" class="post-title">云南瑞丽矿区考察</a>
+        <p class="post-excerpt">红宝石原石交易区走访。高品质鸽血红价格坚挺，处理石比例上升... <span class="tag">[旅行见闻]</span></p>
+      </article>
+
+      <article class="post">
+        <p class="post-date">2026-03-28</p>
+        <a href="#" class="post-title">2.8ct 缅甸鸽血红 · GH-2026-017</a>
+        <p class="post-excerpt">GRS 认证鸽血红，未加热，晶体通透... <span class="tag">[精选藏品]</span></p>
+      </article>
+
+      <article class="post">
+        <p class="post-date">2026-03-25</p>
+        <a href="#" class="post-title">合成钻石检测案例</a>
+        <p class="post-excerpt">1.5ct 无色钻石，GIA 证书齐全。检测发现异常生长纹理，确认为合成石... <span class="tag">[新货]</span></p>
+      </article>
+
+      <article class="post">
+        <p class="post-date">2026-03-20</p>
+        <a href="#" class="post-title">4.1ct 哥伦比亚祖母绿 · GH-2026-016</a>
+        <p class="post-excerpt">GUILD 认证 Verdant Green，微油，含三相包体... <span class="tag">[精选藏品]</span></p>
+      </article>
+    </div>
+
+    <footer>
+      <p>© 2026 GemHunter · 天津</p>
+    </footer>
+  </div>
+</body>
+</html>

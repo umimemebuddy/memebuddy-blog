@@ -46,9 +46,10 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://memebuddy.cc/upl/</loc>
+    <loc>https://memebuddy.cc/upload-tool.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.1</priority>
   </url>
 </urlset>
+
 

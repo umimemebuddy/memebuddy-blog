@@ -1,6 +1,7 @@
 ---
 // src/pages/index.astro - VoltAgent Void-Black + Emerald Style
 import Layout from '../layouts/Layout.astro';
+import CryptoPrices from '../components/CryptoPrices.astro';
 
 const allPosts = [
   // 2026-04-06
@@ -419,6 +420,9 @@ const allPosts = [
       </div>
       <span class="command-arrow">→</span>
     </a>
+
+    <!-- Crypto Prices - Nothing Design -->
+    <CryptoPrices />
 
     <!-- Filter -->
     <nav class="filter-bar">

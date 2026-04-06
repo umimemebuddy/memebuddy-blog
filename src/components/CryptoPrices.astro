@@ -1,5 +1,7 @@
 ---
-// 加密货币价格组件 - 赛博朋克风格
+// 加密货币价格组件 - Nothing Design Language
+// 参考: https://github.com/dominikmartn/nothing-design-skill
+
 const API_KEY = '4de650723df045729019ba16f3951a5e';
 const symbols = ['BTC', 'ETH', 'SOL', 'BNB', 'XRP', 'DOGE', 'ADA', 'AVAX'];
 
@@ -30,11 +32,9 @@ try {
           change24h: coin.quote.USD.percent_change_24h
         }));
     }
-  } else {
-    error = 'API Error: ' + response.status;
   }
 } catch (e) {
-  error = 'Fetch failed';
+  error = 'API Error';
 }
 
 // 备用数据
@@ -52,248 +52,174 @@ const fallbackData = [
 const displayData = cryptoData.length > 0 ? cryptoData : fallbackData;
 ---
 
-<div class="crypto-section">
-  <div class="crypto-header">
-    <span class="crypto-icon">◈</span>
-    <span class="crypto-title">CRYPTO MARKET</span>
-    <span class="crypto-subtitle">Live prices via CoinMarketCap</span>
-  </div>
-  <div class="crypto-grid">
+<!-- Nothing Design: 加载字体 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<div class="nothing-crypto">
+  <header class="nothing-header">
+    <span class="nothing-label">CRYPTO</span>
+    <span class="nothing-time">LIVE</span>
+  </header>
+  
+  <div class="nothing-grid">
     {displayData.map((coin) => (
-      <div class="crypto-card">
-        <div class="crypto-symbol">{coin.symbol}</div>
-        <div class="crypto-name">{coin.name}</div>
-        <div class="crypto-price">${coin.price < 1 ? coin.price.toFixed(4) : coin.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-        <div class={`crypto-change ${coin.change24h >= 0 ? 'positive' : 'negative'}`}>
-          {coin.change24h >= 0 ? '▲' : '▼'} {Math.abs(coin.change24h).toFixed(2)}%
+      <div class="nothing-card">
+        <div class="nothing-primary">
+          {coin.price < 1 ? coin.price.toFixed(4) : coin.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </div>
+        <div class="nothing-secondary">
+          <span class="nothing-symbol">{coin.symbol}</span>
+          <span class="nothing-name">{coin.name}</span>
+        </div>
+        <div class={`nothing-tertiary ${coin.change24h >= 0 ? 'up' : 'down'}`}>
+          {coin.change24h >= 0 ? '+' : ''}{coin.change24h.toFixed(2)}%
         </div>
       </div>
     ))}
   </div>
-  {error && <div class="crypto-error">⚠ {error} - Using cached data</div>}
 </div>
 
 <style>
-  .crypto-section {
-    background: linear-gradient(180deg, rgba(88, 28, 135, 0.15) 0%, rgba(0, 0, 0, 0.95) 50%, rgba(6, 78, 59, 0.15) 100%);
-    border: 3px solid;
-    border-image: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00, #ff00ff) 1;
-    border-radius: 8px;
-    padding: 24px;
-    margin: 20px 0;
-    position: relative;
-    overflow: hidden;
+  /* Nothing Design System */
+  .nothing-crypto {
+    --text-display: #ffffff;
+    --text-primary: #e5e5e5;
+    --text-secondary: #8b8b8b;
+    --text-disabled: #4d4d4d;
+    --surface: #0a0a0a;
+    --border: #262626;
+    --accent-up: #00d953;
+    --accent-down: #d71921;
+    
+    background: var(--surface);
+    padding: 32px 24px;
+    margin: 24px 0;
+    border: 1px solid var(--border);
   }
 
-  .crypto-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 255, 255, 0.03) 2px,
-      rgba(255, 255, 255, 0.03) 4px
-    );
-    pointer-events: none;
-    animation: scanlines 6s linear infinite;
-  }
-
-  .crypto-section::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 0, 255, 0.1) 60deg, transparent 120deg, rgba(0, 255, 255, 0.1) 180deg, transparent 240deg, rgba(255, 255, 0, 0.1) 300deg, transparent 360deg);
-    animation: rotate 10s linear infinite;
-    pointer-events: none;
-  }
-
-  @keyframes scanlines {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(4px); }
-  }
-
-  @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  .crypto-header {
+  /* 3-Layer Header */
+  .nothing-header {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid transparent;
-    border-image: linear-gradient(90deg, #ff00ff, #00ffff) 1;
-    position: relative;
-    z-index: 1;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
   }
 
-  .crypto-icon {
-    font-size: 28px;
-    background: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: rainbow 3s linear infinite;
-    filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.8));
+  .nothing-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 3px;
+    text-transform: uppercase;
   }
 
-  @keyframes rainbow {
-    0% { filter: hue-rotate(0deg) drop-shadow(0 0 10px #ff00ff); }
-    50% { filter: hue-rotate(180deg) drop-shadow(0 0 10px #00ffff); }
-    100% { filter: hue-rotate(360deg) drop-shadow(0 0 10px #ff00ff); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.1); }
-  }
-
-  .crypto-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 14px;
-    background: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    background-size: 300% 100%;
-    animation: gradient-shift 4s ease infinite;
-    letter-spacing: 2px;
-    text-shadow: none;
-  }
-
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  .crypto-subtitle {
-    font-family: 'VT323', monospace;
-    font-size: 14px;
-    background: linear-gradient(90deg, #00ffff, #ff00ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-left: auto;
-  }
-
-  .crypto-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .crypto-card {
-    background: linear-gradient(135deg, rgba(88, 28, 135, 0.4) 0%, rgba(6, 78, 59, 0.4) 100%);
-    border: 1px solid rgba(255, 0, 255, 0.3);
-    border-radius: 8px;
-    padding: 12px;
-    text-align: center;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .crypto-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-  }
-
-  .crypto-card:hover::before {
-    left: 100%;
-  }
-
-  .crypto-card:hover {
-    border-color: #00ffff;
-    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5), inset 0 0 20px rgba(0, 255, 255, 0.1);
-    transform: translateY(-4px) scale(1.02);
-  }
-
-  .crypto-symbol {
-    font-family: 'Press Start 2P', monospace;
+  .nothing-time {
+    font-family: 'Space Mono', monospace;
     font-size: 10px;
-    background: linear-gradient(90deg, #ff00ff, #00ffff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 4px;
+    color: var(--text-disabled);
+    letter-spacing: 1px;
   }
 
-  .crypto-name {
-    font-family: 'VT323', monospace;
+  /* Grid Layout - 4 columns on desktop */
+  .nothing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  /* Card - each crypto as a row */
+  .nothing-card {
+    background: var(--surface);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.15s ease-out;
+  }
+
+  .nothing-card:hover {
+    background: #111111;
+  }
+
+  /* Layer 1: PRIMARY - The price (hero element) */
+  .nothing-primary {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--text-display);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+
+  /* Layer 2: SECONDARY - Symbol + Name */
+  .nothing-secondary {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .nothing-symbol {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+  }
+
+  .nothing-name {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 12px;
-    color: #e0e0e0;
-    margin-bottom: 8px;
+    font-weight: 400;
+    color: var(--text-secondary);
   }
 
-  .crypto-price {
-    font-family: 'VT323', monospace;
-    font-size: 18px;
-    background: linear-gradient(90deg, #fff, #00ffff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 4px;
+  /* Layer 3: TERTIARY - Change percentage */
+  .nothing-tertiary {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-top: auto;
   }
 
-  .crypto-change {
-    font-family: 'VT323', monospace;
-    font-size: 14px;
-    font-weight: bold;
+  .nothing-tertiary.up {
+    color: var(--accent-up);
   }
 
-  .crypto-change.positive {
-    color: #00ff88;
-    text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+  .nothing-tertiary.down {
+    color: var(--accent-down);
   }
 
-  .crypto-change.negative {
-    color: #ff3366;
-    text-shadow: 0 0 10px rgba(255, 51, 102, 0.8);
-  }
-
-  .crypto-error {
-    margin-top: 12px;
-    padding: 8px;
-    background: rgba(255, 51, 102, 0.2);
-    border: 1px solid #ff3366;
-    border-radius: 4px;
-    font-family: 'VT323', monospace;
-    font-size: 14px;
-    color: #ff3366;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  @media (max-width: 600px) {
-    .crypto-grid {
+  /* Responsive - 2 columns on tablet */
+  @media (max-width: 768px) {
+    .nothing-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-    .crypto-header {
-      flex-wrap: wrap;
+    
+    .nothing-primary {
+      font-size: 20px;
     }
-    .crypto-subtitle {
-      width: 100%;
-      margin-left: 0;
-      margin-top: 8px;
+  }
+
+  /* Responsive - 1 column on mobile */
+  @media (max-width: 480px) {
+    .nothing-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .nothing-crypto {
+      padding: 24px 16px;
+    }
+    
+    .nothing-primary {
+      font-size: 28px;
     }
   }
 </style>

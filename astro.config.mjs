@@ -3,7 +3,9 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://memebuddy.cc',
   integrations: [],
-  build: {
-    inlineStylesheets: 'auto'
+  vite: {
+    ssr: {
+      external: ['svgo']
+    }
   }
 });

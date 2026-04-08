@@ -15,7 +15,7 @@
       user-select: none;
       -webkit-user-select: none;
     }
-    /* BUILD: 20260408194500 - MEGA UPDATE */
+    /* BUILD: 20260408194800 - FIX */
     
     /* ── TOP BAR ── */
     #top-bar {
@@ -1342,8 +1342,7 @@
       document.getElementById("best-trade").textContent = "$" + formatMoney(bestTrade);
 
       const displayCps = calculateCPS();
-      document.getElementById("combo-count").textContent = displayCps;
-      document.getElementById("hype-count").textContent = Math.floor(hypeLevel);
+      // combo-count and hype-count are displayed in combo-display element
 
       fomoBarFill.style.width = hypeLevel + "%";
       if (hypeLevel > 70) {
@@ -1432,6 +1431,12 @@
     // ── INIT ──
     updateUI();
     gameLoop();
+    
+    // ── GLOBAL FUNCTIONS (for onclick) ──
+    window.closeAlert = closeAlert;
+    window.takeLastChance = takeLastChance;
+    window.closeLastChance = closeLastChance;
+    window.revenge = revenge;
   </script>
 </body>
 </html>

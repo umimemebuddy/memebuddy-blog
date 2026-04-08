@@ -1539,29 +1539,48 @@
 
       const n = chartData.length;
       const candleW = chartW / n;
-      const bodyW = candleW * 0.7;
+      const bodyW = candleW * 0.75;  // 蜡烛实体更宽：70% -> 75%
+      const gap = candleW * 0.12;    // 蜡烛间隙
       const hypeColor = hypeLevel > 70 ? "#ff00ff" : hypeLevel > 40 ? "#ff6600" : hypeLevel > 15 ? "#ffd700" : "#00ff88";
       
       for (let i = 0; i < n; i++) {
         const open = i === 0 ? chartData[0] : chartData[i - 1];
         const close = chartData[i];
+        const prevClose = i > 0 ? chartData[i - 1] : chartData[0];
+        
+        // 计算高低点（模拟真实蜡烛图）
+        const high = Math.max(open, close) * (1 + Math.random() * 0.02);
+        const low = Math.min(open, close) * (1 - Math.random() * 0.02);
+        
         const isUp = close >= open;
         const color = isUp ? "#00c853" : "#ff1744";
+        const colorAlpha = isUp ? "rgba(0,200,83,0.95)" : "rgba(255,23,68,0.95)";
 
-        const x = leftMargin + i * candleW + candleW * 0.15;
+        const x = leftMargin + i * candleW + gap;
+        const yHigh = chartTop + chartH - ((high - minP) / rangeP) * chartH;
+        const yLow = chartTop + chartH - ((low - minP) / rangeP) * chartH;
         const yTop = chartTop + chartH - ((Math.max(open, close) - minP) / rangeP) * chartH;
         const yBot = chartTop + chartH - ((Math.min(open, close) - minP) / rangeP) * chartH;
-        const bodyH = Math.max(1, yBot - yTop);
+        const bodyH = Math.max(2, yBot - yTop);
 
+        // 绘制上下影线（更细更清晰）
         ctx.strokeStyle = color;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1.5;
         ctx.beginPath();
+        // 上影线
         ctx.moveTo(x + bodyW / 2, yTop);
-        ctx.lineTo(x + bodyW / 2, yBot);
+        ctx.lineTo(x + bodyW / 2, yHigh);
+        // 下影线
+        ctx.moveTo(x + bodyW / 2, yBot);
+        ctx.lineTo(x + bodyW / 2, yLow);
         ctx.stroke();
 
-        ctx.fillStyle = color;
+        // 绘制实体（带边框更专业）
+        ctx.fillStyle = colorAlpha;
         ctx.fillRect(x, yTop, bodyW, bodyH);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(x, yTop, bodyW, bodyH);
       }
 
       // Current price line
@@ -1732,7 +1751,8 @@
     function gameLoop() {
       frameCount++;
       
-      if (frameCount % 3 === 0) {
+      // 每5帧生成一根蜡烛（更慢的K线）
+      if (frameCount % 5 === 0) {
         if (!gameover) {
           gameTime++;
           survivalTime++;

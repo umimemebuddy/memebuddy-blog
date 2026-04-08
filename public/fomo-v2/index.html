@@ -1434,5 +1434,77 @@
     window.closeLastChance = closeLastChance;
     window.revenge = revenge;
   </script>
+
+  <!-- ── RESPONSIVE DESIGN ── -->
+  <style>
+    @media (max-width: 768px) {
+      /* 顶部栏缩小 */
+      #top-bar { height: 50px; padding: 0 10px; }
+      #balance-value { font-size: 28px; }
+      #capital-value { font-size: 14px; }
+      #capital-label, #balance-label, #pnl-label { font-size: 8px; }
+
+      /* 血条/FGI/杠杆指示器缩小 */
+      #health-container { top: 55px; right: 10px; width: 120px; }
+      #health-bar { height: 8px; }
+      #health-label { font-size: 7px; }
+      #health-text { font-size: 8px; }
+
+      #fgi-container { top: 95px; right: 10px; width: 120px; }
+      #fgi-label { font-size: 7px; }
+      #fgi-text { font-size: 9px; }
+
+      #leverage-display { top: 55px; left: 10px; }
+      #leverage-value { font-size: 18px; }
+      #leverage-label { font-size: 7px; }
+
+      #trap-container { top: 85px; left: 10px; width: 100px; }
+      #trap-label { font-size: 7px; }
+      #trap-bar { height: 6px; }
+
+      /* 持仓栏缩小 */
+      #position-bar { top: 50px; height: 28px; gap: 15px; }
+      #position-label, #entry-label { font-size: 7px; }
+      #position-value, #entry-value { font-size: 11px; }
+
+      /* 图表区域调整 */
+      #chart-container { top: 110px; bottom: 100px; }
+      #chart-label { font-size: 9px; }
+
+      /* 交易按钮缩小 */
+      .trade-buttons { bottom: 20px; }
+      .trade-btn { padding: 18px 35px; font-size: 20px; letter-spacing: 2px; border-width: 3px; }
+
+      /* REVENGE 按钮缩小 */
+      #revenge-btn { padding: 20px 40px; font-size: 24px; letter-spacing: 2px; }
+
+      /* 排行榜缩小 */
+      #leaderboard { width: 140px; right: 5px; bottom: 110px; font-size: 9px; }
+      #leaderboard h3 { font-size: 9px; }
+
+      /* 弹幕缩小 */
+      .danmu { font-size: 12px; }
+
+      /* 公告缩小 */
+      .alert-content { width: 90%; padding: 15px; }
+      .alert-title { font-size: 16px; }
+      .alert-text { font-size: 11px; }
+
+      /* 统计信息缩小 */
+      #stats { font-size: 10px; bottom: 75px; }
+
+      /* 闪电效果缩小 */
+      .lightning { width: 80%; left: 10%; }
+    }
+
+    @media (max-width: 480px) {
+      /* 更小的屏幕 */
+      #balance-value { font-size: 22px; }
+      .trade-btn { padding: 14px 25px; font-size: 16px; letter-spacing: 1px; }
+      #chart-container { top: 100px; bottom: 90px; }
+      #health-container, #fgi-container { width: 100px; }
+      #leaderboard { width: 120px; font-size: 8px; }
+    }
+  </style>
 </body>
 </html>

@@ -1,4 +1,28 @@
 // GET /api/posts/[slug].json - Single post as JSON
+
+// Required for static builds - tells Astro all possible paths
+export function getStaticPaths() {
+  const slugs = [
+    'skills-matrix-dusk-full',
+    'skills-matrix',
+    'self-organizing',
+    'local-model-joy',
+    'on-collecting-adhd',
+    'two-minds',
+    'on-the-sweat-of-machines',
+    'on-work-and-self',
+    'oil-price-analysis-2026-04',
+    'lobster-diary',
+    'memebuddy-airdrop-blueprint',
+    'meme-coin-navigator-plan',
+    'agent-evolution-saturation',
+    'building-memebuddy-blog',
+    'hello-world',
+  ];
+  
+  return slugs.map(slug => ({ params: { slug } }));
+}
+
 export async function GET({ params }) {
   const { slug } = params;
 

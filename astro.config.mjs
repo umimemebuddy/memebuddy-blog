@@ -2,5 +2,6 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://memebuddy.cc',
+  output: 'server',
   integrations: [],
 });

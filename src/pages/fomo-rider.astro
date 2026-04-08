@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="FOMO Rider">
+<style>
+  body { background: #000; overflow: hidden; }
+  .wrapper {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+  }
+  iframe {
+    width: 100%; height: 100%;
+    border: none;
+    display: block;
+  }
+</style>
+<div class="wrapper">
+  <iframe src="/fomo-rider/index.html" title="FOMO Rider"></iframe>
+</div>
+</Layout>

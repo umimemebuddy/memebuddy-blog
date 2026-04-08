@@ -15,7 +15,7 @@
       user-select: none;
       -webkit-user-select: none;
     }
-    /* BUILD: 20260408200000 - BALANCE FIX */
+    /* BUILD: 20260408220000 - MEGA UPDATE 2: CANDLE SPLIT, TORNADO, AFTERIMAGE, FLAME, HEARTBEAT, GUILLOTINE, CALL, TOMBSTONE, TWITTER, KOL, ACHIEVEMENT */
     
     /* ── TOP BAR ── */
     #top-bar {
@@ -34,10 +34,14 @@
     #balance-value { font-size: 48px; font-weight: bold; letter-spacing: -1px; }
     #balance-value.up { color: #00ff88; text-shadow: 0 0 30px #00ff88; }
     #balance-value.down { color: #ff4444; text-shadow: 0 0 30px #ff4444; }
+    #balance-value.on-fire { animation: on-fire 0.3s infinite; }
+    #balance-value.frozen { animation: frozen 0.5s infinite; color: #00aaff; }
+    @keyframes on-fire { 0%, 100% { text-shadow: 0 0 20px #ff6600, 0 0 40px #ff4444; } 50% { text-shadow: 0 0 40px #ff6600, 0 0 60px #ff4444; } }
+    @keyframes frozen { 0%, 100% { text-shadow: 0 0 10px #00aaff; } 50% { text-shadow: 0 0 20px #00aaff, 0 0 30px #0088ff; } }
     #pnl-value.positive { color: #00ff88; }
     #pnl-value.negative { color: #ff4444; }
     
-    /* ── HEALTH BAR (新增) ── */
+    /* ── HEALTH BAR ── */
     #health-container {
       position: fixed;
       top: 75px;
@@ -45,66 +49,37 @@
       width: 180px;
       z-index: 110;
     }
-    #health-label {
-      font-size: 9px;
-      color: #ff4444;
-      letter-spacing: 2px;
-      margin-bottom: 4px;
-    }
-    #health-bar {
-      width: 100%;
-      height: 12px;
-      background: #1a0000;
-      border: 1px solid #ff4444;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    #health-fill {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, #ff4444, #ff6600);
-      transition: width 0.3s;
-    }
-    #health-text {
-      font-size: 10px;
-      color: #ff4444;
-      margin-top: 2px;
-      text-align: right;
-    }
+    #health-label { font-size: 9px; color: #ff4444; letter-spacing: 2px; margin-bottom: 4px; }
+    #health-bar { width: 100%; height: 12px; background: #1a0000; border: 1px solid #ff4444; border-radius: 2px; overflow: hidden; }
+    #health-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #ff4444, #ff6600); transition: width 0.3s; }
+    #health-text { font-size: 10px; color: #ff4444; margin-top: 2px; text-align: right; }
     
-    /* ── FEAR & GREED INDEX (新增) ── */
-    #fgi-container {
+    /* ── HEARTBEAT MONITOR (新增) ── */
+    #heartbeat-container {
       position: fixed;
-      top: 130px;
+      top: 115px;
       right: 15px;
       width: 180px;
       z-index: 110;
     }
-    #fgi-label {
-      font-size: 9px;
-      color: #888;
-      letter-spacing: 1px;
-      margin-bottom: 4px;
-    }
-    #fgi-bar {
-      width: 100%;
-      height: 8px;
-      background: #111;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    #fgi-fill {
-      width: 50%;
-      height: 100%;
-      transition: width 0.5s, background 0.5s;
-    }
-    #fgi-text {
-      font-size: 11px;
-      color: #666;
-      margin-top: 2px;
-    }
+    #heartbeat-label { font-size: 9px; color: #ff6600; letter-spacing: 1px; margin-bottom: 4px; }
+    #heartbeat-canvas { width: 100%; height: 30px; background: #0a0a0a; border: 1px solid #333; }
+    #heartbeat-text { font-size: 10px; color: #ff6600; margin-top: 2px; }
     
-    /* ── LEVERAGE INDICATOR (新增) ── */
+    /* ── FEAR & GREED INDEX ── */
+    #fgi-container {
+      position: fixed;
+      top: 160px;
+      right: 15px;
+      width: 180px;
+      z-index: 110;
+    }
+    #fgi-label { font-size: 9px; color: #888; letter-spacing: 1px; margin-bottom: 4px; }
+    #fgi-bar { width: 100%; height: 8px; background: #111; border-radius: 4px; overflow: hidden; }
+    #fgi-fill { width: 50%; height: 100%; transition: width 0.5s, background 0.5s; }
+    #fgi-text { font-size: 11px; color: #666; margin-top: 2px; }
+    
+    /* ── LEVERAGE INDICATOR ── */
     #leverage-display {
       position: fixed;
       top: 75px;
@@ -112,14 +87,9 @@
       z-index: 110;
     }
     #leverage-label { font-size: 9px; color: #ff00ff; letter-spacing: 1px; }
-    #leverage-value {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ff00ff;
-      text-shadow: 0 0 10px #ff00ff;
-    }
+    #leverage-value { font-size: 24px; font-weight: bold; color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
     
-    /* ── TRAP DEPTH BAR (新增) ── */
+    /* ── TRAP DEPTH BAR ── */
     #trap-container {
       position: fixed;
       top: 115px;
@@ -129,20 +99,31 @@
       display: none;
     }
     #trap-label { font-size: 9px; color: #ff6600; letter-spacing: 1px; margin-bottom: 2px; }
-    #trap-bar {
-      width: 100%;
-      height: 8px;
-      background: #1a0a00;
-      border: 1px solid #ff6600;
-      border-radius: 2px;
-      overflow: hidden;
+    #trap-bar { width: 100%; height: 8px; background: #1a0a00; border: 1px solid #ff6600; border-radius: 2px; overflow: hidden; }
+    #trap-fill { width: 0%; height: 100%; background: #ff6600; transition: width 0.2s; }
+    
+    /* ── ACHIEVEMENT UNLOCK (新增) ── */
+    #achievement {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border: 2px solid #ffd700;
+      padding: 20px 40px;
+      text-align: center;
+      display: none;
+      z-index: 600;
+      animation: achievement-pop 0.5s ease-out;
     }
-    #trap-fill {
-      width: 0%;
-      height: 100%;
-      background: #ff6600;
-      transition: width 0.2s;
+    @keyframes achievement-pop {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
+    #achievement-icon { font-size: 48px; margin-bottom: 10px; }
+    #achievement-title { font-size: 14px; color: #ffd700; letter-spacing: 2px; margin-bottom: 5px; }
+    #achievement-name { font-size: 24px; color: #fff; font-weight: bold; }
     
     /* ── POSITION BAR ── */
     #position-bar {
@@ -184,31 +165,34 @@
       cursor: pointer;
       font-family: 'Courier New', monospace;
       transition: all 0.15s ease-out;
+      position: relative;
+      overflow: hidden;
     }
-    #buy-btn {
-      color: #00ff88;
-      border-color: #00ff88;
-      border-radius: 8px 0 0 8px;
-      box-shadow: 0 0 20px rgba(0,255,136,0.3);
+    /* 霓虹残影效果 */
+    .trade-btn.clicking::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+      animation: afterimage 0.4s ease-out forwards;
+      pointer-events: none;
     }
+    @keyframes afterimage {
+      0% { opacity: 0.8; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.5) translateY(-20px); }
+    }
+    #buy-btn { color: #00ff88; border-color: #00ff88; border-radius: 8px 0 0 8px; box-shadow: 0 0 20px rgba(0,255,136,0.3); }
     #buy-btn:hover { background: #00ff88; color: #000; }
-    #fomo-btn {
-      color: #ff6600;
-      border-color: #ff6600;
-      background: rgba(255,102,0,0.1);
-      box-shadow: 0 0 25px rgba(255,102,0,0.4);
-    }
+    #fomo-btn { color: #ff6600; border-color: #ff6600; background: rgba(255,102,0,0.1); box-shadow: 0 0 25px rgba(255,102,0,0.4); }
     #fomo-btn:hover { background: #ff6600; color: #000; }
-    #sell-btn {
-      color: #ff4444;
-      border-color: #ff4444;
-      border-radius: 0 8px 8px 0;
-      box-shadow: 0 0 20px rgba(255,68,68,0.3);
-    }
+    #sell-btn { color: #ff4444; border-color: #ff4444; border-radius: 0 8px 8px 0; box-shadow: 0 0 20px rgba(255,68,68,0.3); }
     #sell-btn:disabled { opacity: 0.3; cursor: not-allowed; }
     #sell-btn:not(:disabled):hover { background: #ff4444; color: #000; }
     
-    /* ── REVENGE BUTTON (新增) ── */
+    /* ── REVENGE BUTTON ── */
     #revenge-btn {
       position: fixed;
       top: 50%;
@@ -228,32 +212,15 @@
       z-index: 500;
       animation: revenge-pulse 1s infinite;
     }
-    @keyframes revenge-pulse {
-      0%, 100% { box-shadow: 0 0 30px #ff00ff; }
-      50% { box-shadow: 0 0 60px #ff00ff, 0 0 100px #ff00ff; }
-    }
+    @keyframes revenge-pulse { 0%, 100% { box-shadow: 0 0 30px #ff00ff; } 50% { box-shadow: 0 0 60px #ff00ff, 0 0 100px #ff00ff; } }
     
     /* ── CHART ── */
-    #chart-container { position: fixed; top: 160px; left: 0; right: 0; bottom: 140px; }
+    #chart-container { position: fixed; top: 190px; left: 0; right: 0; bottom: 140px; }
     #chart { width: 100%; height: 100%; }
-    #chart-label {
-      position: absolute;
-      top: 8px;
-      left: 15px;
-      font-size: 11px;
-      color: #444;
-      letter-spacing: 1px;
-    }
+    #chart-label { position: absolute; top: 8px; left: 15px; font-size: 11px; color: #444; letter-spacing: 1px; }
     
     /* ── STATS ── */
-    #stats {
-      position: fixed;
-      bottom: 5px;
-      left: 15px;
-      font-size: 10px;
-      color: #333;
-      z-index: 90;
-    }
+    #stats { position: fixed; bottom: 5px; left: 15px; font-size: 10px; color: #333; z-index: 90; }
     #stats span { margin-right: 15px; }
     #stats strong { color: #555; }
     
@@ -272,43 +239,14 @@
     #combo-display.peak { color: #ff00ff; text-shadow: 0 0 30px #ff00ff; }
     
     /* ── FOMO BAR ── */
-    #fomo-bar-container {
-      position: fixed;
-      bottom: 130px;
-      left: 15px;
-      right: 15px;
-      height: 10px;
-      background: #111;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-    #fomo-bar-fill {
-      height: 100%;
-      width: 0%;
-      transition: width 0.1s;
-    }
+    #fomo-bar-container { position: fixed; bottom: 130px; left: 15px; right: 15px; height: 10px; background: #111; border-radius: 5px; overflow: hidden; }
+    #fomo-bar-fill { height: 100%; width: 0%; transition: width 0.1s; }
     
     /* ── CLICK ZONE ── */
-    #click-zone {
-      position: fixed;
-      top: 200px;
-      left: 0;
-      right: 0;
-      bottom: 200px;
-      z-index: 80;
-      cursor: crosshair;
-    }
+    #click-zone { position: fixed; top: 200px; left: 0; right: 0; bottom: 200px; z-index: 80; cursor: crosshair; }
     
     /* ── RIDER ── */
-    #rider {
-      position: fixed;
-      width: 100px;
-      height: 100px;
-      color: #00ff88;
-      transition: transform 0.08s;
-      z-index: 85;
-      pointer-events: none;
-    }
+    #rider { position: fixed; width: 100px; height: 100px; color: #00ff88; transition: transform 0.08s; z-index: 85; pointer-events: none; }
     #rider.flat { color: #00ff88; }
     #rider.fomo { color: #ffd700; animation: pulse 0.4s infinite; }
     #rider.peak { color: #ff00ff; animation: pulse 0.2s infinite; }
@@ -319,27 +257,30 @@
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
     
     /* ── ICONS & DANMU ── */
-    .icon {
-      position: fixed;
-      font-size: 26px;
-      pointer-events: none;
-      z-index: 150;
-      animation: icon-pop 1s ease-out forwards;
-    }
-    @keyframes icon-pop {
-      0% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-80px) scale(0.3); }
-    }
-    .danmu {
-      position: fixed;
-      right: -200px;
-      white-space: nowrap;
-      font-size: 14px;
-      pointer-events: none;
-      z-index: 120;
-      animation: danmu-scroll 7s linear forwards;
-    }
+    .icon { position: fixed; font-size: 26px; pointer-events: none; z-index: 150; animation: icon-pop 1s ease-out forwards; }
+    @keyframes icon-pop { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-80px) scale(0.3); } }
+    .danmu { position: fixed; right: -200px; white-space: nowrap; font-size: 14px; pointer-events: none; z-index: 120; animation: danmu-scroll 7s linear forwards; }
     @keyframes danmu-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100vw - 300px)); } }
+    
+    /* ── FAKE TWITTER FEED (新增) ── */
+    #twitter-feed {
+      position: fixed;
+      bottom: 165px;
+      left: 15px;
+      width: 200px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid #1da1f2;
+      padding: 8px;
+      font-size: 9px;
+      z-index: 100;
+      max-height: 100px;
+      overflow: hidden;
+    }
+    #twitter-feed-title { color: #1da1f2; font-size: 10px; margin-bottom: 5px; letter-spacing: 1px; }
+    .tweet { margin-bottom: 5px; padding-bottom: 5px; border-bottom: 1px solid #1a1a1a; animation: tweet-slide 0.3s ease-out; }
+    @keyframes tweet-slide { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+    .tweet-handle { color: #1da1f2; }
+    .tweet-text { color: #888; margin-top: 2px; }
     
     /* ── EVENT ── */
     #event {
@@ -377,19 +318,111 @@
       pointer-events: none;
     }
     
-    /* ── LIGHTNING (新增) ── */
-    #lightning {
+    /* ── LIGHTNING ── */
+    #lightning { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 400; display: none; }
+    
+    /* ── GUILLOTINE (新增) ── */
+    #guillotine {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 400;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 150px;
+      z-index: 450;
       display: none;
+      pointer-events: none;
+    }
+    #guillotine-blade {
+      position: absolute;
+      left: 50%;
+      top: 20px;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 130px;
+      background: linear-gradient(180deg, #888, #444);
+      animation: blade-fall 0.5s ease-in forwards;
+    }
+    #guillotine-blade::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: -30px;
+      width: 68px;
+      height: 20px;
+      background: linear-gradient(180deg, #ff4444, #aa0000);
+      clip-path: polygon(0 0, 50% 100%, 100% 0);
+    }
+    @keyframes blade-fall {
+      0% { top: 20px; }
+      100% { top: 100vh; }
     }
     
-    /* ── EXCHANGE ALERT (新增) ── */
+    /* ── TOMBSTONE (新增) ── */
+    #tombstone {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(180deg, #2a2a2a, #1a1a1a);
+      border: 2px solid #444;
+      border-radius: 50% 50% 0 0;
+      width: 250px;
+      height: 300px;
+      padding: 30px 20px;
+      text-align: center;
+      display: none;
+      z-index: 550;
+      animation: tombstone-rise 0.8s ease-out;
+    }
+    @keyframes tombstone-rise {
+      0% { transform: translate(-50%, 100vh); opacity: 0; }
+      100% { transform: translate(-50%, -50%); opacity: 1; }
+    }
+    #tombstone-emoji { font-size: 48px; margin-bottom: 15px; }
+    #tombstone-name { font-size: 16px; color: #888; letter-spacing: 2px; margin-bottom: 10px; }
+    #tombstone-date { font-size: 11px; color: #555; margin-bottom: 20px; }
+    #tombstone-cause { font-size: 13px; color: #ff4444; margin-bottom: 15px; }
+    #tombstone-stats { font-size: 10px; color: #666; line-height: 1.8; }
+    #tombstone-share {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background: #333;
+      border: 1px solid #555;
+      color: #888;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    #tombstone-share:hover { background: #444; color: #fff; }
+    
+    /* ── MARKET MAKER CALL (新增) ── */
+    #phone-call {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #111;
+      border: 2px solid #00ff88;
+      border-radius: 20px;
+      width: 280px;
+      padding: 25px;
+      text-align: center;
+      display: none;
+      z-index: 500;
+      animation: phone-ring 0.3s ease-out;
+    }
+    @keyframes phone-ring {
+      0%, 50%, 100% { transform: translate(-50%, -50%) rotate(0); }
+      25% { transform: translate(-50%, -50%) rotate(-3deg); }
+      75% { transform: translate(-50%, -50%) rotate(3deg); }
+    }
+    #phone-icon { font-size: 40px; margin-bottom: 10px; animation: phone-shake 0.1s infinite; }
+    @keyframes phone-shake { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+    #phone-title { font-size: 12px; color: #00ff88; letter-spacing: 2px; margin-bottom: 10px; }
+    #phone-text { font-size: 11px; color: #888; line-height: 1.6; margin-bottom: 15px; }
+    #phone-btn { padding: 8px 20px; background: #00ff88; color: #000; border: none; cursor: pointer; font-weight: bold; font-family: inherit; }
+    
+    /* ── EXCHANGE ALERT ── */
     #exchange-alert {
       position: fixed;
       top: 50%;
@@ -403,29 +436,11 @@
       z-index: 450;
       font-family: 'Courier New', monospace;
     }
-    #exchange-alert h3 {
-      color: #ff4444;
-      font-size: 16px;
-      margin-bottom: 10px;
-      letter-spacing: 2px;
-    }
-    #exchange-alert p {
-      color: #888;
-      font-size: 12px;
-      line-height: 1.6;
-    }
-    #exchange-alert .btn {
-      margin-top: 15px;
-      padding: 8px 20px;
-      background: #ff4444;
-      color: #000;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: bold;
-    }
+    #exchange-alert h3 { color: #ff4444; font-size: 16px; margin-bottom: 10px; letter-spacing: 2px; }
+    #exchange-alert p { color: #888; font-size: 12px; line-height: 1.6; }
+    #exchange-alert .btn { margin-top: 15px; padding: 8px 20px; background: #ff4444; color: #000; border: none; cursor: pointer; font-family: inherit; font-weight: bold; }
     
-    /* ── LEADERBOARD (新增) ── */
+    /* ── LEADERBOARD ── */
     #leaderboard {
       position: fixed;
       bottom: 160px;
@@ -437,42 +452,17 @@
       font-size: 9px;
       z-index: 100;
     }
-    #leaderboard-title {
-      color: #ff6600;
-      font-size: 10px;
-      letter-spacing: 1px;
-      margin-bottom: 5px;
-      border-bottom: 1px solid #333;
-      padding-bottom: 3px;
-    }
-    .lb-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 2px 0;
-      color: #555;
-    }
+    #leaderboard-title { color: #ff6600; font-size: 10px; letter-spacing: 1px; margin-bottom: 5px; border-bottom: 1px solid #333; padding-bottom: 3px; }
+    .lb-row { display: flex; justify-content: space-between; padding: 2px 0; color: #555; }
     .lb-row.top1 { color: #ffd700; }
     .lb-row.top2 { color: #c0c0c0; }
     .lb-row.top3 { color: #cd7f32; }
     .lb-addr { font-family: monospace; }
     
-    /* ── WARNING (新增) ── */
-    #warning {
-      position: fixed;
-      top: 180px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255,0,0,0.2);
-      border: 1px solid #ff4444;
-      padding: 5px 15px;
-      font-size: 11px;
-      color: #ff4444;
-      display: none;
-      z-index: 150;
-      letter-spacing: 1px;
-    }
+    /* ── WARNING ── */
+    #warning { position: fixed; top: 190px; left: 50%; transform: translateX(-50%); background: rgba(255,0,0,0.2); border: 1px solid #ff4444; padding: 5px 15px; font-size: 11px; color: #ff4444; display: none; z-index: 150; letter-spacing: 1px; }
     
-    /* ── LAST CHANCE (新增) ── */
+    /* ── LAST CHANCE ── */
     #last-chance {
       position: fixed;
       top: 50%;
@@ -485,41 +475,14 @@
       display: none;
       z-index: 500;
     }
-    #last-chance h2 {
-      color: #ff00ff;
-      font-size: 24px;
-      margin-bottom: 15px;
-      letter-spacing: 3px;
-    }
-    #last-chance p {
-      color: #888;
-      font-size: 12px;
-      margin-bottom: 20px;
-    }
-    #last-chance .btn {
-      padding: 10px 30px;
-      margin: 5px;
-      cursor: pointer;
-      font-family: 'Courier New', monospace;
-      font-weight: bold;
-    }
+    #last-chance h2 { color: #ff00ff; font-size: 24px; margin-bottom: 15px; letter-spacing: 3px; }
+    #last-chance p { color: #888; font-size: 12px; margin-bottom: 20px; }
+    #last-chance .btn { padding: 10px 30px; margin: 5px; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold; }
     #last-chance .yes { background: #ff00ff; color: #000; border: none; }
     #last-chance .no { background: transparent; color: #666; border: 1px solid #333; }
     
     /* ── RESET BUTTON ── */
-    #reset-btn {
-      position: fixed;
-      bottom: 10px;
-      right: 15px;
-      background: #111;
-      border: 1px solid #333;
-      color: #444;
-      padding: 5px 12px;
-      cursor: pointer;
-      font-size: 10px;
-      font-family: 'Courier New', monospace;
-      z-index: 90;
-    }
+    #reset-btn { position: fixed; bottom: 10px; right: 15px; background: #111; border: 1px solid #333; color: #444; padding: 5px 12px; cursor: pointer; font-size: 10px; font-family: 'Courier New', monospace; z-index: 90; }
     #reset-btn:hover { border-color: #ff4444; color: #ff4444; }
     
     /* ── ANIMATIONS ── */
@@ -556,6 +519,17 @@
       10%, 30%, 50% { opacity: 1; }
       20%, 40%, 60% { opacity: 0.3; }
     }
+    /* K线分裂碎片 */
+    @keyframes candle-fragment {
+      0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); }
+    }
+    /* 价格龙卷风 */
+    @keyframes price-tornado {
+      0% { transform: rotate(0deg) scale(1); opacity: 1; }
+      50% { transform: rotate(180deg) scale(1.5); opacity: 0.7; }
+      100% { transform: rotate(360deg) scale(0.5); opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -577,33 +551,40 @@
     </div>
   </div>
 
-  <!-- 新增：血条 -->
+  <!-- 血条 -->
   <div id="health-container">
     <div id="health-label">🔴 RETAIL HEALTH</div>
     <div id="health-bar"><div id="health-fill"></div></div>
     <div id="health-text">100 HP</div>
   </div>
 
-  <!-- 新增：恐惧贪婪指数 -->
+  <!-- 心跳监测 -->
+  <div id="heartbeat-container">
+    <div id="heartbeat-label">💓 HEARTBEAT</div>
+    <canvas id="heartbeat-canvas"></canvas>
+    <div id="heartbeat-text">72 BPM</div>
+  </div>
+
+  <!-- 恐惧贪婪指数 -->
   <div id="fgi-container">
     <div id="fgi-label">FEAR &amp; GREED INDEX</div>
     <div id="fgi-bar"><div id="fgi-fill"></div></div>
     <div id="fgi-text">50 - NEUTRAL</div>
   </div>
 
-  <!-- 新增：杠杆显示 -->
+  <!-- 杠杆显示 -->
   <div id="leverage-display">
     <div id="leverage-label">LEVERAGE</div>
     <div id="leverage-value">1x</div>
   </div>
 
-  <!-- 新增：被套深度 -->
+  <!-- 被套深度 -->
   <div id="trap-container">
     <div id="trap-label">📉 TRAP DEPTH</div>
     <div id="trap-bar"><div id="trap-fill"></div></div>
   </div>
 
-  <!-- 新增：排行榜 -->
+  <!-- 排行榜 -->
   <div id="leaderboard">
     <div id="leaderboard-title">🏆 TODAY'S REKT KINGS</div>
     <div class="lb-row top1"><span class="lb-addr">0x7a3f...</span><span>-$12.8M</span></div>
@@ -613,7 +594,20 @@
     <div class="lb-row"><span class="lb-addr">YOU</span><span id="lb-you">$0</span></div>
   </div>
 
-  <!-- 新增：庄家警告 -->
+  <!-- 假Twitter -->
+  <div id="twitter-feed">
+    <div id="twitter-feed-title">🐦 TRENDING</div>
+    <div id="twitter-tweets"></div>
+  </div>
+
+  <!-- 成就解锁 -->
+  <div id="achievement">
+    <div id="achievement-icon">🏆</div>
+    <div id="achievement-title">ACHIEVEMENT UNLOCKED</div>
+    <div id="achievement-name"></div>
+  </div>
+
+  <!-- 庄家警告 -->
   <div id="warning">⚠️ SMART MONEY HAS DETECTED YOUR POSITION</div>
 
   <div id="position-bar">
@@ -642,9 +636,9 @@
   <div id="click-zone"></div>
 
   <div class="trade-buttons">
-    <button id="buy-btn" class="trade-btn">BUY</button>
-    <button id="fomo-btn" class="trade-btn">⚡ FOMO ⚡</button>
-    <button id="sell-btn" class="trade-btn" disabled>SELL</button>
+    <button id="buy-btn" class="trade-btn" data-text="BUY">BUY</button>
+    <button id="fomo-btn" class="trade-btn" data-text="⚡FOMO⚡">⚡ FOMO ⚡</button>
+    <button id="sell-btn" class="trade-btn" data-text="SELL" disabled>SELL</button>
   </div>
 
   <div id="fomo-bar-container"><div id="fomo-bar-fill"></div></div>
@@ -653,19 +647,42 @@
   <div id="event"></div>
   <div id="market-event"></div>
   
-  <!-- 新增：闪电 -->
+  <!-- 闪电 -->
   <svg id="lightning" viewBox="0 0 100 100" preserveAspectRatio="none">
     <path id="lightning-path" fill="none" stroke="#ff4444" stroke-width="0.5"/>
   </svg>
   
-  <!-- 新增：交易所公告 -->
+  <!-- 断头台 -->
+  <div id="guillotine">
+    <div id="guillotine-blade"></div>
+  </div>
+  
+  <!-- 墓碑 -->
+  <div id="tombstone">
+    <div id="tombstone-emoji">🪦</div>
+    <div id="tombstone-name">HERE LIES A DEGEN</div>
+    <div id="tombstone-date"></div>
+    <div id="tombstone-cause"></div>
+    <div id="tombstone-stats"></div>
+    <button id="tombstone-share">SHARE YOUR GRAVE</button>
+  </div>
+  
+  <!-- 庄家来电 -->
+  <div id="phone-call">
+    <div id="phone-icon">📞</div>
+    <div id="phone-title">INCOMING CALL</div>
+    <div id="phone-text"></div>
+    <button id="phone-btn" onclick="closePhoneCall()">ANSWER</button>
+  </div>
+  
+  <!-- 交易所公告 -->
   <div id="exchange-alert">
     <h3>📢 EXCHANGE NOTICE</h3>
     <p id="alert-text"></p>
     <button class="btn" onclick="closeAlert()">OK</button>
   </div>
   
-  <!-- 新增：最后一次机会 -->
+  <!-- 最后一次机会 -->
   <div id="last-chance">
     <h2>🎲 ONE LAST CHANCE</h2>
     <p>Double or nothing? 10x leverage, one trade.</p>
@@ -673,7 +690,7 @@
     <button class="btn no" onclick="closeLastChance()">I'm done</button>
   </div>
   
-  <!-- 新增：复仇按钮 -->
+  <!-- 复仇按钮 -->
   <button id="revenge-btn" onclick="revenge()">🔥 REVENGE 🔥</button>
 
   <button id="reset-btn">RESET</button>
@@ -691,9 +708,9 @@
 
     // FOMO engine
     let hypeLevel = 0;
-    let hypeDecay = 0.4;
-    let hypeGain = 8;
-    let hypeGainDecay = 0.92;
+    let hypeDecay = 0.5;  // 难度提升：衰减更快
+    let hypeGain = 6;     // 难度提升：增益更少
+    let hypeGainDecay = 0.95;
     let lastClickTime = 0;
     let clickTimes = [];
     let totalClicks = 0;
@@ -709,6 +726,21 @@
     let totalLoss = 0;
     let consecutiveRekts = 0;
     let gameover = false;
+    
+    // 成就系统
+    const achievements = {
+      firstRekt: { icon: '🥀', name: '韭菜新星', desc: '首次爆仓', unlocked: false },
+      rekt3: { icon: '💀', name: '被套专家', desc: '累计爆仓3次', unlocked: false },
+      rekt10: { icon: '☠️', name: '抄底烈士', desc: '累计爆仓10次', unlocked: false },
+      profit10x: { icon: '🚀', name: '冲上云霄', desc: '单笔盈利10倍', unlocked: false },
+      survival: { icon: '🛡️', name: '生存大师', desc: '存活5分钟', unlocked: false },
+      highHype: { icon: '🔥', name: 'HYPE之王', desc: 'Hype达到100', unlocked: false },
+      revenge3: { icon: '😈', name: '复仇天使', desc: '使用3次复仇模式', unlocked: false },
+      trapMaster: { icon: '🎣', name: '被套大师', desc: '被套深度超过90%', unlocked: false },
+    };
+    let achievementsUnlocked = [];
+    let revengeCount = 0;
+    let survivalTime = 0;
 
     const canvas = document.getElementById("chart");
     const ctx = canvas.getContext("2d");
@@ -721,16 +753,69 @@
     const buyBtn = document.getElementById("buy-btn");
     const sellBtn = document.getElementById("sell-btn");
     const fomoBtn = document.getElementById("fomo-btn");
+    
+    // 心跳监测
+    const heartbeatCanvas = document.getElementById("heartbeat-canvas");
+    const hbCtx = heartbeatCanvas.getContext("2d");
+    let heartbeatData = [];
+    let bpm = 72;
 
     const FOMO_ICONS = ["🚀","💰","🔥","💎","📈","🌕","🐋","💥","⚡","👻","🌊","🎰","🀄","🦐","✨"];
-    const DANMU = ["HODL","WAGMI","FOMO","REKT","MOON","DIAMOND HANDS","TO THE MOON","APES TOGETHER","DYOR","NFA","GM","NGMI","BULLISH","BEARISH","PUMP","DUMP","梭哈梭哈","跑啊","庄家砸盘了","快抄底","这波稳了"];
+    const DANMU = ["HODL","WAGMI","FOMO","REKT","MOON","DIAMOND HANDS","TO THE MOON","APES TOGETHER","DYOR","NFA","GM","NGMI","BULLISH","BEARISH","PUMP","DUMP","梭哈梭哈","跑啊","庄家砸盘了","快抄底","这波稳了","🚀🚀🚀","老板,再来!","卖了就涨","买了就跌"];
+    
+    // 假Twitter内容
+    const TWITTER_TWEETS = [
+      { handle: "@DegenApe420", text: "$FOMO to the moon! 🚀🚀🚀" },
+      { handle: "@CryptoKing69", text: "Just aped in! This is the one!" },
+      { handle: "@DiamondHands", text: "NEVER SELLING. Diamond hands only 💎🙌" },
+      { handle: "@CryptoWhale", text: "Big announcement coming... 👀" },
+      { handle: "@MoonBoi", text: "1M market cap is FUD. We going to 100M!" },
+      { handle: "@DegenTrader", text: "Down 90% but still holding. I'm not a loser." },
+      { handle: "@CryptoShill", text: "This project is undervalued. 100x easy." },
+      { handle: "@NGMIWarrior", text: "Sold my car to buy more. WAGMI!" },
+      { handle: "@RektDaily", text: "Lost everything again. Time to quit? Never!" },
+      { handle: "@SatoshiJr", text: "My dad invented Bitcoin. Trust me bro." },
+    ];
+    
+    // 庄家来电内容
+    const MARKET_MAKER_CALLS = [
+      "We see your position. Careful, friend.",
+      "Nice leverage. Would be a shame if someone... liquidated it.",
+      "You're getting close to our threshold. Back off.",
+      "The house always wins. You know that, right?",
+      "We're watching. Always watching.",
+      "Your stop loss is cute. We'll find it.",
+      "50x leverage? Bold move. Good luck.",
+      "We've seen your trading history. It's... entertaining.",
+    ];
+    
+    // 死因列表
+    const DEATH_CAUSES = [
+      "Liquidated by a 1% wick",
+      "Sold the bottom, bought the top",
+      "Held through a 99% drop",
+      "Trust me bro, it's a dip",
+      "Diamond hands, paper account",
+      "Leverage was too high",
+      "Did not set stop loss",
+      "FOMO'd at the peak",
+      "The classic rug pull",
+      "Exchange went down during dump",
+    ];
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight * 0.50;
+    heartbeatCanvas.width = 180;
+    heartbeatCanvas.height = 30;
 
     for (let i = 0; i < 80; i++) {
       chartData.push(100 + Math.random() * 15 - 7.5);
       volData.push(Math.random() * 5 + 1);
+    }
+    
+    // 初始化心跳数据
+    for (let i = 0; i < 180; i++) {
+      heartbeatData.push(15);
     }
 
     // ── CLICK HANDLING ──
@@ -752,13 +837,38 @@
       lastClickTime = now;
       totalClicks++;
       hypeBursts++;
+      
+      // 检查成就
+      if (hypeLevel >= 100 && !achievements.highHype.unlocked) {
+        unlockAchievement('highHype');
+      }
+      
       if (e) {
         const x = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || window.innerWidth / 2;
         const y = e.clientY || (e.touches && e.touches[0] && e.touches[0].clientY) || window.innerHeight / 2;
         spawnIcon(x, y);
+        // 霓虹残影
+        createAfterimage(x, y);
       }
       updateUI();
       calculateCPS();
+    }
+
+    function createAfterimage(x, y) {
+      const el = document.createElement("div");
+      el.textContent = "⚡";
+      el.style.cssText = `
+        position:fixed;
+        left:${x}px;
+        top:${y}px;
+        font-size:30px;
+        color:#ff00ff;
+        pointer-events:none;
+        z-index:140;
+        animation:afterimage 0.3s ease-out forwards;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 300);
     }
 
     function spawnIcon(x, y) {
@@ -785,6 +895,19 @@
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 7000);
     }
+    
+    // ── FAKE TWITTER ──
+    function addTweet() {
+      const container = document.getElementById("twitter-tweets");
+      const tweet = TWITTER_TWEETS[Math.floor(Math.random() * TWITTER_TWEETS.length)];
+      const div = document.createElement("div");
+      div.className = "tweet";
+      div.innerHTML = `<span class="tweet-handle">${tweet.handle}</span><div class="tweet-text">${tweet.text}</div>`;
+      container.insertBefore(div, container.firstChild);
+      if (container.children.length > 3) {
+        container.removeChild(container.lastChild);
+      }
+    }
 
     // ── TRADE LOGIC ──
     buyBtn.addEventListener("click", () => {
@@ -794,29 +917,47 @@
       entryPrice = lastPrice;
       balance = 0;
       trades++;
+      
+      // 霓虹残影效果
+      buyBtn.classList.add('clicking');
+      setTimeout(() => buyBtn.classList.remove('clicking'), 400);
+      
       updateUI();
-      // 买入后拉升
       setTimeout(() => injectWick('up'), 100);
     });
 
     sellBtn.addEventListener("click", () => {
       if (position > 0) {
-        const hypeMultiplier = 1 + (hypeLevel / 20) + (Math.random() * 2);
+        const hypeMultiplier = 1 + (hypeLevel / 25) + (Math.random() * 1.5);  // 难度降低：更容易赚
         const rawProfit = position * (lastPrice / entryPrice);
         const profit = rawProfit * hypeMultiplier;
         const pnl = profit - position;
         balance = profit;
         if (pnl > bestTrade) bestTrade = pnl;
+        
+        // 检查10倍盈利成就
+        if (pnl >= position * 10 && !achievements.profit10x.unlocked) {
+          unlockAchievement('profit10x');
+        }
+        
         position = 0;
         entryPrice = 0;
         trades++;
+        
+        // 霓虹残影效果
+        sellBtn.classList.add('clicking');
+        setTimeout(() => sellBtn.classList.remove('clicking'), 400);
+        
         updateUI();
-        // 卖出后暴跌
         setTimeout(() => injectWick('down'), 150);
       }
     });
 
-    fomoBtn.addEventListener("click", doClick);
+    fomoBtn.addEventListener("click", (e) => {
+      doClick(e);
+      fomoBtn.classList.add('clicking');
+      setTimeout(() => fomoBtn.classList.remove('clicking'), 400);
+    });
     clickZone.addEventListener("click", doClick);
     clickZone.addEventListener("touchstart", (e) => { e.preventDefault(); doClick(e); }, { passive: false });
 
@@ -833,6 +974,7 @@
       leverage = 1;
       consecutiveRekts = 0;
       gameover = false;
+      survivalTime = 0;
       chartData = [];
       volData = [];
       for (let i = 0; i < 80; i++) {
@@ -841,43 +983,64 @@
       }
       document.getElementById("revenge-btn").style.display = "none";
       document.getElementById("warning").style.display = "none";
+      document.getElementById("tombstone").style.display = "none";
       updateUI();
     });
+    
+    // 墓碑分享
+    document.getElementById("tombstone-share").addEventListener("click", () => {
+      const text = `🪦 I was REKT on FOMO Rider\n\nCause: ${document.getElementById("tombstone-cause").textContent}\nTotal Loss: $${formatMoney(totalLoss)}\nRekt Count: ${rektCount}\n\nPlay at memebuddy.cc/fomo-rider`;
+      if (navigator.share) {
+        navigator.share({ title: 'My FOMO Rider Grave', text });
+      } else {
+        navigator.clipboard.writeText(text);
+        alert("Copied to clipboard!");
+      }
+    });
 
-    // ── MARKET MANIPULATION (平衡版) ──
+    // ── MARKET MANIPULATION (难度提升版) ──
     function injectWick(direction) {
-      // 更容易赢：拉升强，插针弱
+      // 难度提升：拉升弱，插针强
       const pct = direction === 'down'
-        ? -(0.15 + Math.random() * 0.15)  // 卖出插针 -15%~30%（之前30%~60%）
-        :  (0.40 + Math.random() * 0.30); // 买入拉升 +40%~70%（之前25%~50%）
+        ? -(0.25 + Math.random() * 0.35)  // 卖出插针 -25%~60%
+        :  (0.30 + Math.random() * 0.25); // 买入拉升 +30%~55%
       const spike = lastPrice * (1 + pct);
 
-      // 直接推入 spike，不推中间点避免挤出
       chartData.push(spike);
-      volData.push(20); // 大成交量
+      volData.push(20);
       lastPrice = spike;
 
       if (direction === 'down') {
         flashScreen("#ff1744", 300);
         shakeScreen();
-        hypeLevel = Math.max(0, hypeLevel - 20);  // 减少扣减
-        fearGreedIndex = Math.max(0, fearGreedIndex - 10);
+        hypeLevel = Math.max(0, hypeLevel - 25);
+        fearGreedIndex = Math.max(0, fearGreedIndex - 15);
 
         showRektText();
         spawnSkullRain();
         showLightning();
+        showGuillotine();  // 断头台
+        splitCandles();    // K线分裂
+        priceTornado();    // 价格龙卷风
         
-        // 扣血减少
-        const damage = 10 + Math.floor(Math.random() * 10);  // 10-20（之前15-35）
+        // 随机庄家来电
+        if (Math.random() < 0.3) {
+          showMarketMakerCall();
+        }
+        
+        const damage = 15 + Math.floor(Math.random() * 20);  // 15-35 HP
         health = Math.max(0, health - damage);
         document.getElementById("health-fill").style.width = health + "%";
         document.getElementById("health-text").textContent = health + " HP";
+        
+        // 余额结冰效果
+        balanceEl.classList.add('frozen');
+        setTimeout(() => balanceEl.classList.remove('frozen'), 1000);
         
         if (health <= 0) {
           gameOver();
         }
 
-        // 小图标爆炸
         for (let i = 0; i < 12; i++) {
           setTimeout(() => spawnIcon(
             100 + Math.random() * (window.innerWidth - 200),
@@ -887,33 +1050,82 @@
 
         spawnDanmuBurst(["REKT", "NGMI", "LIQUIDATED", "💀💀💀", "YOU ARE EXIT LIQUIDITY"]);
 
-        // 庄家警告
-        if (leverage >= 5) {
+        if (leverage >= 3) {
           document.getElementById("warning").style.display = "block";
           setTimeout(() => document.getElementById("warning").style.display = "none", 3000);
         }
 
       } else {
         flashScreen("#00c853", 200);
-        hypeLevel = Math.min(100, hypeLevel + 30);  // 拉升给更多 hype
-        fearGreedIndex = Math.min(100, fearGreedIndex + 15);
-        for (let i = 0; i < 6; i++) {
+        hypeLevel = Math.min(100, hypeLevel + 25);
+        fearGreedIndex = Math.min(100, fearGreedIndex + 12);
+        
+        // 余额着火效果
+        balanceEl.classList.add('on-fire');
+        setTimeout(() => balanceEl.classList.remove('on-fire'), 1500);
+        
+        for (let i = 0; i < 8; i++) {
           setTimeout(() => spawnIcon(window.innerWidth / 2, window.innerHeight / 2), i * 80);
         }
         spawnProfitText("+PUMP!");
         spawnDanmuBurst(["MOON", "WAGMI", "PUMP IT"]);
       }
       
-      // 更新恐惧贪婪指数显示
       updateFGI();
     }
+    
+    // ── K线分裂效果 ──
+    function splitCandles() {
+      for (let i = 0; i < 20; i++) {
+        const fragment = document.createElement("div");
+        const dx = (Math.random() - 0.5) * 200;
+        const dy = Math.random() * 300 + 100;
+        const rot = (Math.random() - 0.5) * 720;
+        fragment.style.cssText = `
+          position:fixed;
+          left:${30 + Math.random() * (window.innerWidth - 60)}px;
+          top:${200 + Math.random() * 200}px;
+          width:6px;
+          height:${10 + Math.random() * 30}px;
+          background:${Math.random() > 0.5 ? '#00c853' : '#ff1744'};
+          z-index:300;
+          pointer-events:none;
+          animation:candle-fragment 1s ease-out forwards;
+          --dx:${dx}px;
+          --dy:${dy}px;
+          --rot:${rot}deg;
+        `;
+        document.body.appendChild(fragment);
+        setTimeout(() => fragment.remove(), 1000);
+      }
+    }
+    
+    // ── 价格龙卷风 ──
+    function priceTornado() {
+      const tornado = document.createElement("div");
+      tornado.textContent = `$${lastPrice.toFixed(2)}`;
+      tornado.style.cssText = `
+        position:fixed;
+        top:40%;
+        left:50%;
+        transform:translate(-50%, -50%);
+        font-size:80px;
+        font-weight:900;
+        color:#ff00ff;
+        text-shadow:0 0 30px #ff00ff;
+        z-index:350;
+        pointer-events:none;
+        animation:price-tornado 1s ease-out forwards;
+      `;
+      document.body.appendChild(tornado);
+      setTimeout(() => tornado.remove(), 1000);
+    }
 
-    // ── 新增：闪电效果 ──
+    // ── 闪电效果 ──
     function showLightning() {
       const lightning = document.getElementById("lightning");
       const path = document.getElementById("lightning-path");
       
-      // 生成锯齿闪电路径
       let d = "M50,0";
       let y = 0;
       while (y < 100) {
@@ -928,19 +1140,55 @@
       lightning.style.display = "block";
       lightning.style.animation = "lightning-flash 0.5s";
       
-      setTimeout(() => {
-        lightning.style.display = "none";
-      }, 500);
+      setTimeout(() => { lightning.style.display = "none"; }, 500);
+    }
+    
+    // ── 断头台 ──
+    function showGuillotine() {
+      const guillotine = document.getElementById("guillotine");
+      guillotine.style.display = "block";
+      setTimeout(() => { guillotine.style.display = "none"; }, 600);
+    }
+    
+    // ── 庄家来电 ──
+    function showMarketMakerCall() {
+      const phone = document.getElementById("phone-call");
+      const text = document.getElementById("phone-text");
+      text.textContent = MARKET_MAKER_CALLS[Math.floor(Math.random() * MARKET_MAKER_CALLS.length)];
+      phone.style.display = "block";
+    }
+    
+    function closePhoneCall() {
+      document.getElementById("phone-call").style.display = "none";
+      // 接电话后大概率被套
+      if (Math.random() < 0.7 && position > 0) {
+        lastPrice *= 0.85;
+        hypeLevel = Math.max(0, hypeLevel - 30);
+        spawnDanmuBurst(["NEVER ANSWER", "TRAPPED", "💀"]);
+      }
+    }
+    
+    // ── 墓碑显示 ──
+    function showTombstone() {
+      const tombstone = document.getElementById("tombstone");
+      document.getElementById("tombstone-date").textContent = new Date().toLocaleDateString('zh-CN');
+      document.getElementById("tombstone-cause").textContent = DEATH_CAUSES[Math.floor(Math.random() * DEATH_CAUSES.length)];
+      document.getElementById("tombstone-stats").innerHTML = `
+        Total Loss: -$${formatMoney(totalLoss)}<br>
+        Rekt Count: ${rektCount}<br>
+        Best Trade: +$${formatMoney(bestTrade)}<br>
+        Survival Time: ${Math.floor(survivalTime / 60)}m ${survivalTime % 60}s
+      `;
+      tombstone.style.display = "block";
     }
 
-    // ── 新增：恐惧贪婪指数更新 ──
+    // ── 恐惧贪婪指数更新 ──
     function updateFGI() {
       const fill = document.getElementById("fgi-fill");
       const text = document.getElementById("fgi-text");
       
-      // 基于hype和市场状态计算
       fearGreedIndex = Math.min(100, Math.max(0, 
-        50 + hypeLevel * 0.3 + (balance > STARTING_CAPITAL ? 10 : -10) + (Math.random() - 0.5) * 10
+        50 + hypeLevel * 0.25 + (balance > STARTING_CAPITAL ? 8 : -12) + (Math.random() - 0.5) * 15
       ));
       
       fill.style.width = fearGreedIndex + "%";
@@ -955,12 +1203,49 @@
       fill.style.background = color;
       text.textContent = Math.floor(fearGreedIndex) + " - " + label;
     }
+    
+    // ── 心跳监测 ──
+    function updateHeartbeat() {
+      // BPM基于hype和持仓
+      const baseBpm = 72;
+      const hypeBpm = hypeLevel * 0.8;
+      const posBpm = position > 0 ? 20 : 0;
+      const leverageBpm = (leverage - 1) * 15;
+      bpm = Math.floor(baseBpm + hypeBpm + posBpm + leverageBpm + (Math.random() - 0.5) * 5);
+      
+      document.getElementById("heartbeat-text").textContent = bpm + " BPM";
+      
+      // 绘制心电图
+      hbCtx.fillStyle = "#0a0a0a";
+      hbCtx.fillRect(0, 0, 180, 30);
+      
+      hbCtx.strokeStyle = bpm > 100 ? "#ff4444" : bpm > 80 ? "#ff6600" : "#00ff88";
+      hbCtx.lineWidth = 1.5;
+      hbCtx.beginPath();
+      
+      for (let i = 0; i < heartbeatData.length; i++) {
+        const x = i;
+        const y = heartbeatData[i];
+        if (i === 0) hbCtx.moveTo(x, y);
+        else hbCtx.lineTo(x, y);
+      }
+      hbCtx.stroke();
+      
+      // 更新心跳数据
+      heartbeatData.shift();
+      if (Math.random() < 0.05) {
+        // QRS波
+        heartbeatData.push(15 - 10 - Math.random() * 5);
+      } else {
+        heartbeatData.push(15 + (Math.random() - 0.5) * 2);
+      }
+    }
 
-    // ── 新增：黑天鹅事件 ──
+    // ── 黑天鹅事件 ──
     function triggerBlackSwan() {
       const events = [
-        { title: "🚨 EXCHANGE HACKED", text: "Withdrawals suspended. Your funds are... temporarily unavailable.", effect: () => { balance *= 0.5; } },
-        { title: "⚖️ REGULATORY RAID", text: "SEC has classified FOMO as a security. Trading halted.", effect: () => { lastPrice *= 0.4; } },
+        { title: "🚨 EXCHANGE HACKED", text: "Withdrawals suspended. Your funds are... temporarily unavailable.", effect: () => { balance *= 0.4; } },
+        { title: "⚖️ REGULATORY RAID", text: "SEC has classified FOMO as a security. Trading halted.", effect: () => { lastPrice *= 0.35; } },
         { title: "🏃 RUG PULL", text: "Devs have exited with liquidity. Token migrates to new contract (not yours).", effect: () => { balance = 0; position = 0; } },
         { title: "📉 FLASH CRASH", text: "Oracle malfunction. All positions liquidated at bottom.", effect: () => { health = 0; } },
         { title: "🌐 NETWORK CONGESTION", text: "Gas fees: 10,000 gwei. Your transaction: pending.", effect: () => { /* 视觉效果 */ } },
@@ -974,7 +1259,7 @@
       shakeScreen();
       flashScreen("#ff4444", 500);
       
-      health = Math.max(0, health - 30);
+      health = Math.max(0, health - 35);
       document.getElementById("health-fill").style.width = health + "%";
       
       if (health <= 0) gameOver();
@@ -984,48 +1269,66 @@
       document.getElementById("exchange-alert").style.display = "none";
     }
 
-    // ── 新增：游戏结束 ──
+    // ── 成就解锁 ──
+    function unlockAchievement(key) {
+      if (achievements[key].unlocked) return;
+      achievements[key].unlocked = true;
+      achievementsUnlocked.push(key);
+      
+      const ach = achievements[key];
+      document.getElementById("achievement-icon").textContent = ach.icon;
+      document.getElementById("achievement-name").textContent = ach.name;
+      document.getElementById("achievement").style.display = "block";
+      
+      setTimeout(() => {
+        document.getElementById("achievement").style.display = "none";
+      }, 3000);
+    }
+
+    // ── 游戏结束 ──
     function gameOver() {
       gameover = true;
       rektCount++;
       consecutiveRekts++;
       totalLoss += STARTING_CAPITAL - balance;
+      survivalTime = 0;
       
       document.getElementById("rekt-count").textContent = rektCount;
       document.getElementById("lb-you").textContent = "-$" + formatMoney(totalLoss);
       
-      // 显示GAME OVER
-      const go = document.createElement("div");
-      go.innerHTML = `
-        <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:600;">
-          <div style="font-size:80px;color:#ff4444;font-weight:900;letter-spacing:10px;text-shadow:0 0 30px #ff4444;">GAME OVER</div>
-          <div style="font-size:20px;color:#666;margin-top:20px;">Total Loss: -$${formatMoney(totalLoss)}</div>
-        </div>
-      `;
-      document.body.appendChild(go);
+      // 成就检查
+      if (!achievements.firstRekt.unlocked) unlockAchievement('firstRekt');
+      if (rektCount >= 3 && !achievements.rekt3.unlocked) unlockAchievement('rekt3');
+      if (rektCount >= 10 && !achievements.rekt10.unlocked) unlockAchievement('rekt10');
       
-      // 显示复仇按钮
+      // 显示墓碑
       setTimeout(() => {
-        go.remove();
+        showTombstone();
+      }, 2000);
+      
+      setTimeout(() => {
+        document.getElementById("tombstone").style.display = "none";
         if (consecutiveRekts >= 1) {
           document.getElementById("revenge-btn").style.display = "block";
         }
         if (consecutiveRekts >= 3) {
           showLastChance();
         }
-      }, 2000);
+      }, 5000);
     }
 
-    // ── 新增：复仇模式 ──
+    // ── 复仇模式 ──
     function revenge() {
       leverage *= 2;
+      revengeCount++;
       document.getElementById("leverage-value").textContent = leverage + "x";
       document.getElementById("revenge-btn").style.display = "none";
+      document.getElementById("tombstone").style.display = "none";
       
       balance = STARTING_CAPITAL * leverage;
       position = 0;
       entryPrice = 0;
-      health = 50;
+      health = 40;
       gameover = false;
       
       document.getElementById("health-fill").style.width = health + "%";
@@ -1034,10 +1337,13 @@
       flashScreen("#ff00ff", 300);
       spawnDanmuBurst(["REVENGE MODE", `${leverage}x LEVERAGE`, "TO THE MOON OR ZERO"]);
       
+      // 成就检查
+      if (revengeCount >= 3 && !achievements.revenge3.unlocked) unlockAchievement('revenge3');
+      
       updateUI();
     }
 
-    // ── 新增：最后一次机会 ──
+    // ── 最后一次机会 ──
     function showLastChance() {
       document.getElementById("last-chance").style.display = "block";
     }
@@ -1047,7 +1353,7 @@
       leverage = 10;
       document.getElementById("leverage-value").textContent = "10x";
       balance = STARTING_CAPITAL * 10;
-      health = 25;
+      health = 20;
       gameover = false;
       
       document.getElementById("health-fill").style.width = health + "%";
@@ -1157,21 +1463,20 @@
     function generateCandle() {
       if (gameover) return;
       
-      const baseVol = 0.03 + hypeLevel * 0.002 + gameTime * 0.00003;
-      const hypeBias = hypeLevel > 60 ? 0.4 : (hypeLevel > 30 ? 0.15 : 0);
+      const baseVol = 0.04 + hypeLevel * 0.002 + gameTime * 0.00004;  // 难度提升：波动更大
+      const hypeBias = hypeLevel > 60 ? 0.35 : (hypeLevel > 30 ? 0.1 : 0);
       const direction = Math.random() - 0.5 + hypeBias;
-      const vol = baseVol * (1 + hypeLevel * 0.015);
+      const vol = baseVol * (1 + hypeLevel * 0.02);
       const change = direction * vol * lastPrice * leverage;
       lastPrice = Math.max(1, lastPrice + change);
 
       hypeLevel = Math.max(0, hypeLevel - hypeDecay);
 
       chartData.push(lastPrice);
-      const volBar = Math.random() * 8 + hypeLevel * 0.1 + 1;
+      const volBar = Math.random() * 8 + hypeLevel * 0.12 + 1;
       volData.push(volBar);
       if (chartData.length > 120) { chartData.shift(); volData.shift(); }
       
-      // 更新被套深度
       updateTrapDepth();
     }
 
@@ -1185,13 +1490,13 @@
         trapContainer.style.display = "block";
         trapFill.style.width = lossPct + "%";
         
-        if (lossPct > 80) {
-          trapFill.style.background = "#ff4444";
-        } else if (lossPct > 50) {
-          trapFill.style.background = "#ff6600";
-        } else {
-          trapFill.style.background = "#ffcc00";
+        if (lossPct > 90 && !achievements.trapMaster.unlocked) {
+          unlockAchievement('trapMaster');
         }
+        
+        if (lossPct > 80) trapFill.style.background = "#ff4444";
+        else if (lossPct > 50) trapFill.style.background = "#ff6600";
+        else trapFill.style.background = "#ffcc00";
       } else {
         document.getElementById("trap-container").style.display = "none";
       }
@@ -1213,7 +1518,6 @@
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, W, H);
 
-      // Price grid
       const allPrices = [...chartData];
       const maxP = Math.max(...allPrices);
       const minP = Math.min(...allPrices);
@@ -1233,7 +1537,6 @@
         ctx.stroke();
       }
 
-      // Candles
       const n = chartData.length;
       const candleW = chartW / n;
       const bodyW = candleW * 0.7;
@@ -1284,8 +1587,7 @@
       for (let i = 0; i < n; i++) {
         const barH = Math.max(1, (volData[i] / volMax) * volH * 0.9);
         const x = leftMargin + i * candleW + candleW * 0.15;
-        ctx.fillStyle = chartData[i] >= (i === 0 ? chartData[0] : chartData[i-1]) 
-          ? "rgba(0,200,83,0.4)" : "rgba(255,23,68,0.4)";
+        ctx.fillStyle = chartData[i] >= (i === 0 ? chartData[0] : chartData[i-1]) ? "rgba(0,200,83,0.4)" : "rgba(255,23,68,0.4)";
         ctx.fillRect(x, volBot - barH, bodyW, barH);
       }
 
@@ -1293,8 +1595,7 @@
       riderEl.style.left = (W - 120) + "px";
       riderEl.style.top = (130 + curY - 50) + "px";
 
-      document.getElementById("chart-label").textContent =
-        `FOMO/USDT  1s  O:${lastPrice.toFixed(2)}  H:${maxP.toFixed(2)}  L:${minP.toFixed(2)}`;
+      document.getElementById("chart-label").textContent = "FOMO/USDT  1s  O:" + lastPrice.toFixed(2) + "  H:" + maxP.toFixed(2) + "  L:" + minP.toFixed(2);
     }
 
     function formatMoney(amount) {
@@ -1336,9 +1637,6 @@
       document.getElementById("trades-count").textContent = trades;
       document.getElementById("best-trade").textContent = "$" + formatMoney(bestTrade);
 
-      const displayCps = calculateCPS();
-      // combo-count and hype-count are displayed in combo-display element
-
       fomoBarFill.style.width = hypeLevel + "%";
       if (hypeLevel > 70) {
         fomoBarFill.style.background = "#ff00ff";
@@ -1356,6 +1654,7 @@
       else if (health <= 0) riderEl.className = "rekt";
       else riderEl.className = "flat";
 
+      const displayCps = calculateCPS();
       if (displayCps >= 5) {
         comboDisplay.style.display = "block";
         comboDisplay.textContent = "x" + displayCps;
@@ -1365,22 +1664,22 @@
       }
     }
 
-    // ── RANDOM EVENTS ──
+    // RANDOM EVENTS
     function randomEvent() {
       if (gameover) return;
       
       const events = [
-        { text: "🚀 ELON TWEET!", effect: () => { lastPrice *= 2.2; hypeLevel = Math.min(100, hypeLevel + 40); }, type: "fomo" },
-        { text: "💰 KOL PUMP!", effect: () => { lastPrice *= 1.8; hypeLevel = Math.min(100, hypeLevel + 25); }, type: "good" },
-        { text: "🔥 100X INCOMING!", effect: () => { lastPrice *= 4; hypeLevel = Math.min(100, hypeLevel + 50); }, type: "fomo" },
-        { text: "🌕 TO THE MOON!", effect: () => { lastPrice *= 3; hypeLevel = Math.min(100, hypeLevel + 45); }, type: "fomo" },
-        { text: "🐋 WHALE BUY!", effect: () => { lastPrice *= 2.5; hypeLevel = Math.min(100, hypeLevel + 35); }, type: "fomo" },
-        { text: "📉 CZ SELLING!", effect: () => { lastPrice *= 0.6; hypeLevel = Math.max(0, hypeLevel - 20); }, type: "bad" },
-        { text: "💀 RUG PULL!", effect: () => { lastPrice *= 0.3; hypeLevel = Math.max(0, hypeLevel - 30); health -= 20; }, type: "bad" },
-        { text: "⚡ EXCHANGE HALTS!", effect: () => { balance *= 0.7; position *= 0.7; hypeLevel = Math.max(0, hypeLevel - 25); }, type: "bad" },
+        { text: "🚀 ELON TWEET!", effect: function() { lastPrice *= 1.8; hypeLevel = Math.min(100, hypeLevel + 35); }, type: "fomo" },
+        { text: "💰 KOL PUMP!", effect: function() { lastPrice *= 1.5; hypeLevel = Math.min(100, hypeLevel + 20); }, type: "good" },
+        { text: "🔥 50X INCOMING!", effect: function() { lastPrice *= 2.5; hypeLevel = Math.min(100, hypeLevel + 40); }, type: "fomo" },
+        { text: "🌕 TO THE MOON!", effect: function() { lastPrice *= 2; hypeLevel = Math.min(100, hypeLevel + 35); }, type: "fomo" },
+        { text: "🐋 WHALE BUY!", effect: function() { lastPrice *= 1.7; hypeLevel = Math.min(100, hypeLevel + 25); }, type: "fomo" },
+        { text: "📉 CZ SELLING!", effect: function() { lastPrice *= 0.5; hypeLevel = Math.max(0, hypeLevel - 25); }, type: "bad" },
+        { text: "💀 RUG PULL!", effect: function() { lastPrice *= 0.25; hypeLevel = Math.max(0, hypeLevel - 35); health -= 25; }, type: "bad" },
+        { text: "⚡ EXCHANGE HALTS!", effect: function() { balance *= 0.6; position *= 0.6; hypeLevel = Math.max(0, hypeLevel - 30); }, type: "bad" },
       ];
       
-      const prob = 0.015 + hypeLevel * 0.001;
+      const prob = 0.018 + hypeLevel * 0.0012;
       if (Math.random() < prob) {
         const ev = events[Math.floor(Math.random() * events.length)];
         const el = document.getElementById("event");
@@ -1390,120 +1689,128 @@
         ev.effect();
         updateUI();
         for (let i = 0; i < 5; i++) {
-          setTimeout(() => spawnIcon(window.innerWidth / 2, window.innerHeight / 2), i * 80);
+          setTimeout(function() { spawnIcon(window.innerWidth / 2, window.innerHeight / 2); }, i * 80);
         }
-        setTimeout(() => el.style.display = "none", 2500);
+        setTimeout(function() { el.style.display = "none"; }, 2500);
       }
       
-      // 黑天鹅事件 (极低概率)
-      if (Math.random() < 0.002) {
-        triggerBlackSwan();
-      }
+      if (Math.random() < 0.005) showKOLShill();
+      if (Math.random() < 0.003) triggerBlackSwan();
+    }
+    
+    // KOL SHILL
+    function showKOLShill() {
+      const shills = [
+        { name: "CryptoKing", action: "JUST APED 100K! 🚀" },
+        { name: "MoonBoi69", action: "This is THE ONE! 100x incoming!" },
+        { name: "DegenTrader", action: "Selling my house for this. WAGMI!" },
+        { name: "DiamondApe", action: "Diamond hands only! NO PAPER HANDS!" },
+      ];
+      const shill = shills[Math.floor(Math.random() * shills.length)];
+      
+      const popup = document.createElement("div");
+      popup.innerHTML = '<div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a2e;border:2px solid #ffd700;padding:20px;z-index:500;text-align:center;font-family:monospace;"><div style="font-size:40px;margin-bottom:10px;">👨‍💼</div><div style="color:#ffd700;font-size:14px;">' + shill.name + ' just followed $FOMO</div><div style="color:#888;font-size:12px;margin-top:10px;">' + shill.action + '</div><button id="kol-btn" style="margin-top:15px;padding:8px 20px;background:#ffd700;color:#000;border:none;cursor:pointer;font-weight:bold;">FOLLOW</button></div>';
+      document.body.appendChild(popup);
+      
+      document.getElementById("kol-btn").onclick = function() {
+        if (position === 0 && balance > 0) {
+          position = balance;
+          entryPrice = lastPrice * 1.1;
+          balance = 0;
+          hypeLevel = Math.min(100, hypeLevel + 20);
+          spawnDanmuBurst(["FOLLOW THE KOL!", "APE IN!", "TRUST ME BRO"]);
+          updateUI();
+        }
+        popup.remove();
+      };
+      
+      setTimeout(function() { popup.remove(); }, 5000);
     }
 
-    // ── MAIN LOOP ──
-    let lastTime = Date.now();
+    // MAIN LOOP
     let frameCount = 0;
     function gameLoop() {
       frameCount++;
       
-      // 每3帧生成一根蜡烛，降低K线滚动速度
       if (frameCount % 3 === 0) {
-        gameTime++;
+        if (!gameover) {
+          gameTime++;
+          survivalTime++;
+          if (survivalTime >= 300 && !achievements.survival.unlocked) unlockAchievement("survival");
+        }
         generateCandle();
         if (gameTime % 10 === 0) randomEvent();
         if (gameTime % 20 === 0) updateFGI();
+        if (gameTime % 5 === 0) updateHeartbeat();
+        if (gameTime % 30 === 0) addTweet();
       }
 
       drawChart();
       updateUI();
 
-      // 随机弹幕
-      if (Math.random() < 0.01) spawnDanmu();
+      if (Math.random() < 0.012) spawnDanmu();
 
       requestAnimationFrame(gameLoop);
     }
 
-    // ── INIT ──
+    // INIT
     updateUI();
     gameLoop();
+    addTweet();
+    addTweet();
     
-    // ── GLOBAL FUNCTIONS (for onclick) ──
     window.closeAlert = closeAlert;
     window.takeLastChance = takeLastChance;
     window.closeLastChance = closeLastChance;
     window.revenge = revenge;
+    window.closePhoneCall = closePhoneCall;
   </script>
 
-  <!-- ── RESPONSIVE DESIGN ── -->
   <style>
     @media (max-width: 768px) {
-      /* 顶部栏缩小 */
       #top-bar { height: 50px; padding: 0 10px; }
       #balance-value { font-size: 28px; }
       #capital-value { font-size: 14px; }
       #capital-label, #balance-label, #pnl-label { font-size: 8px; }
-
-      /* 血条/FGI/杠杆指示器缩小 */
       #health-container { top: 55px; right: 10px; width: 120px; }
       #health-bar { height: 8px; }
       #health-label { font-size: 7px; }
       #health-text { font-size: 8px; }
-
-      #fgi-container { top: 95px; right: 10px; width: 120px; }
+      #heartbeat-container { top: 95px; right: 10px; width: 120px; }
+      #fgi-container { top: 140px; right: 10px; width: 120px; }
       #fgi-label { font-size: 7px; }
       #fgi-text { font-size: 9px; }
-
       #leverage-display { top: 55px; left: 10px; }
       #leverage-value { font-size: 18px; }
       #leverage-label { font-size: 7px; }
-
       #trap-container { top: 85px; left: 10px; width: 100px; }
       #trap-label { font-size: 7px; }
       #trap-bar { height: 6px; }
-
-      /* 持仓栏缩小 */
       #position-bar { top: 50px; height: 28px; gap: 15px; }
       #position-label, #entry-label { font-size: 7px; }
       #position-value, #entry-value { font-size: 11px; }
-
-      /* 图表区域调整 */
-      #chart-container { top: 110px; bottom: 100px; }
+      #chart-container { top: 140px; bottom: 100px; }
       #chart-label { font-size: 9px; }
-
-      /* 交易按钮缩小 */
       .trade-buttons { bottom: 20px; }
       .trade-btn { padding: 18px 35px; font-size: 20px; letter-spacing: 2px; border-width: 3px; }
-
-      /* REVENGE 按钮缩小 */
       #revenge-btn { padding: 20px 40px; font-size: 24px; letter-spacing: 2px; }
-
-      /* 排行榜缩小 */
       #leaderboard { width: 140px; right: 5px; bottom: 110px; font-size: 9px; }
-      #leaderboard h3 { font-size: 9px; }
-
-      /* 弹幕缩小 */
+      #twitter-feed { width: 150px; font-size: 8px; }
       .danmu { font-size: 12px; }
-
-      /* 公告缩小 */
-      .alert-content { width: 90%; padding: 15px; }
-      .alert-title { font-size: 16px; }
-      .alert-text { font-size: 11px; }
-
-      /* 统计信息缩小 */
       #stats { font-size: 10px; bottom: 75px; }
-
-      /* 闪电效果缩小 */
-      .lightning { width: 80%; left: 10%; }
+      #tombstone { width: 200px; height: 250px; padding: 20px 15px; }
+      #tombstone-emoji { font-size: 36px; }
+      #tombstone-name { font-size: 13px; }
+      #phone-call { width: 240px; padding: 20px; }
     }
 
     @media (max-width: 480px) {
-      /* 更小的屏幕 */
       #balance-value { font-size: 22px; }
       .trade-btn { padding: 14px 25px; font-size: 16px; letter-spacing: 1px; }
-      #chart-container { top: 100px; bottom: 90px; }
-      #health-container, #fgi-container { width: 100px; }
+      #chart-container { top: 130px; bottom: 90px; }
+      #health-container, #fgi-container, #heartbeat-container { width: 100px; }
       #leaderboard { width: 120px; font-size: 8px; }
+      #twitter-feed { display: none; }
     }
   </style>
 </body>

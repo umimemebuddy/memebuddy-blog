@@ -12,131 +12,137 @@
       font-family: monospace;
       overflow: hidden;
       touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
     }
     #top-bar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 80px;
+      top: 0; left: 0; right: 0;
+      height: 70px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0 20px;
       z-index: 100;
+      background: #000;
     }
     #capital-label, #balance-label, #pnl-label {
-      font-size: 11px;
-      color: #444;
+      font-size: 10px;
+      color: #555;
       letter-spacing: 2px;
     }
-    #capital-value {
-      font-size: 20px;
-      color: #666;
-    }
-    #balance-value {
-      font-size: 56px;
-      font-weight: bold;
-      letter-spacing: -2px;
-    }
-    #balance-value.up { color: #00ff88; text-shadow: 0 0 40px #00ff88; }
-    #balance-value.down { color: #ff4444; text-shadow: 0 0 40px #ff4444; }
+    #capital-value { font-size: 18px; color: #666; }
+    #balance-value { font-size: 48px; font-weight: bold; letter-spacing: -1px; }
+    #balance-value.up { color: #00ff88; text-shadow: 0 0 30px #00ff88; }
+    #balance-value.down { color: #ff4444; text-shadow: 0 0 30px #ff4444; }
     #pnl-value.positive { color: #00ff88; }
     #pnl-value.negative { color: #ff4444; }
     #score-board {
       position: fixed;
-      top: 85px;
+      top: 75px;
       left: 20px;
       display: flex;
-      gap: 15px;
+      gap: 12px;
       z-index: 90;
     }
     .score-item {
       background: rgba(255,255,255,0.03);
-      padding: 6px 12px;
+      padding: 5px 10px;
       border-left: 3px solid;
     }
     .score-item.trades { border-color: #00ff88; }
     .score-item.profit { border-color: #ffd700; }
     .score-item.combo { border-color: #ff00ff; }
-    .score-label { font-size: 9px; color: #444; }
-    .score-value { font-size: 18px; font-weight: bold; }
+    .score-item.hype { border-color: #ff6600; }
+    .score-label { font-size: 9px; color: #444; letter-spacing: 1px; }
+    .score-value { font-size: 16px; font-weight: bold; }
+    #fomo-bar-wrap {
+      position: fixed;
+      top: 75px;
+      right: 20px;
+      width: 120px;
+      z-index: 90;
+    }
+    #fomo-label { font-size: 9px; color: #444; letter-spacing: 2px; text-align: right; }
+    #fomo-bar-bg {
+      margin-top: 4px;
+      height: 6px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+    }
+    #fomo-bar-fill {
+      height: 100%;
+      background: #ff6600;
+      width: 0%;
+      transition: width 0.1s;
+      box-shadow: 0 0 8px #ff6600;
+    }
     #chart {
       position: fixed;
-      top: 150px;
+      top: 140px;
       left: 0;
       width: 100%;
-      height: 45%;
+      height: 42%;
     }
     #rider {
       position: fixed;
       z-index: 50;
-      transition: all 0.08s ease-out;
+      transition: left 0.08s ease-out, top 0.08s ease-out;
     }
     #rider-svg {
-      width: 100px;
-      height: 100px;
-      filter: drop-shadow(0 0 30px currentColor);
+      width: 90px;
+      height: 90px;
+      filter: drop-shadow(0 0 20px currentColor);
     }
-    #rider.long { color: #00ff88; }
-    #rider.short { color: #ff4444; }
     #rider.flat { color: #666; }
-    #rider.rich { color: #ffd700; }
-    #rider.panic #rider-svg {
-      animation: rider-shake 0.15s infinite;
+    #rider.fomo { color: #ff6600; animation: rider-throb 0.15s infinite alternate; }
+    #rider.peak { color: #ff00ff; animation: rider-throb 0.08s infinite alternate; }
+    #rider.rekt { color: #ff4444; animation: rider-shake 0.2s infinite; }
+    #rider.rich { color: #ffd700; animation: rider-glow 0.5s infinite alternate; }
+    @keyframes rider-throb {
+      from { transform: scale(1); }
+      to { transform: scale(1.3); }
     }
     @keyframes rider-shake {
-      0%, 100% { transform: rotate(-15deg) translateX(-5px); }
-      50% { transform: rotate(15deg) translateX(5px); }
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+    }
+    @keyframes rider-glow {
+      from { filter: drop-shadow(0 0 20px #ffd700); }
+      to { filter: drop-shadow(0 0 50px #ffd700); }
     }
     #action {
       position: fixed;
-      bottom: 40px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      width: 200px;
-      height: 60px;
+      width: 220px;
+      height: 70px;
       background: transparent;
       color: #00ff88;
       border: 2px solid #00ff88;
-      font-size: 24px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
+      font-family: monospace;
     }
-    #action.hold {
-      background: #ff4444;
-      border-color: #ff4444;
+    #action.fomo {
+      background: #ff6600;
+      border-color: #ff6600;
       color: #000;
+      box-shadow: 0 0 30px #ff6600;
     }
-    .token {
-      position: absolute;
-      font-size: 36px;
-      cursor: pointer;
-      z-index: 10;
-      animation: float 2s ease-in-out infinite;
+    #action.peak {
+      background: #ff00ff;
+      border-color: #ff00ff;
+      color: #fff;
+      box-shadow: 0 0 50px #ff00ff;
+      animation: btn-pulse 0.1s infinite alternate;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
-    .kol {
-      position: fixed;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      border: 2px solid;
-      background: #000;
-      z-index: 20;
-      animation: kol-float 2s ease-in-out infinite;
-    }
-    @keyframes kol-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    @keyframes btn-pulse {
+      from { transform: translateX(-50%) scale(1); }
+      to { transform: translateX(-50%) scale(1.05); }
     }
     #event {
       position: fixed;
@@ -145,20 +151,36 @@
       transform: translate(-50%, -50%);
       background: #000;
       border: 2px solid;
-      padding: 30px 40px;
-      font-size: 22px;
+      padding: 25px 35px;
+      font-size: 18px;
       display: none;
       z-index: 200;
       text-align: center;
+      font-family: monospace;
+      letter-spacing: 2px;
     }
-    #event.good { border-color: #00ff88; color: #00ff88; }
-    #event.bad { border-color: #ff4444; color: #ff4444; }
+    #event.good { border-color: #00ff88; color: #00ff88; text-shadow: 0 0 15px #00ff88; }
+    #event.bad { border-color: #ff4444; color: #ff4444; text-shadow: 0 0 15px #ff4444; }
+    #event.fomo { border-color: #ff6600; color: #ff6600; text-shadow: 0 0 15px #ff6600; }
+    .icon {
+      position: fixed;
+      font-size: 28px;
+      z-index: 60;
+      pointer-events: none;
+      animation: icon-pop 0.8s ease-out forwards;
+    }
+    @keyframes icon-pop {
+      0% { opacity: 1; transform: scale(1) translateY(0); }
+      100% { opacity: 0; transform: scale(1.8) translateY(-120px); }
+    }
     .danmu {
       position: fixed;
       white-space: nowrap;
-      font-size: 16px;
-      opacity: 0.8;
-      animation: scroll 8s linear;
+      font-size: 14px;
+      opacity: 0.7;
+      animation: scroll 6s linear;
+      font-family: monospace;
+      z-index: 30;
     }
     @keyframes scroll {
       from { transform: translateX(100vw); }
@@ -166,15 +188,45 @@
     }
     #combo-display {
       position: fixed;
-      top: 45%;
+      top: 40%;
       right: 30px;
-      font-size: 80px;
+      font-size: 72px;
       font-weight: bold;
-      color: #ff00ff;
+      color: #ff6600;
       display: none;
-      text-shadow: 0 0 30px #ff00ff;
+      text-shadow: 0 0 30px #ff6600;
       z-index: 60;
+      font-family: monospace;
     }
+    #combo-display.peak {
+      color: #ff00ff;
+      text-shadow: 0 0 50px #ff00ff;
+      font-size: 90px;
+    }
+    #cpc-display {
+      position: fixed;
+      bottom: 115px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: #333;
+      letter-spacing: 2px;
+      font-family: monospace;
+    }
+    #reset-btn {
+      position: fixed;
+      bottom: 10px;
+      right: 15px;
+      background: transparent;
+      border: 1px solid #333;
+      color: #444;
+      font-size: 10px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+    #reset-btn:hover { border-color: #666; color: #888; }
   </style>
 </head>
 <body>
@@ -192,6 +244,7 @@
       <div id="pnl-value" class="positive">$0</div>
     </div>
   </div>
+
   <div id="score-board">
     <div class="score-item trades">
       <div class="score-label">TRADES</div>
@@ -202,139 +255,217 @@
       <div class="score-value" id="best-trade">$0</div>
     </div>
     <div class="score-item combo">
-      <div class="score-label">COMBO</div>
-      <div class="score-value" id="combo-count">x0</div>
+      <div class="score-label">CPS</div>
+      <div class="score-value" id="combo-count">0</div>
+    </div>
+    <div class="score-item hype">
+      <div class="score-label">HYPE</div>
+      <div class="score-value" id="hype-count">0</div>
     </div>
   </div>
+
+  <div id="fomo-bar-wrap">
+    <div id="fomo-label">FOMO LEVEL</div>
+    <div id="fomo-bar-bg"><div id="fomo-bar-fill"></div></div>
+  </div>
+
   <div id="combo-display">x0</div>
+
   <div id="rider" class="flat">
     <svg id="rider-svg" viewBox="0 0 100 100">
-      <!-- …ÌÃÂ -->
       <ellipse cx="50" cy="55" rx="25" ry="30" fill="currentColor" opacity="0.9"/>
-      <!-- Õ∑≤ø -->
       <circle cx="50" cy="30" r="18" fill="currentColor"/>
-      <!-- —€æ¶ -->
       <circle cx="44" cy="28" r="4" fill="#000"/>
       <circle cx="56" cy="28" r="4" fill="#000"/>
-      <!-- «Ø◊” -->
       <path d="M25 45 Q15 35 20 25 Q25 30 30 40" fill="currentColor"/>
       <path d="M75 45 Q85 35 80 25 Q75 30 70 40" fill="currentColor"/>
-      <!-- Œ≤∞Õ -->
       <path d="M50 85 Q35 95 40 100 L60 100 Q65 95 50 85" fill="currentColor"/>
-      <!-- Œ˜◊∞¡Ï¥¯ -->
       <polygon points="50,40 45,55 50,60 55,55" fill="#000" opacity="0.5"/>
     </svg>
   </div>
+
   <canvas id="chart"></canvas>
-  <button id="action">HOLD</button>
+
+  <button id="action">CLICK FOMO</button>
+  <div id="cpc-display">CPS: 0 | CLICK TO GENERATE FOMO</div>
+
   <div id="event"></div>
+  <button id="reset-btn">RESET</button>
+
   <script>
     const STARTING_CAPITAL = 100;
     let balance = STARTING_CAPITAL;
-    let holding = false;
-    let position = 0;
-    let entryPrice = 0;
+    let lastPrice = 100;
     let chartData = [];
     let gameTime = 0;
-    let lastPrice = 100;
-    let combo = 0;
-    let trades = 0;
+
+    // FOMO engine
+    let hypeLevel = 0;        // 0-100, how "fomo'd" we are
+    let hypeDecay = 0.4;      // decay per tick when not clicking
+    let hypeGain = 8;         // gain per click
+    let hypeGainDecay = 0.92; // multiplier decay on consecutive clicks
+    let lastClickTime = 0;
+    let cps = 0;              // clicks per second (rolling)
+    let clickTimes = [];      // timestamps of last N clicks for CPS calc
+    let totalClicks = 0;
+    let hypeBursts = 0;
     let bestTrade = 0;
-    const kols = [
-      { name: "Elon", emoji: "??", color: "#1DA1F2" },
-      { name: "CZ", emoji: "??", color: "#F0B90B" },
-      { name: "SBF", emoji: "??", color: "#ff4444" },
-      { name: "Degen", emoji: "??", color: "#00ff88" },
-      { name: "Whale", emoji: "??", color: "#4488ff" },
-      { name: "Dev", emoji: "?????", color: "#ff00ff" }
-    ];
-    const memes = [
-      { emoji: "??", multiplier: 1.5 },
-      { emoji: "??", multiplier: 2 },
-      { emoji: "??", multiplier: 10 },
-      { emoji: "??", multiplier: 100 }
-    ];
+    let trades = 0;
+    let position = 0;
+    let entryPrice = 0;
+
+    const canvas = document.getElementById("chart");
+    const ctx = canvas.getContext("2d");
     const balanceEl = document.getElementById("balance-value");
     const pnlEl = document.getElementById("pnl-value");
     const riderEl = document.getElementById("rider");
     const actionBtn = document.getElementById("action");
-    const canvas = document.getElementById("chart");
-    const ctx = canvas.getContext("2d");
     const comboDisplay = document.getElementById("combo-display");
+    const fomoBarFill = document.getElementById("fomo-bar-fill");
+    const cpcEl = document.getElementById("cpc-display");
+
+    const FOMO_ICONS = ["üöÄ","üí∞","üî•","üíé","üìà","üåï","üêã","üí•","‚ö°","üëª","üåä","üé∞","üÄÑ","ü¶ê","‚ú®"];
+    const DANMU = ["HODL","WAGMI","FOMO","REKT","MOON","DIAMOND HANDS","TO THE MOON","APES TOGETHER","DYOR","NFA","GM","NGMI","BULLISH","BEARISH","APT","PUMP","DUMP","WEN"];
+
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * 0.45;
-    for (let i = 0; i < 50; i++) {
-      chartData.push(100 + Math.random() * 20 - 10);
+    canvas.height = window.innerHeight * 0.42;
+
+    for (let i = 0; i < 60; i++) {
+      chartData.push(100 + Math.random() * 15 - 7.5);
     }
-    const startHold = () => {
-      holding = true;
-      actionBtn.textContent = "SELL";
-      actionBtn.classList.add("hold");
-      riderEl.className = "long";
-      if (balance > 0) {
+
+    function calculateCPS() {
+      const now = Date.now();
+      // keep only clicks in last 1000ms
+      clickTimes = clickTimes.filter(t => now - t < 1000);
+      cps = clickTimes.length;
+      return cps;
+    }
+
+    function doClick(e) {
+      const now = Date.now();
+      clickTimes.push(now);
+
+      // Hype accumulation with diminishing returns
+      const timeSinceLast = now - lastClickTime;
+      let gain = hypeGain;
+      if (timeSinceLast < 300) {
+        gain = hypeGain * Math.pow(hypeGainDecay, Math.floor(300 / timeSinceLast));
+      }
+      hypeLevel = Math.min(100, hypeLevel + gain);
+      lastClickTime = now;
+      totalClicks++;
+      hypeBursts++;
+
+      // Spawn icon near click
+      if (e) {
+        const x = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || window.innerWidth / 2;
+        const y = e.clientY || (e.touches && e.touches[0] && e.touches[0].clientY) || window.innerHeight / 2;
+        spawnIcon(x, y);
+      }
+
+      // Chance to buy
+      if (position === 0 && Math.random() < 0.05 + hypeLevel * 0.003) {
         position = balance;
         entryPrice = lastPrice;
         balance = 0;
         trades++;
-        updateUI();
       }
-    };
-    const endHold = () => {
-      holding = false;
-      actionBtn.textContent = "HOLD";
-      actionBtn.classList.remove("hold");
+
+      updateUI();
+      calculateCPS();
+    }
+
+    function spawnIcon(x, y) {
+      const el = document.createElement("div");
+      el.className = "icon";
+      el.textContent = FOMO_ICONS[Math.floor(Math.random() * FOMO_ICONS.length)];
+      el.style.left = (x + Math.random() * 60 - 30) + "px";
+      el.style.top = (y + Math.random() * 40 - 20) + "px";
+      el.style.animationDuration = (0.6 + Math.random() * 0.4) + "s";
+      el.style.fontSize = (22 + Math.random() * 16) + "px";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1000);
+    }
+
+    function spawnDanmu() {
+      const el = document.createElement("div");
+      el.className = "danmu";
+      el.textContent = DANMU[Math.floor(Math.random() * DANMU.length)];
+      el.style.top = (150 + Math.random() * (window.innerHeight - 250)) + "px";
+      const colors = ["#00ff88","#ff4444","#ff6600","#ffd700","#ff00ff","#00aaff"];
+      el.style.color = colors[Math.floor(Math.random() * colors.length)];
+      el.style.fontSize = (12 + Math.floor(Math.random() * 6)) + "px";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 7000);
+    }
+
+    function sell() {
       if (position > 0) {
         const profit = position * (lastPrice / entryPrice);
         const pnl = profit - position;
         balance = profit;
         if (pnl > bestTrade) bestTrade = pnl;
-        if (pnl > 0) {
-          combo++;
-          comboDisplay.textContent = "x" + combo;
-          comboDisplay.style.display = "block";
-          setTimeout(() => comboDisplay.style.display = "none", 1200);
-        } else {
-          combo = 0;
-          riderEl.classList.add("panic");
-          setTimeout(() => riderEl.classList.remove("panic"), 800);
-        }
         position = 0;
         entryPrice = 0;
         updateUI();
-        riderEl.className = balance >= 1000000 ? "rich" : "flat";
       }
-    };
-    actionBtn.addEventListener("mousedown", startHold);
-    actionBtn.addEventListener("mouseup", endHold);
-    actionBtn.addEventListener("touchstart", (e) => { e.preventDefault(); startHold(); });
-    actionBtn.addEventListener("touchend", (e) => { e.preventDefault(); endHold(); });
-    function updateUI() {
-      balanceEl.textContent = "$" + Math.floor(balance).toLocaleString();
-      balanceEl.className = "";
-      const pnl = balance - STARTING_CAPITAL;
-      pnlEl.textContent = (pnl >= 0 ? "+" : "") + "$" + Math.floor(pnl).toLocaleString();
-      pnlEl.className = pnl >= 0 ? "positive" : "negative";
-      if (position > 0) {
-        const currentPnl = position * (lastPrice / entryPrice) - position;
-        if (currentPnl > 0) balanceEl.classList.add("up");
-        else if (currentPnl < 0) balanceEl.classList.add("down");
-      }
-      document.getElementById("trades-count").textContent = trades;
-      document.getElementById("best-trade").textContent = "$" + Math.floor(bestTrade).toLocaleString();
-      document.getElementById("combo-count").textContent = "x" + combo;
     }
+
+    function randomEvent() {
+      const events = [
+        { text: "üöÄ ELON TWEET!", effect: () => { lastPrice *= 1.6; hypeLevel = Math.min(100, hypeLevel + 40); }, type: "fomo" },
+        { text: "üí∞ KOL PUMP!", effect: () => { lastPrice *= 1.4; hypeLevel = Math.min(100, hypeLevel + 25); }, type: "good" },
+        { text: "üî• 100X INCOMING!", effect: () => { lastPrice *= 2.5; hypeLevel = Math.min(100, hypeLevel + 50); }, type: "fomo" },
+        { text: "üìâ CZ SELLING!", effect: () => { lastPrice *= 0.55; hypeLevel = Math.max(0, hypeLevel - 20); }, type: "bad" },
+        { text: "üíÄ RUG PULL!", effect: () => { lastPrice *= 0.1; hypeLevel = Math.max(0, hypeLevel - 30); }, type: "bad" },
+        { text: "‚ö° EXCHANGE HALTS!", effect: () => { balance *= 0.6; position *= 0.6; hypeLevel = Math.max(0, hypeLevel - 25); }, type: "bad" },
+        { text: "üåï PAMP IT!", effect: () => { lastPrice *= 1.8; hypeLevel = Math.min(100, hypeLevel + 35); }, type: "fomo" },
+        { text: "üìâ LIQUIDATION WAVE!", effect: () => { lastPrice *= 0.6; hypeLevel = Math.max(0, hypeLevel - 15); }, type: "bad" },
+      ];
+      // More likely at high hype
+      const prob = 0.02 + hypeLevel * 0.001;
+      if (Math.random() < prob) {
+        const ev = events[Math.floor(Math.random() * events.length)];
+        const el = document.getElementById("event");
+        el.textContent = ev.text;
+        el.className = ev.type;
+        el.style.display = "block";
+        ev.effect();
+        updateUI();
+        // Big icons burst
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            spawnIcon(window.innerWidth / 2, window.innerHeight / 2);
+          }, i * 80);
+        }
+        setTimeout(() => el.style.display = "none", 2500);
+      }
+    }
+
     function generateCandle() {
-      const volatility = 0.1 + (gameTime / 1000);
-      const change = (Math.random() - 0.5) * volatility * lastPrice;
-      lastPrice = Math.max(10, lastPrice + change);
+      // Base volatility grows with hype and time
+      const baseVol = 0.03 + hypeLevel * 0.002 + gameTime * 0.00003;
+      // Hype drives the direction (mostly up, sometimes crash)
+      const hypeBias = hypeLevel > 60 ? 0.4 : (hypeLevel > 30 ? 0.15 : 0);
+      const direction = Math.random() - 0.5 + hypeBias;
+      const vol = baseVol * (1 + hypeLevel * 0.015);
+      const change = direction * vol * lastPrice;
+      lastPrice = Math.max(1, lastPrice + change);
+
+      // Hype decays when not generating
+      hypeLevel = Math.max(0, hypeLevel - hypeDecay);
+
       chartData.push(lastPrice);
-      if (chartData.length > 100) chartData.shift();
-      if (holding && position > 0) updateUI();
+      if (chartData.length > 120) chartData.shift();
     }
+
     function drawChart() {
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "#0a0a0a";
+
+      // Grid
+      ctx.strokeStyle = "#0f0f0f";
       ctx.lineWidth = 1;
       for (let i = 0; i < 5; i++) {
         ctx.beginPath();
@@ -342,16 +473,24 @@
         ctx.lineTo(canvas.width, i * canvas.height / 5);
         ctx.stroke();
       }
+
       const w = canvas.width / chartData.length;
       const max = Math.max(...chartData);
       const min = Math.min(...chartData);
       const range = max - min || 1;
+
+      // FOMO color based on hype
+      let lineColor = "#00ff88";
+      if (hypeLevel > 70) lineColor = "#ff00ff";
+      else if (hypeLevel > 40) lineColor = "#ff6600";
+      else if (hypeLevel > 15) lineColor = "#ffd700";
+
       ctx.beginPath();
-      const isUp = lastPrice > chartData[chartData.length - 2];
-      ctx.strokeStyle = isUp ? "#00ff88" : "#ff4444";
-      ctx.lineWidth = 5;
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = ctx.strokeStyle;
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 3 + hypeLevel * 0.05;
+      ctx.shadowBlur = 10 + hypeLevel * 0.5;
+      ctx.shadowColor = lineColor;
+
       chartData.forEach((price, i) => {
         const x = i * w;
         const y = canvas.height - ((price - min) / range) * canvas.height * 0.8 - canvas.height * 0.1;
@@ -360,47 +499,113 @@
       });
       ctx.stroke();
       ctx.shadowBlur = 0;
+
+      // Rider position follows price
       const lastY = canvas.height - ((lastPrice - min) / range) * canvas.height * 0.8 - canvas.height * 0.1;
-      riderEl.style.left = (canvas.width - 110) + "px";
-      riderEl.style.top = (150 + lastY - 50) + "px";
+      riderEl.style.left = (canvas.width - 100) + "px";
+      riderEl.style.top = (145 + lastY - 45) + "px";
     }
-    function randomEvent() {
-      const events = [
-        { text: "?? ELON TWEET +50%", effect: () => lastPrice *= 1.5, type: "good" },
-        { text: "?? CZ PUMP", effect: () => lastPrice *= 1.3, type: "good" },
-        { text: "?? SBF ARRESTED", effect: () => lastPrice *= 0.6, type: "bad" },
-        { text: "?? EXCHANGE DOWN", effect: () => { balance *= 0.5; position *= 0.5; }, type: "bad" },
-        { text: "?? 100X GEM", effect: () => lastPrice *= 3, type: "good" },
-        { text: "?? RUG PULL", effect: () => lastPrice *= 0.1, type: "bad" }
-      ];
-      if (Math.random() < 0.025) {
-        const event = events[Math.floor(Math.random() * events.length)];
-        const el = document.getElementById("event");
-        el.textContent = event.text;
-        el.className = event.type;
-        el.style.display = "block";
-        event.effect();
-        updateUI();
-        setTimeout(() => el.style.display = "none", 2000);
+
+    function updateUI() {
+      balanceEl.textContent = "$" + Math.floor(balance).toLocaleString();
+      balanceEl.className = "";
+      if (position > 0) {
+        const cur = position * (lastPrice / entryPrice) - position;
+        if (cur > 0) balanceEl.classList.add("up");
+        else balanceEl.classList.add("down");
       }
+
+      const pnl = balance - STARTING_CAPITAL;
+      pnlEl.textContent = (pnl >= 0 ? "+" : "") + "$" + Math.floor(pnl).toLocaleString();
+      pnlEl.className = pnl >= 0 ? "positive" : "negative";
+
+      document.getElementById("trades-count").textContent = trades;
+      document.getElementById("best-trade").textContent = "$" + Math.floor(bestTrade).toLocaleString();
+
+      // CPS display
+      const displayCps = calculateCPS();
+      document.getElementById("combo-count").textContent = displayCps;
+      document.getElementById("hype-count").textContent = Math.floor(hypeLevel);
+
+      // FOMO bar
+      fomoBarFill.style.width = hypeLevel + "%";
+      if (hypeLevel > 70) {
+        fomoBarFill.style.background = "#ff00ff";
+        fomoBarFill.style.boxShadow = "0 0 15px #ff00ff";
+      } else if (hypeLevel > 40) {
+        fomoBarFill.style.background = "#ff6600";
+        fomoBarFill.style.boxShadow = "0 0 10px #ff6600";
+      } else {
+        fomoBarFill.style.background = "#ff6600";
+        fomoBarFill.style.boxShadow = "0 0 5px #ff6600";
+      }
+
+      // Rider state
+      if (balance >= 1000000) {
+        riderEl.className = "rich";
+      } else if (hypeLevel > 70) {
+        riderEl.className = "peak";
+      } else if (hypeLevel > 25) {
+        riderEl.className = "fomo";
+      } else if (balance < 10) {
+        riderEl.className = "rekt";
+      } else {
+        riderEl.className = "flat";
+      }
+
+      // Button state
+      actionBtn.className = "";
+      if (hypeLevel > 70) actionBtn.classList.add("peak");
+      else if (hypeLevel > 25) actionBtn.classList.add("fomo");
+
+      // Combo display
+      if (displayCps >= 5) {
+        comboDisplay.style.display = "block";
+        comboDisplay.textContent = "x" + displayCps;
+        comboDisplay.className = displayCps >= 10 ? "peak" : "";
+      } else {
+        comboDisplay.style.display = "none";
+      }
+
+      // CPS text
+      const cpcText = displayCps > 0
+        ? `CPS: ${displayCps} | FOMO AT ${Math.floor(hypeLevel)}%`
+        : `CLICK TO GENERATE FOMO`;
+      cpcEl.textContent = cpcText;
     }
-    function addDanmu() {
-      const texts = ["HODL", "WAGMI", "FOMO", "REKT", "MOON", "DUMP", "PUMP", "DIAMOND HANDS"];
-      const el = document.createElement("div");
-      el.className = "danmu";
-      el.textContent = texts[Math.floor(Math.random() * texts.length)];
-      el.style.top = (160 + Math.random() * 250) + "px";
-      el.style.color = Math.random() > 0.5 ? "#00ff88" : "#ff4444";
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 8000);
-    }
+
+    // Input handlers
+    actionBtn.addEventListener("mousedown", (e) => { e.preventDefault(); doClick(e); });
+    actionBtn.addEventListener("touchstart", (e) => { e.preventDefault(); doClick(e); }, { passive: false });
+    document.addEventListener("mousedown", (e) => { if (e.target !== actionBtn && e.target.id !== "reset-btn") doClick(e); });
+    document.addEventListener("touchstart", (e) => { if (e.target !== actionBtn && e.target.id !== "reset-btn") doClick(e); }, { passive: true });
+
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      if (confirm("Reset game? All balance lost.")) {
+        balance = STARTING_CAPITAL;
+        position = 0;
+        entryPrice = 0;
+        hypeLevel = 0;
+        totalClicks = 0;
+        hypeBursts = 0;
+        lastPrice = 100;
+        chartData = [];
+        for (let i = 0; i < 60; i++) chartData.push(100 + Math.random() * 15 - 7.5);
+        updateUI();
+      }
+    });
+
+    // Main loop
     setInterval(() => {
       gameTime++;
       generateCandle();
       drawChart();
       randomEvent();
-      if (gameTime % 50 === 0) addDanmu();
+      updateUI();
+      if (gameTime % 30 === 0) spawnDanmu();
+      if (gameTime % 15 === 0 && hypeLevel > 50) spawnDanmu();
     }, 100);
+
     updateUI();
   </script>
 </body>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>FOMO Rider</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: monospace;
+      overflow: hidden;
+      touch-action: none;
+    }
+    #top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 100;
+    }
+    #capital-label, #balance-label, #pnl-label {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 2px;
+    }
+    #capital-value {
+      font-size: 20px;
+      color: #666;
+    }
+    #balance-value {
+      font-size: 56px;
+      font-weight: bold;
+      letter-spacing: -2px;
+    }
+    #balance-value.up { color: #00ff88; text-shadow: 0 0 40px #00ff88; }
+    #balance-value.down { color: #ff4444; text-shadow: 0 0 40px #ff4444; }
+    #pnl-value.positive { color: #00ff88; }
+    #pnl-value.negative { color: #ff4444; }
+    #score-board {
+      position: fixed;
+      top: 85px;
+      left: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 90;
+    }
+    .score-item {
+      background: rgba(255,255,255,0.03);
+      padding: 6px 12px;
+      border-left: 3px solid;
+    }
+    .score-item.trades { border-color: #00ff88; }
+    .score-item.profit { border-color: #ffd700; }
+    .score-item.combo { border-color: #ff00ff; }
+    .score-label { font-size: 9px; color: #444; }
+    .score-value { font-size: 18px; font-weight: bold; }
+    #chart {
+      position: fixed;
+      top: 150px;
+      left: 0;
+      width: 100%;
+      height: 45%;
+    }
+    #rider {
+      position: fixed;
+      z-index: 50;
+      transition: all 0.08s ease-out;
+    }
+    #rider-svg {
+      width: 100px;
+      height: 100px;
+      filter: drop-shadow(0 0 30px currentColor);
+    }
+    #rider.long { color: #00ff88; }
+    #rider.short { color: #ff4444; }
+    #rider.flat { color: #666; }
+    #rider.rich { color: #ffd700; }
+    #rider.panic #rider-svg {
+      animation: rider-shake 0.15s infinite;
+    }
+    @keyframes rider-shake {
+      0%, 100% { transform: rotate(-15deg) translateX(-5px); }
+      50% { transform: rotate(15deg) translateX(5px); }
+    }
+    #action {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 60px;
+      background: transparent;
+      color: #00ff88;
+      border: 2px solid #00ff88;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      letter-spacing: 4px;
+    }
+    #action.hold {
+      background: #ff4444;
+      border-color: #ff4444;
+      color: #000;
+    }
+    .token {
+      position: absolute;
+      font-size: 36px;
+      cursor: pointer;
+      z-index: 10;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    .kol {
+      position: fixed;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      border: 2px solid;
+      background: #000;
+      z-index: 20;
+      animation: kol-float 2s ease-in-out infinite;
+    }
+    @keyframes kol-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    #event {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #000;
+      border: 2px solid;
+      padding: 30px 40px;
+      font-size: 22px;
+      display: none;
+      z-index: 200;
+      text-align: center;
+    }
+    #event.good { border-color: #00ff88; color: #00ff88; }
+    #event.bad { border-color: #ff4444; color: #ff4444; }
+    .danmu {
+      position: fixed;
+      white-space: nowrap;
+      font-size: 16px;
+      opacity: 0.8;
+      animation: scroll 8s linear;
+    }
+    @keyframes scroll {
+      from { transform: translateX(100vw); }
+      to { transform: translateX(-100%); }
+    }
+    #combo-display {
+      position: fixed;
+      top: 45%;
+      right: 30px;
+      font-size: 80px;
+      font-weight: bold;
+      color: #ff00ff;
+      display: none;
+      text-shadow: 0 0 30px #ff00ff;
+      z-index: 60;
+    }
+  </style>
+</head>
+<body>
+  <div id="top-bar">
+    <div id="capital">
+      <div id="capital-label">CAPITAL</div>
+      <div id="capital-value">$100</div>
+    </div>
+    <div id="balance">
+      <div id="balance-label">BALANCE</div>
+      <div id="balance-value">$100</div>
+    </div>
+    <div id="pnl">
+      <div id="pnl-label">P&L</div>
+      <div id="pnl-value" class="positive">$0</div>
+    </div>
+  </div>
+  <div id="score-board">
+    <div class="score-item trades">
+      <div class="score-label">TRADES</div>
+      <div class="score-value" id="trades-count">0</div>
+    </div>
+    <div class="score-item profit">
+      <div class="score-label">BEST</div>
+      <div class="score-value" id="best-trade">$0</div>
+    </div>
+    <div class="score-item combo">
+      <div class="score-label">COMBO</div>
+      <div class="score-value" id="combo-count">x0</div>
+    </div>
+  </div>
+  <div id="combo-display">x0</div>
+  <div id="rider" class="flat">
+    <svg id="rider-svg" viewBox="0 0 100 100">
+      <!-- 身体 -->
+      <ellipse cx="50" cy="55" rx="25" ry="30" fill="currentColor" opacity="0.9"/>
+      <!-- 头部 -->
+      <circle cx="50" cy="30" r="18" fill="currentColor"/>
+      <!-- 眼睛 -->
+      <circle cx="44" cy="28" r="4" fill="#000"/>
+      <circle cx="56" cy="28" r="4" fill="#000"/>
+      <!-- 钳子 -->
+      <path d="M25 45 Q15 35 20 25 Q25 30 30 40" fill="currentColor"/>
+      <path d="M75 45 Q85 35 80 25 Q75 30 70 40" fill="currentColor"/>
+      <!-- 尾巴 -->
+      <path d="M50 85 Q35 95 40 100 L60 100 Q65 95 50 85" fill="currentColor"/>
+      <!-- 西装领带 -->
+      <polygon points="50,40 45,55 50,60 55,55" fill="#000" opacity="0.5"/>
+    </svg>
+  </div>
+  <canvas id="chart"></canvas>
+  <button id="action">HOLD</button>
+  <div id="event"></div>
+  <script>
+    const STARTING_CAPITAL = 100;
+    let balance = STARTING_CAPITAL;
+    let holding = false;
+    let position = 0;
+    let entryPrice = 0;
+    let chartData = [];
+    let gameTime = 0;
+    let lastPrice = 100;
+    let combo = 0;
+    let trades = 0;
+    let bestTrade = 0;
+    const kols = [
+      { name: "Elon", emoji: "??", color: "#1DA1F2" },
+      { name: "CZ", emoji: "??", color: "#F0B90B" },
+      { name: "SBF", emoji: "??", color: "#ff4444" },
+      { name: "Degen", emoji: "??", color: "#00ff88" },
+      { name: "Whale", emoji: "??", color: "#4488ff" },
+      { name: "Dev", emoji: "?????", color: "#ff00ff" }
+    ];
+    const memes = [
+      { emoji: "??", multiplier: 1.5 },
+      { emoji: "??", multiplier: 2 },
+      { emoji: "??", multiplier: 10 },
+      { emoji: "??", multiplier: 100 }
+    ];
+    const balanceEl = document.getElementById("balance-value");
+    const pnlEl = document.getElementById("pnl-value");
+    const riderEl = document.getElementById("rider");
+    const actionBtn = document.getElementById("action");
+    const canvas = document.getElementById("chart");
+    const ctx = canvas.getContext("2d");
+    const comboDisplay = document.getElementById("combo-display");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight * 0.45;
+    for (let i = 0; i < 50; i++) {
+      chartData.push(100 + Math.random() * 20 - 10);
+    }
+    const startHold = () => {
+      holding = true;
+      actionBtn.textContent = "SELL";
+      actionBtn.classList.add("hold");
+      riderEl.className = "long";
+      if (balance > 0) {
+        position = balance;
+        entryPrice = lastPrice;
+        balance = 0;
+        trades++;
+        updateUI();
+      }
+    };
+    const endHold = () => {
+      holding = false;
+      actionBtn.textContent = "HOLD";
+      actionBtn.classList.remove("hold");
+      if (position > 0) {
+        const profit = position * (lastPrice / entryPrice);
+        const pnl = profit - position;
+        balance = profit;
+        if (pnl > bestTrade) bestTrade = pnl;
+        if (pnl > 0) {
+          combo++;
+          comboDisplay.textContent = "x" + combo;
+          comboDisplay.style.display = "block";
+          setTimeout(() => comboDisplay.style.display = "none", 1200);
+        } else {
+          combo = 0;
+          riderEl.classList.add("panic");
+          setTimeout(() => riderEl.classList.remove("panic"), 800);
+        }
+        position = 0;
+        entryPrice = 0;
+        updateUI();
+        riderEl.className = balance >= 1000000 ? "rich" : "flat";
+      }
+    };
+    actionBtn.addEventListener("mousedown", startHold);
+    actionBtn.addEventListener("mouseup", endHold);
+    actionBtn.addEventListener("touchstart", (e) => { e.preventDefault(); startHold(); });
+    actionBtn.addEventListener("touchend", (e) => { e.preventDefault(); endHold(); });
+    function updateUI() {
+      balanceEl.textContent = "$" + Math.floor(balance).toLocaleString();
+      balanceEl.className = "";
+      const pnl = balance - STARTING_CAPITAL;
+      pnlEl.textContent = (pnl >= 0 ? "+" : "") + "$" + Math.floor(pnl).toLocaleString();
+      pnlEl.className = pnl >= 0 ? "positive" : "negative";
+      if (position > 0) {
+        const currentPnl = position * (lastPrice / entryPrice) - position;
+        if (currentPnl > 0) balanceEl.classList.add("up");
+        else if (currentPnl < 0) balanceEl.classList.add("down");
+      }
+      document.getElementById("trades-count").textContent = trades;
+      document.getElementById("best-trade").textContent = "$" + Math.floor(bestTrade).toLocaleString();
+      document.getElementById("combo-count").textContent = "x" + combo;
+    }
+    function generateCandle() {
+      const volatility = 0.1 + (gameTime / 1000);
+      const change = (Math.random() - 0.5) * volatility * lastPrice;
+      lastPrice = Math.max(10, lastPrice + change);
+      chartData.push(lastPrice);
+      if (chartData.length > 100) chartData.shift();
+      if (holding && position > 0) updateUI();
+    }
+    function drawChart() {
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = "#0a0a0a";
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, i * canvas.height / 5);
+        ctx.lineTo(canvas.width, i * canvas.height / 5);
+        ctx.stroke();
+      }
+      const w = canvas.width / chartData.length;
+      const max = Math.max(...chartData);
+      const min = Math.min(...chartData);
+      const range = max - min || 1;
+      ctx.beginPath();
+      const isUp = lastPrice > chartData[chartData.length - 2];
+      ctx.strokeStyle = isUp ? "#00ff88" : "#ff4444";
+      ctx.lineWidth = 5;
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = ctx.strokeStyle;
+      chartData.forEach((price, i) => {
+        const x = i * w;
+        const y = canvas.height - ((price - min) / range) * canvas.height * 0.8 - canvas.height * 0.1;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      const lastY = canvas.height - ((lastPrice - min) / range) * canvas.height * 0.8 - canvas.height * 0.1;
+      riderEl.style.left = (canvas.width - 110) + "px";
+      riderEl.style.top = (150 + lastY - 50) + "px";
+    }
+    function randomEvent() {
+      const events = [
+        { text: "?? ELON TWEET +50%", effect: () => lastPrice *= 1.5, type: "good" },
+        { text: "?? CZ PUMP", effect: () => lastPrice *= 1.3, type: "good" },
+        { text: "?? SBF ARRESTED", effect: () => lastPrice *= 0.6, type: "bad" },
+        { text: "?? EXCHANGE DOWN", effect: () => { balance *= 0.5; position *= 0.5; }, type: "bad" },
+        { text: "?? 100X GEM", effect: () => lastPrice *= 3, type: "good" },
+        { text: "?? RUG PULL", effect: () => lastPrice *= 0.1, type: "bad" }
+      ];
+      if (Math.random() < 0.025) {
+        const event = events[Math.floor(Math.random() * events.length)];
+        const el = document.getElementById("event");
+        el.textContent = event.text;
+        el.className = event.type;
+        el.style.display = "block";
+        event.effect();
+        updateUI();
+        setTimeout(() => el.style.display = "none", 2000);
+      }
+    }
+    function addDanmu() {
+      const texts = ["HODL", "WAGMI", "FOMO", "REKT", "MOON", "DUMP", "PUMP", "DIAMOND HANDS"];
+      const el = document.createElement("div");
+      el.className = "danmu";
+      el.textContent = texts[Math.floor(Math.random() * texts.length)];
+      el.style.top = (160 + Math.random() * 250) + "px";
+      el.style.color = Math.random() > 0.5 ? "#00ff88" : "#ff4444";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 8000);
+    }
+    setInterval(() => {
+      gameTime++;
+      generateCandle();
+      drawChart();
+      randomEvent();
+      if (gameTime % 50 === 0) addDanmu();
+    }, 100);
+    updateUI();
+  </script>
+</body>
+</html>

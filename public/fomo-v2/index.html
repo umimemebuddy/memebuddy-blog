@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>FOMO Rider</title>
+  <title>FOMO Rider - 散户模拟器</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -15,6 +15,9 @@
       user-select: none;
       -webkit-user-select: none;
     }
+    /* BUILD: 20260408194500 - MEGA UPDATE */
+    
+    /* ── TOP BAR ── */
     #top-bar {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -26,17 +29,122 @@
       z-index: 100;
       background: #000;
     }
-    #capital-label, #balance-label, #pnl-label {
-      font-size: 10px;
-      color: #555;
-      letter-spacing: 2px;
-    }
+    #capital-label, #balance-label, #pnl-label { font-size: 10px; color: #555; letter-spacing: 2px; }
     #capital-value { font-size: 18px; color: #666; }
     #balance-value { font-size: 48px; font-weight: bold; letter-spacing: -1px; }
     #balance-value.up { color: #00ff88; text-shadow: 0 0 30px #00ff88; }
     #balance-value.down { color: #ff4444; text-shadow: 0 0 30px #ff4444; }
     #pnl-value.positive { color: #00ff88; }
     #pnl-value.negative { color: #ff4444; }
+    
+    /* ── HEALTH BAR (新增) ── */
+    #health-container {
+      position: fixed;
+      top: 75px;
+      right: 15px;
+      width: 180px;
+      z-index: 110;
+    }
+    #health-label {
+      font-size: 9px;
+      color: #ff4444;
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+    #health-bar {
+      width: 100%;
+      height: 12px;
+      background: #1a0000;
+      border: 1px solid #ff4444;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    #health-fill {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff4444, #ff6600);
+      transition: width 0.3s;
+    }
+    #health-text {
+      font-size: 10px;
+      color: #ff4444;
+      margin-top: 2px;
+      text-align: right;
+    }
+    
+    /* ── FEAR & GREED INDEX (新增) ── */
+    #fgi-container {
+      position: fixed;
+      top: 130px;
+      right: 15px;
+      width: 180px;
+      z-index: 110;
+    }
+    #fgi-label {
+      font-size: 9px;
+      color: #888;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    #fgi-bar {
+      width: 100%;
+      height: 8px;
+      background: #111;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    #fgi-fill {
+      width: 50%;
+      height: 100%;
+      transition: width 0.5s, background 0.5s;
+    }
+    #fgi-text {
+      font-size: 11px;
+      color: #666;
+      margin-top: 2px;
+    }
+    
+    /* ── LEVERAGE INDICATOR (新增) ── */
+    #leverage-display {
+      position: fixed;
+      top: 75px;
+      left: 15px;
+      z-index: 110;
+    }
+    #leverage-label { font-size: 9px; color: #ff00ff; letter-spacing: 1px; }
+    #leverage-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff00ff;
+      text-shadow: 0 0 10px #ff00ff;
+    }
+    
+    /* ── TRAP DEPTH BAR (新增) ── */
+    #trap-container {
+      position: fixed;
+      top: 115px;
+      left: 15px;
+      width: 150px;
+      z-index: 110;
+      display: none;
+    }
+    #trap-label { font-size: 9px; color: #ff6600; letter-spacing: 1px; margin-bottom: 2px; }
+    #trap-bar {
+      width: 100%;
+      height: 8px;
+      background: #1a0a00;
+      border: 1px solid #ff6600;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    #trap-fill {
+      width: 0%;
+      height: 100%;
+      background: #ff6600;
+      transition: width 0.2s;
+    }
+    
+    /* ── POSITION BAR ── */
     #position-bar {
       position: fixed;
       top: 70px;
@@ -55,6 +163,8 @@
     #position-value, #entry-value { font-size: 14px; color: #888; font-weight: bold; }
     #position-value.active { color: #00ff88; }
     #entry-value.active { color: #ff6600; }
+    
+    /* ── TRADE BUTTONS ── */
     .trade-buttons {
       position: fixed;
       bottom: 40px;
@@ -64,7 +174,6 @@
       gap: 0;
       z-index: 100;
     }
-    /* BUILD: 20260408185710 */
     .trade-btn {
       padding: 32px 70px;
       font-size: 32px;
@@ -75,229 +184,184 @@
       cursor: pointer;
       font-family: 'Courier New', monospace;
       transition: all 0.15s ease-out;
-      position: relative;
-      overflow: hidden;
-    }
-    .trade-btn::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
-    }
-    .trade-btn:hover::before {
-      left: 100%;
     }
     #buy-btn {
       color: #00ff88;
       border-color: #00ff88;
       border-radius: 8px 0 0 8px;
-      box-shadow: 0 0 20px rgba(0,255,136,0.3), inset 0 0 20px rgba(0,255,136,0.05);
+      box-shadow: 0 0 20px rgba(0,255,136,0.3);
     }
-    #buy-btn:hover {
-      background: #00ff88;
-      color: #000;
-      box-shadow: 0 0 40px #00ff88, 0 0 60px rgba(0,255,136,0.5);
-    }
-    #buy-btn:active {
-      transform: scale(0.97);
-      box-shadow: 0 0 60px #00ff88;
-    }
+    #buy-btn:hover { background: #00ff88; color: #000; }
     #fomo-btn {
-      color: #ff00ff;
-      border-color: #ff00ff;
-      background: rgba(255,0,255,0.1);
-      box-shadow: 0 0 20px rgba(255,0,255,0.3), inset 0 0 20px rgba(255,0,255,0.05);
-      animation: fomo-glow 1.5s ease-in-out infinite alternate;
+      color: #ff6600;
+      border-color: #ff6600;
+      background: rgba(255,102,0,0.1);
+      box-shadow: 0 0 25px rgba(255,102,0,0.4);
     }
-    @keyframes fomo-glow {
-      from { box-shadow: 0 0 20px rgba(255,0,255,0.3), inset 0 0 20px rgba(255,0,255,0.05); }
-      to { box-shadow: 0 0 40px rgba(255,0,255,0.6), inset 0 0 30px rgba(255,0,255,0.1); }
-    }
-    #fomo-btn:hover {
-      background: #ff00ff;
-      color: #000;
-      box-shadow: 0 0 50px #ff00ff, 0 0 80px rgba(255,0,255,0.6);
-    }
-    #fomo-btn:active {
-      transform: scale(0.97);
-    }
+    #fomo-btn:hover { background: #ff6600; color: #000; }
     #sell-btn {
       color: #ff4444;
       border-color: #ff4444;
       border-radius: 0 8px 8px 0;
-      box-shadow: 0 0 20px rgba(255,68,68,0.3), inset 0 0 20px rgba(255,68,68,0.05);
+      box-shadow: 0 0 20px rgba(255,68,68,0.3);
     }
-    #sell-btn:hover {
-      background: #ff4444;
-      color: #000;
-      box-shadow: 0 0 40px #ff4444, 0 0 60px rgba(255,68,68,0.5);
-    }
-    #sell-btn:active {
-      transform: scale(0.97);
-      box-shadow: 0 0 60px #ff4444;
-    }
-    #sell-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-    #sell-btn:disabled:hover {
-      background: transparent;
-      color: #ff4444;
-      box-shadow: none;
-    }
-    #click-zone {
-      position: fixed;
-      top: 106px;
-      left: 0;
-      right: 0;
-      bottom: 80px;
-      z-index: 50;
-      cursor: pointer;
-    }
-    #click-zone:active {
-      background: rgba(0,255,136,0.05);
-    }
-    #score-board {
-      position: fixed;
-      top: 75px;
-      left: 20px;
-      display: flex;
-      gap: 12px;
-      z-index: 90;
-    }
-    .score-item {
-      background: rgba(255,255,255,0.03);
-      padding: 5px 10px;
-      border-left: 3px solid;
-    }
-    .score-item.trades { border-color: #00ff88; }
-    .score-item.profit { border-color: #ffd700; }
-    .score-item.combo { border-color: #ff00ff; }
-    .score-item.hype { border-color: #ff6600; }
-    .score-label { font-size: 9px; color: #444; letter-spacing: 1px; }
-    .score-value { font-size: 16px; font-weight: bold; }
-    #fomo-bar-wrap {
-      position: fixed;
-      top: 75px;
-      right: 20px;
-      width: 120px;
-      z-index: 90;
-    }
-    #fomo-label { font-size: 9px; color: #444; letter-spacing: 2px; text-align: right; }
-    #fomo-bar-bg {
-      margin-top: 4px;
-      height: 6px;
-      background: #1a1a1a;
-      border: 1px solid #333;
-    }
-    #fomo-bar-fill {
-      height: 100%;
-      background: #ff6600;
-      width: 0%;
-      transition: width 0.1s;
-      box-shadow: 0 0 8px #ff6600;
-    }
-    #chart-wrap {
-      position: fixed;
-      top: 130px;
-      left: 0;
-      right: 0;
-      height: 50%;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    #chart {
-      position: absolute;
-      top: 0; left: 60px; right: 0; bottom: 0;
-    }
-    #chart-label {
-      position: absolute;
-      top: 5px;
-      left: 65px;
-      font-size: 9px;
-      color: #333;
-      letter-spacing: 1px;
-      font-family: monospace;
-    }
-    #rider {
-      position: fixed;
-      z-index: 50;
-      transition: left 0.08s ease-out, top 0.08s ease-out;
-    }
-    #rider-svg {
-      width: 90px;
-      height: 90px;
-      filter: drop-shadow(0 0 20px currentColor);
-    }
-    #rider.flat { color: #666; }
-    #rider.fomo { color: #ff6600; animation: rider-throb 0.15s infinite alternate; }
-    #rider.peak { color: #ff00ff; animation: rider-throb 0.08s infinite alternate; }
-    #rider.rekt { color: #ff4444; animation: rider-shake 0.2s infinite; }
-    #rider.rich { color: #ffd700; animation: rider-glow 0.5s infinite alternate; }
-    @keyframes rider-throb {
-      from { transform: scale(1); }
-      to { transform: scale(1.3); }
-    }
-    @keyframes rider-shake {
-      0%, 100% { transform: rotate(-10deg); }
-      50% { transform: rotate(10deg); }
-    }
-    @keyframes rider-glow {
-      from { filter: drop-shadow(0 0 20px #ffd700); }
-      to { filter: drop-shadow(0 0 50px #ffd700); }
-    }
-    #action {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 220px;
-      height: 70px;
-      background: transparent;
-      color: #00ff88;
-      border: 2px solid #00ff88;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      letter-spacing: 3px;
-      font-family: monospace;
-    }
-    #action.fomo {
-      background: #ff6600;
-      border-color: #ff6600;
-      color: #000;
-      box-shadow: 0 0 30px #ff6600;
-    }
-    #action.peak {
-      background: #ff00ff;
-      border-color: #ff00ff;
-      color: #fff;
-      box-shadow: 0 0 50px #ff00ff;
-      animation: btn-pulse 0.1s infinite alternate;
-    }
-    @keyframes btn-pulse {
-      from { transform: translateX(-50%) scale(1); }
-      to { transform: translateX(-50%) scale(1.05); }
-    }
-    #event {
+    #sell-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    #sell-btn:not(:disabled):hover { background: #ff4444; color: #000; }
+    
+    /* ── REVENGE BUTTON (新增) ── */
+    #revenge-btn {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #000;
+      padding: 30px 60px;
+      font-size: 36px;
+      font-weight: 900;
+      color: #ff00ff;
+      border: 4px solid #ff00ff;
+      background: rgba(0,0,0,0.95);
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 4px;
+      box-shadow: 0 0 50px #ff00ff;
+      display: none;
+      z-index: 500;
+      animation: revenge-pulse 1s infinite;
+    }
+    @keyframes revenge-pulse {
+      0%, 100% { box-shadow: 0 0 30px #ff00ff; }
+      50% { box-shadow: 0 0 60px #ff00ff, 0 0 100px #ff00ff; }
+    }
+    
+    /* ── CHART ── */
+    #chart-container { position: fixed; top: 160px; left: 0; right: 0; bottom: 140px; }
+    #chart { width: 100%; height: 100%; }
+    #chart-label {
+      position: absolute;
+      top: 8px;
+      left: 15px;
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 1px;
+    }
+    
+    /* ── STATS ── */
+    #stats {
+      position: fixed;
+      bottom: 5px;
+      left: 15px;
+      font-size: 10px;
+      color: #333;
+      z-index: 90;
+    }
+    #stats span { margin-right: 15px; }
+    #stats strong { color: #555; }
+    
+    /* ── COMBO DISPLAY ── */
+    #combo-display {
+      position: fixed;
+      bottom: 150px;
+      right: 20px;
+      font-size: 32px;
+      font-weight: 900;
+      color: #ff6600;
+      text-shadow: 0 0 20px #ff6600;
+      display: none;
+      z-index: 90;
+    }
+    #combo-display.peak { color: #ff00ff; text-shadow: 0 0 30px #ff00ff; }
+    
+    /* ── FOMO BAR ── */
+    #fomo-bar-container {
+      position: fixed;
+      bottom: 130px;
+      left: 15px;
+      right: 15px;
+      height: 10px;
+      background: #111;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    #fomo-bar-fill {
+      height: 100%;
+      width: 0%;
+      transition: width 0.1s;
+    }
+    
+    /* ── CLICK ZONE ── */
+    #click-zone {
+      position: fixed;
+      top: 200px;
+      left: 0;
+      right: 0;
+      bottom: 200px;
+      z-index: 80;
+      cursor: crosshair;
+    }
+    
+    /* ── RIDER ── */
+    #rider {
+      position: fixed;
+      width: 100px;
+      height: 100px;
+      color: #00ff88;
+      transition: transform 0.08s;
+      z-index: 85;
+      pointer-events: none;
+    }
+    #rider.flat { color: #00ff88; }
+    #rider.fomo { color: #ffd700; animation: pulse 0.4s infinite; }
+    #rider.peak { color: #ff00ff; animation: pulse 0.2s infinite; }
+    #rider.rich { color: #ffd700; animation: glow 1s infinite; }
+    #rider.rekt { color: #ff4444; animation: shake 0.3s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    @keyframes glow { 0%, 100% { filter: drop-shadow(0 0 10px #ffd700); } 50% { filter: drop-shadow(0 0 30px #ffd700); } }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+    
+    /* ── ICONS & DANMU ── */
+    .icon {
+      position: fixed;
+      font-size: 26px;
+      pointer-events: none;
+      z-index: 150;
+      animation: icon-pop 1s ease-out forwards;
+    }
+    @keyframes icon-pop {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-80px) scale(0.3); }
+    }
+    .danmu {
+      position: fixed;
+      right: -200px;
+      white-space: nowrap;
+      font-size: 14px;
+      pointer-events: none;
+      z-index: 120;
+      animation: danmu-scroll 7s linear forwards;
+    }
+    @keyframes danmu-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100vw - 300px)); } }
+    
+    /* ── EVENT ── */
+    #event {
+      position: fixed;
+      top: 200px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      font-weight: bold;
+      padding: 15px 30px;
       border: 2px solid;
-      padding: 25px 35px;
-      font-size: 18px;
+      background: rgba(0,0,0,0.9);
       display: none;
       z-index: 200;
-      text-align: center;
-      font-family: monospace;
+      font-family: 'Courier New', monospace;
       letter-spacing: 2px;
     }
-    #event.good { border-color: #00ff88; color: #00ff88; text-shadow: 0 0 15px #00ff88; }
-    #event.bad { border-color: #ff4444; color: #ff4444; text-shadow: 0 0 15px #ff4444; }
+    #event.good { border-color: #00c853; color: #00c853; text-shadow: 0 0 15px #00c853; }
+    #event.bad { border-color: #ff1744; color: #ff1744; text-shadow: 0 0 15px #ff1744; }
     #event.fomo { border-color: #ff6600; color: #ff6600; text-shadow: 0 0 15px #ff6600; }
+    
+    /* ── MARKET EVENT ── */
     #market-event {
       position: fixed;
       top: 50%;
@@ -311,13 +375,154 @@
       z-index: 200;
       text-align: center;
       pointer-events: none;
-      animation: market-event-pop 0.3s ease-out;
     }
-    @keyframes market-event-pop {
-      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-      100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+    
+    /* ── LIGHTNING (新增) ── */
+    #lightning {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 400;
+      display: none;
     }
+    
+    /* ── EXCHANGE ALERT (新增) ── */
+    #exchange-alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      background: #111;
+      border: 2px solid #ff4444;
+      padding: 20px;
+      display: none;
+      z-index: 450;
+      font-family: 'Courier New', monospace;
+    }
+    #exchange-alert h3 {
+      color: #ff4444;
+      font-size: 16px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+    #exchange-alert p {
+      color: #888;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    #exchange-alert .btn {
+      margin-top: 15px;
+      padding: 8px 20px;
+      background: #ff4444;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: bold;
+    }
+    
+    /* ── LEADERBOARD (新增) ── */
+    #leaderboard {
+      position: fixed;
+      bottom: 160px;
+      right: 15px;
+      width: 180px;
+      background: rgba(0,0,0,0.8);
+      border: 1px solid #333;
+      padding: 8px;
+      font-size: 9px;
+      z-index: 100;
+    }
+    #leaderboard-title {
+      color: #ff6600;
+      font-size: 10px;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 3px;
+    }
+    .lb-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 2px 0;
+      color: #555;
+    }
+    .lb-row.top1 { color: #ffd700; }
+    .lb-row.top2 { color: #c0c0c0; }
+    .lb-row.top3 { color: #cd7f32; }
+    .lb-addr { font-family: monospace; }
+    
+    /* ── WARNING (新增) ── */
+    #warning {
+      position: fixed;
+      top: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,0,0,0.2);
+      border: 1px solid #ff4444;
+      padding: 5px 15px;
+      font-size: 11px;
+      color: #ff4444;
+      display: none;
+      z-index: 150;
+      letter-spacing: 1px;
+    }
+    
+    /* ── LAST CHANCE (新增) ── */
+    #last-chance {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.95);
+      border: 3px solid #ff00ff;
+      padding: 30px;
+      text-align: center;
+      display: none;
+      z-index: 500;
+    }
+    #last-chance h2 {
+      color: #ff00ff;
+      font-size: 24px;
+      margin-bottom: 15px;
+      letter-spacing: 3px;
+    }
+    #last-chance p {
+      color: #888;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+    #last-chance .btn {
+      padding: 10px 30px;
+      margin: 5px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+    }
+    #last-chance .yes { background: #ff00ff; color: #000; border: none; }
+    #last-chance .no { background: transparent; color: #666; border: 1px solid #333; }
+    
+    /* ── RESET BUTTON ── */
+    #reset-btn {
+      position: fixed;
+      bottom: 10px;
+      right: 15px;
+      background: #111;
+      border: 1px solid #333;
+      color: #444;
+      padding: 5px 12px;
+      cursor: pointer;
+      font-size: 10px;
+      font-family: 'Courier New', monospace;
+      z-index: 90;
+    }
+    #reset-btn:hover { border-color: #ff4444; color: #ff4444; }
+    
+    /* ── ANIMATIONS ── */
     @keyframes screen-shake {
       0%   { transform: translate(0, 0) rotate(0deg); }
       10%  { transform: translate(-12px, -8px) rotate(-1.5deg); }
@@ -337,95 +542,20 @@
       100% { opacity: 0; transform: translateY(120vh) rotate(360deg) scale(0.5); }
     }
     @keyframes loss-float {
-      0%   { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
-      40%  { opacity: 1; transform: translateY(-30px) translateX(10px) scale(1.3); color: #ff1744; }
-      100% { opacity: 0; transform: translateY(-80px) translateX(-20px) scale(0.8); }
-    }
-    @keyframes profit-pop {
-      0%   { opacity: 0; transform: translateY(20px) scale(0.5); }
-      30%  { opacity: 1; transform: translateY(-20px) scale(1.5); }
-      100% { opacity: 0; transform: translateY(-60px) scale(0.8); }
-    }
-    @keyframes balance-pulse-red {
-      0%, 100% { text-shadow: none; }
-      50% { text-shadow: 0 0 40px #ff1744, 0 0 80px #ff1744; color: #ff1744; }
-    }
-    @keyframes balance-pulse-green {
-      0%, 100% { text-shadow: none; }
-      50% { text-shadow: 0 0 40px #00ff88, 0 0 80px #00ff88; color: #00ff88; }
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-100px) scale(0.6); }
     }
     @keyframes rekt-text {
-      0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.2) rotate(-10deg); }
-      20%  { opacity: 1; transform: translate(-50%, -50%) scale(1.4) rotate(2deg); }
-      60%  { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-1deg); }
-      80%  { opacity: 0.8; transform: translate(-50%, -50%) scale(0.9) rotate(0deg); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.7) rotate(0deg); }
+      0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+      20%  { opacity: 1; transform: translate(-50%, -50%) scale(1.4); }
+      80%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; }
     }
-    .icon {
-      position: fixed;
-      font-size: 28px;
-      z-index: 60;
-      pointer-events: none;
-      animation: icon-pop 0.8s ease-out forwards;
+    @keyframes lightning-flash {
+      0%, 100% { opacity: 0; }
+      10%, 30%, 50% { opacity: 1; }
+      20%, 40%, 60% { opacity: 0.3; }
     }
-    @keyframes icon-pop {
-      0% { opacity: 1; transform: scale(1) translateY(0); }
-      100% { opacity: 0; transform: scale(1.8) translateY(-120px); }
-    }
-    .danmu {
-      position: fixed;
-      white-space: nowrap;
-      font-size: 14px;
-      opacity: 0.7;
-      animation: scroll 6s linear;
-      font-family: monospace;
-      z-index: 30;
-    }
-    @keyframes scroll {
-      from { transform: translateX(100vw); }
-      to { transform: translateX(-100%); }
-    }
-    #combo-display {
-      position: fixed;
-      top: 40%;
-      right: 30px;
-      font-size: 72px;
-      font-weight: bold;
-      color: #ff6600;
-      display: none;
-      text-shadow: 0 0 30px #ff6600;
-      z-index: 60;
-      font-family: monospace;
-    }
-    #combo-display.peak {
-      color: #ff00ff;
-      text-shadow: 0 0 50px #ff00ff;
-      font-size: 90px;
-    }
-    #cpc-display {
-      position: fixed;
-      bottom: 115px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 11px;
-      color: #333;
-      letter-spacing: 2px;
-      font-family: monospace;
-    }
-    #reset-btn {
-      position: fixed;
-      bottom: 10px;
-      right: 15px;
-      background: transparent;
-      border: 1px solid #333;
-      color: #444;
-      font-size: 10px;
-      padding: 4px 8px;
-      cursor: pointer;
-      font-family: monospace;
-      letter-spacing: 1px;
-    }
-    #reset-btn:hover { border-color: #666; color: #888; }
   </style>
 </head>
 <body>
@@ -437,48 +567,62 @@
     <div id="balance">
       <div id="balance-label">BALANCE</div>
       <div id="balance-value">$100</div>
+      <div id="pnl-label">P&amp;L</div>
+      <div id="pnl-value">$0</div>
     </div>
-    <div id="pnl">
-      <div id="pnl-label">P&L</div>
-      <div id="pnl-value" class="positive">$0</div>
+    <div id="stats">
+      <span>TRADES: <strong id="trades-count">0</strong></span>
+      <span>BEST: <strong id="best-trade">$0</strong></span>
+      <span>REKT: <strong id="rekt-count">0</strong></span>
     </div>
   </div>
+
+  <!-- 新增：血条 -->
+  <div id="health-container">
+    <div id="health-label">🔴 RETAIL HEALTH</div>
+    <div id="health-bar"><div id="health-fill"></div></div>
+    <div id="health-text">100 HP</div>
+  </div>
+
+  <!-- 新增：恐惧贪婪指数 -->
+  <div id="fgi-container">
+    <div id="fgi-label">FEAR &amp; GREED INDEX</div>
+    <div id="fgi-bar"><div id="fgi-fill"></div></div>
+    <div id="fgi-text">50 - NEUTRAL</div>
+  </div>
+
+  <!-- 新增：杠杆显示 -->
+  <div id="leverage-display">
+    <div id="leverage-label">LEVERAGE</div>
+    <div id="leverage-value">1x</div>
+  </div>
+
+  <!-- 新增：被套深度 -->
+  <div id="trap-container">
+    <div id="trap-label">📉 TRAP DEPTH</div>
+    <div id="trap-bar"><div id="trap-fill"></div></div>
+  </div>
+
+  <!-- 新增：排行榜 -->
+  <div id="leaderboard">
+    <div id="leaderboard-title">🏆 TODAY'S REKT KINGS</div>
+    <div class="lb-row top1"><span class="lb-addr">0x7a3f...</span><span>-$12.8M</span></div>
+    <div class="lb-row top2"><span class="lb-addr">0x9e2c...</span><span>-$8.4M</span></div>
+    <div class="lb-row top3"><span class="lb-addr">0x1b4d...</span><span>-$5.2M</span></div>
+    <div class="lb-row"><span class="lb-addr">0x5f8a...</span><span>-$3.1M</span></div>
+    <div class="lb-row"><span class="lb-addr">YOU</span><span id="lb-you">$0</span></div>
+  </div>
+
+  <!-- 新增：庄家警告 -->
+  <div id="warning">⚠️ SMART MONEY HAS DETECTED YOUR POSITION</div>
 
   <div id="position-bar">
-    <div id="position-label">POSITION</div>
-    <div id="position-value">-</div>
-    <div id="entry-label">ENTRY</div>
-    <div id="entry-value">-</div>
+    <div><span id="position-label">POSITION</span> <span id="position-value">-</span></div>
+    <div><span id="entry-label">ENTRY</span> <span id="entry-value">-</span></div>
   </div>
 
-  <div id="score-board">
-    <div class="score-item trades">
-      <div class="score-label">TRADES</div>
-      <div class="score-value" id="trades-count">0</div>
-    </div>
-    <div class="score-item profit">
-      <div class="score-label">BEST</div>
-      <div class="score-value" id="best-trade">$0</div>
-    </div>
-    <div class="score-item combo">
-      <div class="score-label">CPS</div>
-      <div class="score-value" id="combo-count">0</div>
-    </div>
-    <div class="score-item hype">
-      <div class="score-label">HYPE</div>
-      <div class="score-value" id="hype-count">0</div>
-    </div>
-  </div>
-
-  <div id="fomo-bar-wrap">
-    <div id="fomo-label">FOMO LVL</div>
-    <div id="fomo-bar-bg"><div id="fomo-bar-fill"></div></div>
-  </div>
-
-  <div id="combo-display">x0</div>
-
-  <div id="chart-wrap">
-    <div id="chart-label"></div>
+  <div id="chart-container">
+    <div id="chart-label">FOMO/USDT 1s</div>
     <canvas id="chart"></canvas>
   </div>
 
@@ -498,39 +642,73 @@
   <div id="click-zone"></div>
 
   <div class="trade-buttons">
-    <button id="buy-btn">BUY</button>
-    <button id="fomo-btn">⚡ FOMO ⚡</button>
-    <button id="sell-btn" disabled>SELL</button>
+    <button id="buy-btn" class="trade-btn">BUY</button>
+    <button id="fomo-btn" class="trade-btn">⚡ FOMO ⚡</button>
+    <button id="sell-btn" class="trade-btn" disabled>SELL</button>
   </div>
 
-  <div id="cpc-display">CPS: 0 | CLICK TO GENERATE FOMO</div>
+  <div id="fomo-bar-container"><div id="fomo-bar-fill"></div></div>
+  <div id="combo-display"></div>
 
   <div id="event"></div>
   <div id="market-event"></div>
+  
+  <!-- 新增：闪电 -->
+  <svg id="lightning" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <path id="lightning-path" fill="none" stroke="#ff4444" stroke-width="0.5"/>
+  </svg>
+  
+  <!-- 新增：交易所公告 -->
+  <div id="exchange-alert">
+    <h3>📢 EXCHANGE NOTICE</h3>
+    <p id="alert-text"></p>
+    <button class="btn" onclick="closeAlert()">OK</button>
+  </div>
+  
+  <!-- 新增：最后一次机会 -->
+  <div id="last-chance">
+    <h2>🎲 ONE LAST CHANCE</h2>
+    <p>Double or nothing? 10x leverage, one trade.</p>
+    <button class="btn yes" onclick="takeLastChance()">LET'S GO</button>
+    <button class="btn no" onclick="closeLastChance()">I'm done</button>
+  </div>
+  
+  <!-- 新增：复仇按钮 -->
+  <button id="revenge-btn" onclick="revenge()">🔥 REVENGE 🔥</button>
+
   <button id="reset-btn">RESET</button>
 
   <script>
+    // ── CORE STATE ──
     const STARTING_CAPITAL = 100;
     let balance = STARTING_CAPITAL;
-    let position = 0;        // 当前持仓数量
-    let entryPrice = 0;       // 买入价格
+    let position = 0;
+    let entryPrice = 0;
     let lastPrice = 100;
     let chartData = [];
     let volData = [];
     let gameTime = 0;
 
     // FOMO engine
-    let hypeLevel = 0;        // 0-100, how "fomo'd" we are
-    let hypeDecay = 0.4;      // decay per tick when not clicking
-    let hypeGain = 8;         // gain per click
-    let hypeGainDecay = 0.92; // multiplier decay on consecutive clicks
+    let hypeLevel = 0;
+    let hypeDecay = 0.4;
+    let hypeGain = 8;
+    let hypeGainDecay = 0.92;
     let lastClickTime = 0;
-    let cps = 0;              // clicks per second (rolling)
-    let clickTimes = [];      // timestamps of last N clicks for CPS calc
+    let clickTimes = [];
     let totalClicks = 0;
     let hypeBursts = 0;
     let bestTrade = 0;
     let trades = 0;
+
+    // 新增状态
+    let health = 100;
+    let rektCount = 0;
+    let leverage = 1;
+    let fearGreedIndex = 50;
+    let totalLoss = 0;
+    let consecutiveRekts = 0;
+    let gameover = false;
 
     const canvas = document.getElementById("chart");
     const ctx = canvas.getContext("2d");
@@ -540,13 +718,12 @@
     const clickZone = document.getElementById("click-zone");
     const comboDisplay = document.getElementById("combo-display");
     const fomoBarFill = document.getElementById("fomo-bar-fill");
-    const cpcEl = document.getElementById("cpc-display");
     const buyBtn = document.getElementById("buy-btn");
     const sellBtn = document.getElementById("sell-btn");
     const fomoBtn = document.getElementById("fomo-btn");
 
     const FOMO_ICONS = ["🚀","💰","🔥","💎","📈","🌕","🐋","💥","⚡","👻","🌊","🎰","🀄","🦐","✨"];
-    const DANMU = ["HODL","WAGMI","FOMO","REKT","MOON","DIAMOND HANDS","TO THE MOON","APES TOGETHER","DYOR","NFA","GM","NGMI","BULLISH","BEARISH","APT","PUMP","DUMP","WEN"];
+    const DANMU = ["HODL","WAGMI","FOMO","REKT","MOON","DIAMOND HANDS","TO THE MOON","APES TOGETHER","DYOR","NFA","GM","NGMI","BULLISH","BEARISH","PUMP","DUMP","梭哈梭哈","跑啊","庄家砸盘了","快抄底","这波稳了"];
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight * 0.50;
@@ -556,36 +733,30 @@
       volData.push(Math.random() * 5 + 1);
     }
 
+    // ── CLICK HANDLING ──
     function calculateCPS() {
       const now = Date.now();
-      // keep only clicks in last 1000ms
       clickTimes = clickTimes.filter(t => now - t < 1000);
-      cps = clickTimes.length;
-      return cps;
+      return clickTimes.length;
     }
 
     function doClick(e) {
+      if (gameover) return;
       const now = Date.now();
       clickTimes.push(now);
-
-      // Hype accumulation with diminishing returns
-      const timeSinceLast = now - lastClickTime;
       let gain = hypeGain;
-      if (timeSinceLast < 300) {
-        gain = hypeGain * Math.pow(hypeGainDecay, Math.floor(300 / timeSinceLast));
+      if (now - lastClickTime < 300) {
+        gain = hypeGain * Math.pow(hypeGainDecay, Math.floor(300 / (now - lastClickTime + 1)));
       }
       hypeLevel = Math.min(100, hypeLevel + gain);
       lastClickTime = now;
       totalClicks++;
       hypeBursts++;
-
-      // Spawn icon near click
       if (e) {
         const x = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || window.innerWidth / 2;
         const y = e.clientY || (e.touches && e.touches[0] && e.touches[0].clientY) || window.innerHeight / 2;
         spawnIcon(x, y);
       }
-
       updateUI();
       calculateCPS();
     }
@@ -603,6 +774,7 @@
     }
 
     function spawnDanmu() {
+      if (gameover) return;
       const el = document.createElement("div");
       el.className = "danmu";
       el.textContent = DANMU[Math.floor(Math.random() * DANMU.length)];
@@ -614,9 +786,21 @@
       setTimeout(() => el.remove(), 7000);
     }
 
-    function sell() {
+    // ── TRADE LOGIC ──
+    buyBtn.addEventListener("click", () => {
+      if (gameover || position > 0) return;
+      if (balance <= 0) return;
+      position = balance;
+      entryPrice = lastPrice;
+      balance = 0;
+      trades++;
+      updateUI();
+      // 买入后拉升
+      setTimeout(() => injectWick('up'), 100);
+    });
+
+    sellBtn.addEventListener("click", () => {
       if (position > 0) {
-        // Dramatic profit multiplier based on hype
         const hypeMultiplier = 1 + (hypeLevel / 20) + (Math.random() * 2);
         const rawProfit = position * (lastPrice / entryPrice);
         const profit = rawProfit * hypeMultiplier;
@@ -625,299 +809,52 @@
         if (pnl > bestTrade) bestTrade = pnl;
         position = 0;
         entryPrice = 0;
+        trades++;
         updateUI();
+        // 卖出后暴跌
+        setTimeout(() => injectWick('down'), 150);
       }
-    }
+    });
 
-    function randomEvent() {
-      const events = [
-        { text: "🚀 ELON TWEET!", effect: () => { lastPrice *= 2.2; hypeLevel = Math.min(100, hypeLevel + 40); }, type: "fomo" },
-        { text: "💰 KOL PUMP!", effect: () => { lastPrice *= 1.8; hypeLevel = Math.min(100, hypeLevel + 25); }, type: "good" },
-        { text: "🔥 100X INCOMING!", effect: () => { lastPrice *= 4; hypeLevel = Math.min(100, hypeLevel + 50); }, type: "fomo" },
-        { text: "🌕 TO THE MOON!", effect: () => { lastPrice *= 3; hypeLevel = Math.min(100, hypeLevel + 45); }, type: "fomo" },
-        { text: "🐋 WHALE BUY!", effect: () => { lastPrice *= 2.5; hypeLevel = Math.min(100, hypeLevel + 35); }, type: "fomo" },
-        { text: "📉 CZ SELLING!", effect: () => { lastPrice *= 0.6; hypeLevel = Math.max(0, hypeLevel - 20); }, type: "bad" },
-        { text: "💀 RUG PULL!", effect: () => { lastPrice *= 0.3; hypeLevel = Math.max(0, hypeLevel - 30); }, type: "bad" },
-        { text: "⚡ EXCHANGE HALTS!", effect: () => { balance *= 0.7; position *= 0.7; hypeLevel = Math.max(0, hypeLevel - 25); }, type: "bad" },
-        { text: "📉 LIQUIDATION WAVE!", effect: () => { lastPrice *= 0.5; hypeLevel = Math.max(0, hypeLevel - 15); }, type: "bad" },
-      ];
-      // More likely at high hype
-      const prob = 0.02 + hypeLevel * 0.001;
-      if (Math.random() < prob) {
-        const ev = events[Math.floor(Math.random() * events.length)];
-        const el = document.getElementById("event");
-        el.textContent = ev.text;
-        el.className = ev.type;
-        el.style.display = "block";
-        ev.effect();
-        updateUI();
-        // Big icons burst
-        for (let i = 0; i < 5; i++) {
-          setTimeout(() => {
-            spawnIcon(window.innerWidth / 2, window.innerHeight / 2);
-          }, i * 80);
-        }
-        setTimeout(() => el.style.display = "none", 2500);
-      }
-    }
-
-    function generateCandle() {
-      // Base volatility grows with hype and time
-      const baseVol = 0.03 + hypeLevel * 0.002 + gameTime * 0.00003;
-      // Hype drives the direction (mostly up, sometimes crash)
-      const hypeBias = hypeLevel > 60 ? 0.4 : (hypeLevel > 30 ? 0.15 : 0);
-      const direction = Math.random() - 0.5 + hypeBias;
-      const vol = baseVol * (1 + hypeLevel * 0.015);
-      const change = direction * vol * lastPrice;
-      lastPrice = Math.max(1, lastPrice + change);
-
-      // Hype decays when not generating
-      hypeLevel = Math.max(0, hypeLevel - hypeDecay);
-
-      chartData.push(lastPrice);
-      const volBar = Math.random() * 8 + hypeLevel * 0.1 + 1;
-      volData.push(volBar);
-      if (chartData.length > 120) { chartData.shift(); volData.shift(); }
-    }
-
-    function drawChart() {
-      const W = canvas.width;
-      const H = canvas.height;
-      const chartTop = 0;
-      const chartBot = H * 0.78;  // chart takes 78% of canvas height
-      const volTop = chartBot + 4;
-      const volBot = H - 2;
-      const chartH = chartBot - chartTop;
-      const volH = volBot - volTop;
-      const rightMargin = 65;
-      const leftMargin = 0;
-      const chartW = W - rightMargin;
-
-      ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, W, H);
-
-      // ── price axis labels (right side) ──
-      const allPrices = [...chartData];
-      const maxP = Math.max(...allPrices);
-      const minP = Math.min(...allPrices);
-      const rangeP = maxP - minP || 1;
-      const priceStep = rangeP / 4;
-      ctx.font = "10px monospace";
-      ctx.textAlign = "right";
-      for (let i = 0; i <= 4; i++) {
-        const price = minP + i * priceStep;
-        const y = chartTop + chartH - (i / 4) * chartH;
-        ctx.fillStyle = "#2a2a2a";
-        ctx.fillText(price.toFixed(2), W - 6, y + 3);
-        // grid line
-        ctx.strokeStyle = "#0f0f0f";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(leftMargin, y);
-        ctx.lineTo(W - rightMargin, y);
-        ctx.stroke();
-      }
-
-      // ── vertical time grid ──
-      const n = chartData.length;
-      const candleW = chartW / n;
-      const bodyW = candleW * 0.7;
-      for (let i = 0; i < n; i += 10) {
-        const x = leftMargin + i * candleW + candleW / 2;
-        ctx.strokeStyle = "#0f0f0f";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(x, chartTop);
-        ctx.lineTo(x, chartBot);
-        ctx.stroke();
-      }
-
-      // ── candles ──
-      const hypeColor = hypeLevel > 70 ? "#ff00ff" : hypeLevel > 40 ? "#ff6600" : hypeLevel > 15 ? "#ffd700" : "#00ff88";
-      for (let i = 0; i < n; i++) {
-        const open = i === 0 ? chartData[0] : chartData[i - 1];
-        const close = chartData[i];
-        const isUp = close >= open;
-        const color = isUp ? "#00c853" : "#ff1744";
-
-        const x = leftMargin + i * candleW + candleW * 0.15;
-        const yTop = chartTop + chartH - ((Math.max(open, close) - minP) / rangeP) * chartH;
-        const yBot = chartTop + chartH - ((Math.min(open, close) - minP) / rangeP) * chartH;
-        const bodyH = Math.max(1, yBot - yTop);
-
-        // wick
-        const wickX = x + bodyW / 2;
-        const wickTop = chartTop + chartH - ((Math.max(open, close) - minP) / rangeP) * chartH;
-        const wickBot = chartTop + chartH - ((Math.min(open, close) - minP) / rangeP) * chartH;
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1;
-        ctx.shadowBlur = 2;
-        ctx.shadowColor = color;
-        ctx.beginPath();
-        ctx.moveTo(wickX, wickTop);
-        ctx.lineTo(wickX, wickBot);
-        ctx.stroke();
-
-        // body
-        ctx.fillStyle = isUp ? "#00c853" : "#ff1744";
-        ctx.fillRect(x, yTop, bodyW, bodyH);
-
-        ctx.shadowBlur = 0;
-      }
-
-      // ── current price line ──
-      const curY = chartTop + chartH - ((lastPrice - minP) / rangeP) * chartH;
-      const priceColor = hypeColor;
-      ctx.strokeStyle = priceColor;
-      ctx.lineWidth = 1;
-      ctx.setLineDash([4, 3]);
-      ctx.shadowBlur = 5;
-      ctx.shadowColor = priceColor;
-      ctx.beginPath();
-      ctx.moveTo(leftMargin, curY);
-      ctx.lineTo(W - rightMargin, curY);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.shadowBlur = 0;
-
-      // price badge
-      ctx.fillStyle = priceColor;
-      ctx.fillRect(W - rightMargin + 2, curY - 8, rightMargin - 4, 16);
-      ctx.fillStyle = "#000";
-      ctx.font = "bold 10px monospace";
-      ctx.textAlign = "center";
-      ctx.fillText(lastPrice.toFixed(2), W - rightMargin / 2 - 2, curY + 3);
-
-      // ── volume bars ──
-      const volMax = Math.max(...volData);
-      const volRange = volMax || 1;
-      for (let i = 0; i < n; i++) {
-        const openV = i === 0 ? 1 : volData[i - 1];
-        const closeV = volData[i];
-        const isUpV = closeV >= openV;
-        const barH = Math.max(1, (closeV / volRange) * volH * 0.9);
-        const x = leftMargin + i * candleW + candleW * 0.15;
-        ctx.fillStyle = isUpV ? "rgba(0,200,83,0.4)" : "rgba(255,23,68,0.4)";
-        ctx.fillRect(x, volBot - barH, bodyW, barH);
-      }
-
-      // Rider position
-      riderEl.style.left = (W - 120) + "px";
-      riderEl.style.top = (130 + curY - 50) + "px";
-
-      // update label
-      document.getElementById("chart-label").textContent =
-        `FOMO/USDT  1s  O:${lastPrice.toFixed(2)}  H:${maxP.toFixed(2)}  L:${minP.toFixed(2)}`;
-    }
-
-    function formatMoney(amount) {
-      if (amount >= 1000000000) return (amount / 1000000000).toFixed(2) + "B";
-      if (amount >= 1000000) return (amount / 1000000).toFixed(2) + "M";
-      if (amount >= 10000) return (amount / 1000).toFixed(1) + "K";
-      return Math.floor(amount).toLocaleString();
-    }
-
-    function updateUI() {
-      // Position display
-      const posValueEl = document.getElementById("position-value");
-      const entryValueEl = document.getElementById("entry-value");
-      if (position > 0) {
-        posValueEl.textContent = position.toFixed(2);
-        posValueEl.classList.add("active");
-        entryValueEl.textContent = "$" + entryPrice.toFixed(2);
-        entryValueEl.classList.add("active");
-        sellBtn.disabled = false;
-      } else {
-        posValueEl.textContent = "-";
-        posValueEl.classList.remove("active");
-        entryValueEl.textContent = "-";
-        entryValueEl.classList.remove("active");
-        sellBtn.disabled = true;
-      }
-
-      // Balance display
-      balanceEl.textContent = "$" + formatMoney(balance + (position > 0 ? position * (lastPrice / entryPrice) : 0));
-      balanceEl.className = "";
-      if (position > 0) {
-        const cur = position * (lastPrice / entryPrice) - position;
-        if (cur > 0) balanceEl.classList.add("up");
-        else balanceEl.classList.add("down");
-      }
-
-      // P&L
-      const totalValue = balance + (position > 0 ? position * (lastPrice / entryPrice) : 0);
-      const pnl = totalValue - STARTING_CAPITAL;
-      pnlEl.textContent = (pnl >= 0 ? "+" : "") + "$" + formatMoney(pnl);
-      pnlEl.className = pnl >= 0 ? "positive" : "negative";
-
-      document.getElementById("trades-count").textContent = trades;
-      document.getElementById("best-trade").textContent = "$" + formatMoney(bestTrade);
-
-      // CPS display
-      const displayCps = calculateCPS();
-      document.getElementById("combo-count").textContent = displayCps;
-      document.getElementById("hype-count").textContent = Math.floor(hypeLevel);
-
-      // FOMO bar
-      fomoBarFill.style.width = hypeLevel + "%";
-      if (hypeLevel > 70) {
-        fomoBarFill.style.background = "#ff00ff";
-        fomoBarFill.style.boxShadow = "0 0 15px #ff00ff";
-      } else if (hypeLevel > 40) {
-        fomoBarFill.style.background = "#ff6600";
-        fomoBarFill.style.boxShadow = "0 0 10px #ff6600";
-      } else {
-        fomoBarFill.style.background = "#ff6600";
-        fomoBarFill.style.boxShadow = "0 0 5px #ff6600";
-      }
-
-      // Rider state
-      if (balance >= 1000000) {
-        riderEl.className = "rich";
-      } else if (hypeLevel > 70) {
-        riderEl.className = "peak";
-      } else if (hypeLevel > 25) {
-        riderEl.className = "fomo";
-      } else if (balance < 10 && position === 0) {
-        riderEl.className = "rekt";
-      } else {
-        riderEl.className = "flat";
-      }
-
-      // Combo display
-      if (displayCps >= 5) {
-        comboDisplay.style.display = "block";
-        comboDisplay.textContent = "x" + displayCps;
-        comboDisplay.className = displayCps >= 10 ? "peak" : "";
-      } else {
-        comboDisplay.style.display = "none";
-      }
-
-      // CPS text
-      const cpcText = displayCps > 0
-        ? `CPS: ${displayCps} | FOMO AT ${Math.floor(hypeLevel)}%`
-        : `CLICK TO GENERATE FOMO`;
-      cpcEl.textContent = cpcText;
-    }
-
-    // Input handlers
-    clickZone.addEventListener("mousedown", (e) => { e.preventDefault(); doClick(e); });
+    fomoBtn.addEventListener("click", doClick);
+    clickZone.addEventListener("click", doClick);
     clickZone.addEventListener("touchstart", (e) => { e.preventDefault(); doClick(e); }, { passive: false });
 
-    // ── Market manipulation helpers ──
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      balance = STARTING_CAPITAL;
+      position = 0;
+      entryPrice = 0;
+      lastPrice = 100;
+      health = 100;
+      hypeLevel = 0;
+      trades = 0;
+      rektCount = 0;
+      totalLoss = 0;
+      leverage = 1;
+      consecutiveRekts = 0;
+      gameover = false;
+      chartData = [];
+      volData = [];
+      for (let i = 0; i < 80; i++) {
+        chartData.push(100 + Math.random() * 15 - 7.5);
+        volData.push(Math.random() * 5 + 1);
+      }
+      document.getElementById("revenge-btn").style.display = "none";
+      document.getElementById("warning").style.display = "none";
+      updateUI();
+    });
+
+    // ── MARKET MANIPULATION (增强版) ──
     function injectWick(direction) {
-      // direction: 'down' = squeeze retail longs (散户做多被埋), 'up' = squeeze shorts (空头被轧)
       const pct = direction === 'down'
         ? -(0.30 + Math.random() * 0.30)
         :  (0.25 + Math.random() * 0.25);
       const spike = lastPrice * (1 + pct);
 
       if (direction === 'down') {
-        // 先假突破把多头扫了, 再砸下来
         chartData.push(lastPrice * 1.12);
         chartData.push(lastPrice * 1.08);
       } else {
-        // 先假跌破把空头扫了, 再拉上去
         chartData.push(lastPrice * 0.88);
         chartData.push(lastPrice * 0.92);
       }
@@ -925,28 +862,25 @@
       chartData.push(lastPrice);
       lastPrice = spike;
 
-      const label = direction === 'down'
-        ? "⚰️ STOP HUNTED! RETAIL REKT"
-        : "🔪 SHORT SQUEEZE! WICKED";
-      showMarketEvent(label, direction === 'down' ? "#ff1744" : "#00c853");
-
       if (direction === 'down') {
-        // ── 爆仓大套餐 ──
         flashScreen("#ff1744", 300);
         shakeScreen();
         hypeLevel = Math.max(0, hypeLevel - 30);
+        fearGreedIndex = Math.max(0, fearGreedIndex - 15);
 
-        // 爆仓文字炸屏
         showRektText();
-        // 💀头像雨
         spawnSkullRain();
-        // 亏损数字飘走
-        const pos = (position > 0) ? position * (1 - (lastPrice / entryPrice)) : 0;
-        if (pos > 0) spawnLossText(-pos);
-        // 龙虾变REKT
-        riderEl.className = "rekt";
-        // 余额变红脉冲
-        setTimeout(() => balanceEl.style.animation = "balance-pulse-red 0.4s ease-in-out 4", 100);
+        showLightning();
+        
+        // 扣血
+        const damage = 15 + Math.floor(Math.random() * 20);
+        health = Math.max(0, health - damage);
+        document.getElementById("health-fill").style.width = health + "%";
+        document.getElementById("health-text").textContent = health + " HP";
+        
+        if (health <= 0) {
+          gameOver();
+        }
 
         // 小图标爆炸
         for (let i = 0; i < 12; i++) {
@@ -956,26 +890,183 @@
           ), i * 60);
         }
 
-        // 弹幕变成爆仓内容
-        spawnDanmuBurst([
-          "REKT", "NGMI", "YOU ARE THE EXIT LIQUIDITY", "WAGMI?",
-          "LIQUIDATED", "TO THE ZERO", "DIAMOND HANDS", "💀💀💀",
-          "YOUR STOP LOSS IS MY LUNCH", "韭菜收割完毕", "止损止损止损"
-        ]);
+        spawnDanmuBurst(["REKT", "NGMI", "LIQUIDATED", "💀💀💀", "YOU ARE EXIT LIQUIDITY"]);
+
+        // 庄家警告
+        if (leverage >= 5) {
+          document.getElementById("warning").style.display = "block";
+          setTimeout(() => document.getElementById("warning").style.display = "none", 3000);
+        }
 
       } else {
-        // ── 轧空小套餐 ──
         flashScreen("#00c853", 200);
         hypeLevel = Math.min(100, hypeLevel + 20);
-        // 小图标庆祝
+        fearGreedIndex = Math.min(100, fearGreedIndex + 10);
         for (let i = 0; i < 6; i++) {
           setTimeout(() => spawnIcon(window.innerWidth / 2, window.innerHeight / 2), i * 80);
         }
-        spawnProfitText("+SQUEEZE!");
-        spawnDanmuBurst(["SHORTS REKT", "BEAR TRAP", "GAMMA SQUEEZE"]);
+        spawnProfitText("+PUMP!");
+        spawnDanmuBurst(["MOON", "WAGMI", "PUMP IT"]);
       }
+      
+      // 更新恐惧贪婪指数显示
+      updateFGI();
     }
 
+    // ── 新增：闪电效果 ──
+    function showLightning() {
+      const lightning = document.getElementById("lightning");
+      const path = document.getElementById("lightning-path");
+      
+      // 生成锯齿闪电路径
+      let d = "M50,0";
+      let y = 0;
+      while (y < 100) {
+        y += 5 + Math.random() * 10;
+        const x = 50 + (Math.random() - 0.5) * 40;
+        d += ` L${x},${y}`;
+      }
+      path.setAttribute("d", d);
+      path.style.stroke = "#ff4444";
+      path.style.strokeWidth = "1";
+      
+      lightning.style.display = "block";
+      lightning.style.animation = "lightning-flash 0.5s";
+      
+      setTimeout(() => {
+        lightning.style.display = "none";
+      }, 500);
+    }
+
+    // ── 新增：恐惧贪婪指数更新 ──
+    function updateFGI() {
+      const fill = document.getElementById("fgi-fill");
+      const text = document.getElementById("fgi-text");
+      
+      // 基于hype和市场状态计算
+      fearGreedIndex = Math.min(100, Math.max(0, 
+        50 + hypeLevel * 0.3 + (balance > STARTING_CAPITAL ? 10 : -10) + (Math.random() - 0.5) * 10
+      ));
+      
+      fill.style.width = fearGreedIndex + "%";
+      
+      let color, label;
+      if (fearGreedIndex >= 80) { color = "#00ff88"; label = "EXTREME GREED"; }
+      else if (fearGreedIndex >= 60) { color = "#88ff00"; label = "GREED"; }
+      else if (fearGreedIndex >= 40) { color = "#ffcc00"; label = "NEUTRAL"; }
+      else if (fearGreedIndex >= 20) { color = "#ff6600"; label = "FEAR"; }
+      else { color = "#ff4444"; label = "EXTREME FEAR"; }
+      
+      fill.style.background = color;
+      text.textContent = Math.floor(fearGreedIndex) + " - " + label;
+    }
+
+    // ── 新增：黑天鹅事件 ──
+    function triggerBlackSwan() {
+      const events = [
+        { title: "🚨 EXCHANGE HACKED", text: "Withdrawals suspended. Your funds are... temporarily unavailable.", effect: () => { balance *= 0.5; } },
+        { title: "⚖️ REGULATORY RAID", text: "SEC has classified FOMO as a security. Trading halted.", effect: () => { lastPrice *= 0.4; } },
+        { title: "🏃 RUG PULL", text: "Devs have exited with liquidity. Token migrates to new contract (not yours).", effect: () => { balance = 0; position = 0; } },
+        { title: "📉 FLASH CRASH", text: "Oracle malfunction. All positions liquidated at bottom.", effect: () => { health = 0; } },
+        { title: "🌐 NETWORK CONGESTION", text: "Gas fees: 10,000 gwei. Your transaction: pending.", effect: () => { /* 视觉效果 */ } },
+      ];
+      
+      const ev = events[Math.floor(Math.random() * events.length)];
+      document.getElementById("alert-text").innerHTML = `<strong>${ev.title}</strong><br><br>${ev.text}`;
+      document.getElementById("exchange-alert").style.display = "block";
+      
+      ev.effect();
+      shakeScreen();
+      flashScreen("#ff4444", 500);
+      
+      health = Math.max(0, health - 30);
+      document.getElementById("health-fill").style.width = health + "%";
+      
+      if (health <= 0) gameOver();
+    }
+
+    function closeAlert() {
+      document.getElementById("exchange-alert").style.display = "none";
+    }
+
+    // ── 新增：游戏结束 ──
+    function gameOver() {
+      gameover = true;
+      rektCount++;
+      consecutiveRekts++;
+      totalLoss += STARTING_CAPITAL - balance;
+      
+      document.getElementById("rekt-count").textContent = rektCount;
+      document.getElementById("lb-you").textContent = "-$" + formatMoney(totalLoss);
+      
+      // 显示GAME OVER
+      const go = document.createElement("div");
+      go.innerHTML = `
+        <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:600;">
+          <div style="font-size:80px;color:#ff4444;font-weight:900;letter-spacing:10px;text-shadow:0 0 30px #ff4444;">GAME OVER</div>
+          <div style="font-size:20px;color:#666;margin-top:20px;">Total Loss: -$${formatMoney(totalLoss)}</div>
+        </div>
+      `;
+      document.body.appendChild(go);
+      
+      // 显示复仇按钮
+      setTimeout(() => {
+        go.remove();
+        if (consecutiveRekts >= 1) {
+          document.getElementById("revenge-btn").style.display = "block";
+        }
+        if (consecutiveRekts >= 3) {
+          showLastChance();
+        }
+      }, 2000);
+    }
+
+    // ── 新增：复仇模式 ──
+    function revenge() {
+      leverage *= 2;
+      document.getElementById("leverage-value").textContent = leverage + "x";
+      document.getElementById("revenge-btn").style.display = "none";
+      
+      balance = STARTING_CAPITAL * leverage;
+      position = 0;
+      entryPrice = 0;
+      health = 50;
+      gameover = false;
+      
+      document.getElementById("health-fill").style.width = health + "%";
+      document.getElementById("health-text").textContent = health + " HP";
+      
+      flashScreen("#ff00ff", 300);
+      spawnDanmuBurst(["REVENGE MODE", `${leverage}x LEVERAGE`, "TO THE MOON OR ZERO"]);
+      
+      updateUI();
+    }
+
+    // ── 新增：最后一次机会 ──
+    function showLastChance() {
+      document.getElementById("last-chance").style.display = "block";
+    }
+
+    function takeLastChance() {
+      document.getElementById("last-chance").style.display = "none";
+      leverage = 10;
+      document.getElementById("leverage-value").textContent = "10x";
+      balance = STARTING_CAPITAL * 10;
+      health = 25;
+      gameover = false;
+      
+      document.getElementById("health-fill").style.width = health + "%";
+      flashScreen("#ff00ff", 500);
+      spawnDanmuBurst(["FINAL FORM", "10X LEVERAGE", "ALL OR NOTHING"]);
+      updateUI();
+    }
+
+    function closeLastChance() {
+      document.getElementById("last-chance").style.display = "none";
+      consecutiveRekts = 0;
+    }
+
+    // ── EFFECTS ──
     function showRektText() {
       const el = document.createElement("div");
       el.textContent = "REKT";
@@ -992,23 +1083,6 @@
       `;
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 2600);
-
-      // SECOND WAVE
-      setTimeout(() => {
-        const el2 = document.createElement("div");
-        el2.textContent = ["LIQUIDATED","韭菜被割","被套了","爆仓！","GAME OVER"][Math.floor(Math.random()*5)];
-        el2.style.cssText = `
-          position:fixed;top:35%;left:50%;
-          transform:translateX(-50%);
-          font-size:48px;font-weight:bold;
-          font-family:'Courier New',monospace;
-          color:#ff4444;text-shadow:0 0 20px #ff4444;
-          z-index:300;pointer-events:none;
-          animation:rekt-text 2s ease-out forwards;
-        `;
-        document.body.appendChild(el2);
-        setTimeout(() => el2.remove(), 2100);
-      }, 300);
     }
 
     function spawnSkullRain() {
@@ -1023,7 +1097,6 @@
             font-size:${28 + Math.random()*40}px;
             z-index:250;pointer-events:none;
             animation:skull-fall ${1.5 + Math.random()*1.5}s ease-in forwards;
-            animation-delay:${Math.random()*0.3}s;
           `;
           document.body.appendChild(skull);
           setTimeout(() => skull.remove(), 3000);
@@ -1031,37 +1104,16 @@
       }
     }
 
-    function spawnLossText(loss) {
-      const el = document.createElement("div");
-      el.textContent = (loss >= 0 ? "-" : "+") + "$" + Math.abs(loss).toFixed(2);
-      el.style.cssText = `
-        position:fixed;
-        bottom:30%;left:50%;
-        transform:translateX(-50%);
-        font-size:56px;font-weight:900;
-        font-family:'Courier New',monospace;
-        color:#ff1744;
-        text-shadow:0 0 20px #ff1744, 0 0 40px #ff1744;
-        z-index:260;pointer-events:none;
-        animation:loss-float 2s ease-out forwards;
-      `;
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 2100);
-    }
-
     function spawnProfitText(text) {
       const el = document.createElement("div");
       el.textContent = text;
       el.style.cssText = `
-        position:fixed;
-        bottom:30%;left:50%;
+        position:fixed;bottom:30%;left:50%;
         transform:translateX(-50%);
         font-size:48px;font-weight:900;
-        font-family:'Courier New',monospace;
-        color:#00ff88;
-        text-shadow:0 0 20px #00ff88, 0 0 40px #00ff88;
+        color:#00ff88;text-shadow:0 0 20px #00ff88;
         z-index:260;pointer-events:none;
-        animation:profit-pop 2s ease-out forwards;
+        animation:loss-float 2s ease-out forwards;
       `;
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 2100);
@@ -1076,7 +1128,6 @@
           el.style.top = (200 + Math.random() * (window.innerHeight - 400)) + "px";
           el.style.color = "#ff1744";
           el.style.fontSize = "18px";
-          el.style.animationDuration = (4 + Math.random()*3) + "s";
           document.body.appendChild(el);
           setTimeout(() => el.remove(), 7000);
         }, i * 150);
@@ -1089,9 +1140,7 @@
       void document.body.offsetWidth;
       document.body.style.animation = "screen-shake 0.8s ease-out";
       clearTimeout(shakeTimer);
-      shakeTimer = setTimeout(() => {
-        document.body.style.animation = "none";
-      }, 850);
+      shakeTimer = setTimeout(() => document.body.style.animation = "none", 850);
     }
 
     let screenFlashTimer = null;
@@ -1109,80 +1158,280 @@
       screenFlashTimer = setTimeout(() => overlay.style.opacity = "0", duration);
     }
 
-    function showMarketEvent(text, color) {
-      const el = document.getElementById("market-event");
-      el.textContent = text;
-      el.style.color = color;
-      el.style.textShadow = `0 0 30px ${color}`;
-      el.style.display = "block";
-      setTimeout(() => el.style.display = "none", 3000);
+    // ── CHART DRAWING ──
+    function generateCandle() {
+      if (gameover) return;
+      
+      const baseVol = 0.03 + hypeLevel * 0.002 + gameTime * 0.00003;
+      const hypeBias = hypeLevel > 60 ? 0.4 : (hypeLevel > 30 ? 0.15 : 0);
+      const direction = Math.random() - 0.5 + hypeBias;
+      const vol = baseVol * (1 + hypeLevel * 0.015);
+      const change = direction * vol * lastPrice * leverage;
+      lastPrice = Math.max(1, lastPrice + change);
+
+      hypeLevel = Math.max(0, hypeLevel - hypeDecay);
+
+      chartData.push(lastPrice);
+      const volBar = Math.random() * 8 + hypeLevel * 0.1 + 1;
+      volData.push(volBar);
+      if (chartData.length > 120) { chartData.shift(); volData.shift(); }
+      
+      // 更新被套深度
+      updateTrapDepth();
     }
 
-    // BUY button — straight pump on retail entry
-    buyBtn.addEventListener("click", () => {
-      if (balance > 0) {
-        position = balance;
-        entryPrice = lastPrice;
-        balance = 0;
-        trades++;
-        updateUI();
-        // SMARTS MONEY PUMPS THEN FADES
-        setTimeout(() => injectWick('up'), 200);
+    function updateTrapDepth() {
+      if (position > 0 && entryPrice > 0) {
+        const trapContainer = document.getElementById("trap-container");
+        const trapFill = document.getElementById("trap-fill");
+        const currentVal = position * (lastPrice / entryPrice);
+        const lossPct = Math.max(0, Math.min(100, ((position - currentVal) / position) * 100));
+        
+        trapContainer.style.display = "block";
+        trapFill.style.width = lossPct + "%";
+        
+        if (lossPct > 80) {
+          trapFill.style.background = "#ff4444";
+        } else if (lossPct > 50) {
+          trapFill.style.background = "#ff6600";
+        } else {
+          trapFill.style.background = "#ffcc00";
+        }
+      } else {
+        document.getElementById("trap-container").style.display = "none";
       }
-    });
+    }
 
-    // FOMO button - same as clicking on chart
-    fomoBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      doClick(e);
-    });
+    function drawChart() {
+      const W = canvas.width;
+      const H = canvas.height;
+      const chartTop = 0;
+      const chartBot = H * 0.78;
+      const volTop = chartBot + 4;
+      const volBot = H - 2;
+      const chartH = chartBot - chartTop;
+      const volH = volBot - volTop;
+      const rightMargin = 65;
+      const leftMargin = 0;
+      const chartW = W - rightMargin;
 
-    // SELL button — SMARTS MONEY front-runs and crushes the market
-    sellBtn.addEventListener("click", () => {
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, W, H);
+
+      // Price grid
+      const allPrices = [...chartData];
+      const maxP = Math.max(...allPrices);
+      const minP = Math.min(...allPrices);
+      const rangeP = maxP - minP || 1;
+      
+      ctx.font = "10px monospace";
+      ctx.textAlign = "right";
+      for (let i = 0; i <= 4; i++) {
+        const price = minP + i * (rangeP / 4);
+        const y = chartTop + chartH - (i / 4) * chartH;
+        ctx.fillStyle = "#2a2a2a";
+        ctx.fillText(price.toFixed(2), W - 6, y + 3);
+        ctx.strokeStyle = "#0f0f0f";
+        ctx.beginPath();
+        ctx.moveTo(leftMargin, y);
+        ctx.lineTo(W - rightMargin, y);
+        ctx.stroke();
+      }
+
+      // Candles
+      const n = chartData.length;
+      const candleW = chartW / n;
+      const bodyW = candleW * 0.7;
+      const hypeColor = hypeLevel > 70 ? "#ff00ff" : hypeLevel > 40 ? "#ff6600" : hypeLevel > 15 ? "#ffd700" : "#00ff88";
+      
+      for (let i = 0; i < n; i++) {
+        const open = i === 0 ? chartData[0] : chartData[i - 1];
+        const close = chartData[i];
+        const isUp = close >= open;
+        const color = isUp ? "#00c853" : "#ff1744";
+
+        const x = leftMargin + i * candleW + candleW * 0.15;
+        const yTop = chartTop + chartH - ((Math.max(open, close) - minP) / rangeP) * chartH;
+        const yBot = chartTop + chartH - ((Math.min(open, close) - minP) / rangeP) * chartH;
+        const bodyH = Math.max(1, yBot - yTop);
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x + bodyW / 2, yTop);
+        ctx.lineTo(x + bodyW / 2, yBot);
+        ctx.stroke();
+
+        ctx.fillStyle = color;
+        ctx.fillRect(x, yTop, bodyW, bodyH);
+      }
+
+      // Current price line
+      const curY = chartTop + chartH - ((lastPrice - minP) / rangeP) * chartH;
+      ctx.strokeStyle = hypeColor;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(leftMargin, curY);
+      ctx.lineTo(W - rightMargin, curY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = hypeColor;
+      ctx.fillRect(W - rightMargin + 2, curY - 8, rightMargin - 4, 16);
+      ctx.fillStyle = "#000";
+      ctx.font = "bold 10px monospace";
+      ctx.textAlign = "center";
+      ctx.fillText(lastPrice.toFixed(2), W - rightMargin / 2 - 2, curY + 3);
+
+      // Volume
+      const volMax = Math.max(...volData);
+      for (let i = 0; i < n; i++) {
+        const barH = Math.max(1, (volData[i] / volMax) * volH * 0.9);
+        const x = leftMargin + i * candleW + candleW * 0.15;
+        ctx.fillStyle = chartData[i] >= (i === 0 ? chartData[0] : chartData[i-1]) 
+          ? "rgba(0,200,83,0.4)" : "rgba(255,23,68,0.4)";
+        ctx.fillRect(x, volBot - barH, bodyW, barH);
+      }
+
+      // Rider position
+      riderEl.style.left = (W - 120) + "px";
+      riderEl.style.top = (130 + curY - 50) + "px";
+
+      document.getElementById("chart-label").textContent =
+        `FOMO/USDT  1s  O:${lastPrice.toFixed(2)}  H:${maxP.toFixed(2)}  L:${minP.toFixed(2)}`;
+    }
+
+    function formatMoney(amount) {
+      if (Math.abs(amount) >= 1000000000) return (amount / 1000000000).toFixed(2) + "B";
+      if (Math.abs(amount) >= 1000000) return (amount / 1000000).toFixed(2) + "M";
+      if (Math.abs(amount) >= 10000) return (amount / 1000).toFixed(1) + "K";
+      return Math.floor(Math.abs(amount)).toLocaleString();
+    }
+
+    function updateUI() {
+      const posValueEl = document.getElementById("position-value");
+      const entryValueEl = document.getElementById("entry-value");
       if (position > 0) {
-        const hypeMultiplier = 1 + (hypeLevel / 20) + (Math.random() * 2);
-        const rawProfit = position * (lastPrice / entryPrice);
-        const profit = rawProfit * hypeMultiplier;
-        const pnl = profit - position;
-        balance = profit;
-        if (pnl > bestTrade) bestTrade = pnl;
-        position = 0;
-        entryPrice = 0;
-        trades++;
-        updateUI();
-        // IMMEDIATELY crash the market after retail exits
-        setTimeout(() => injectWick('down'), 150);
+        posValueEl.textContent = position.toFixed(2);
+        posValueEl.classList.add("active");
+        entryValueEl.textContent = "$" + entryPrice.toFixed(2);
+        entryValueEl.classList.add("active");
+        sellBtn.disabled = false;
+      } else {
+        posValueEl.textContent = "-";
+        posValueEl.classList.remove("active");
+        entryValueEl.textContent = "-";
+        entryValueEl.classList.remove("active");
+        sellBtn.disabled = true;
       }
-    });
 
-    document.getElementById("reset-btn").addEventListener("click", () => {
-      if (confirm("Reset game? All balance lost.")) {
-        balance = STARTING_CAPITAL;
-        position = 0;
-        entryPrice = 0;
-        hypeLevel = 0;
-        totalClicks = 0;
-        hypeBursts = 0;
-        lastPrice = 100;
-        chartData = [];
-        for (let i = 0; i < 60; i++) chartData.push(100 + Math.random() * 15 - 7.5);
-        updateUI();
+      const totalValue = balance + (position > 0 ? position * (lastPrice / entryPrice) : 0);
+      balanceEl.textContent = "$" + formatMoney(totalValue);
+      balanceEl.className = "";
+      if (position > 0) {
+        const cur = position * (lastPrice / entryPrice) - position;
+        balanceEl.classList.add(cur > 0 ? "up" : "down");
       }
-    });
 
-    // Main loop
-    setInterval(() => {
+      const pnl = totalValue - STARTING_CAPITAL;
+      pnlEl.textContent = (pnl >= 0 ? "+" : "") + "$" + formatMoney(pnl);
+      pnlEl.className = pnl >= 0 ? "positive" : "negative";
+
+      document.getElementById("trades-count").textContent = trades;
+      document.getElementById("best-trade").textContent = "$" + formatMoney(bestTrade);
+
+      const displayCps = calculateCPS();
+      document.getElementById("combo-count").textContent = displayCps;
+      document.getElementById("hype-count").textContent = Math.floor(hypeLevel);
+
+      fomoBarFill.style.width = hypeLevel + "%";
+      if (hypeLevel > 70) {
+        fomoBarFill.style.background = "#ff00ff";
+        fomoBarFill.style.boxShadow = "0 0 15px #ff00ff";
+      } else if (hypeLevel > 40) {
+        fomoBarFill.style.background = "#ff6600";
+        fomoBarFill.style.boxShadow = "0 0 10px #ff6600";
+      } else {
+        fomoBarFill.style.background = "#ff6600";
+      }
+
+      if (balance >= 1000000) riderEl.className = "rich";
+      else if (hypeLevel > 70) riderEl.className = "peak";
+      else if (hypeLevel > 25) riderEl.className = "fomo";
+      else if (health <= 0) riderEl.className = "rekt";
+      else riderEl.className = "flat";
+
+      if (displayCps >= 5) {
+        comboDisplay.style.display = "block";
+        comboDisplay.textContent = "x" + displayCps;
+        comboDisplay.className = displayCps >= 10 ? "peak" : "";
+      } else {
+        comboDisplay.style.display = "none";
+      }
+    }
+
+    // ── RANDOM EVENTS ──
+    function randomEvent() {
+      if (gameover) return;
+      
+      const events = [
+        { text: "🚀 ELON TWEET!", effect: () => { lastPrice *= 2.2; hypeLevel = Math.min(100, hypeLevel + 40); }, type: "fomo" },
+        { text: "💰 KOL PUMP!", effect: () => { lastPrice *= 1.8; hypeLevel = Math.min(100, hypeLevel + 25); }, type: "good" },
+        { text: "🔥 100X INCOMING!", effect: () => { lastPrice *= 4; hypeLevel = Math.min(100, hypeLevel + 50); }, type: "fomo" },
+        { text: "🌕 TO THE MOON!", effect: () => { lastPrice *= 3; hypeLevel = Math.min(100, hypeLevel + 45); }, type: "fomo" },
+        { text: "🐋 WHALE BUY!", effect: () => { lastPrice *= 2.5; hypeLevel = Math.min(100, hypeLevel + 35); }, type: "fomo" },
+        { text: "📉 CZ SELLING!", effect: () => { lastPrice *= 0.6; hypeLevel = Math.max(0, hypeLevel - 20); }, type: "bad" },
+        { text: "💀 RUG PULL!", effect: () => { lastPrice *= 0.3; hypeLevel = Math.max(0, hypeLevel - 30); health -= 20; }, type: "bad" },
+        { text: "⚡ EXCHANGE HALTS!", effect: () => { balance *= 0.7; position *= 0.7; hypeLevel = Math.max(0, hypeLevel - 25); }, type: "bad" },
+      ];
+      
+      const prob = 0.015 + hypeLevel * 0.001;
+      if (Math.random() < prob) {
+        const ev = events[Math.floor(Math.random() * events.length)];
+        const el = document.getElementById("event");
+        el.textContent = ev.text;
+        el.className = ev.type;
+        el.style.display = "block";
+        ev.effect();
+        updateUI();
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => spawnIcon(window.innerWidth / 2, window.innerHeight / 2), i * 80);
+        }
+        setTimeout(() => el.style.display = "none", 2500);
+      }
+      
+      // 黑天鹅事件 (极低概率)
+      if (Math.random() < 0.002) {
+        triggerBlackSwan();
+      }
+    }
+
+    // ── MAIN LOOP ──
+    let lastTime = Date.now();
+    function gameLoop() {
+      const now = Date.now();
       gameTime++;
+
       generateCandle();
       drawChart();
-      randomEvent();
       updateUI();
-      if (gameTime % 30 === 0) spawnDanmu();
-      if (gameTime % 15 === 0 && hypeLevel > 50) spawnDanmu();
-    }, 100);
 
+      // 随机弹幕
+      if (Math.random() < 0.03) spawnDanmu();
+      
+      // 随机事件
+      if (gameTime % 30 === 0) randomEvent();
+      
+      // 更新恐惧贪婪指数
+      if (gameTime % 60 === 0) updateFGI();
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    // ── INIT ──
     updateUI();
+    gameLoop();
   </script>
 </body>
 </html>

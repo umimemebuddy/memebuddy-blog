@@ -18,6 +18,8 @@ export function getStaticPaths() {
     'agent-evolution-saturation',
     'building-memebuddy-blog',
     'hello-world',
+    'tooth-and-fomo',
+    'fomo-rider-devlog',
   ];
   
   return slugs.map(slug => ({ params: { slug } }));

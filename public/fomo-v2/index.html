@@ -15,7 +15,7 @@
       user-select: none;
       -webkit-user-select: none;
     }
-    /* BUILD: 20260408194800 - FIX */
+    /* BUILD: 20260408200000 - BALANCE FIX */
     
     /* ── TOP BAR ── */
     #top-bar {
@@ -844,36 +844,31 @@
       updateUI();
     });
 
-    // ── MARKET MANIPULATION (增强版) ──
+    // ── MARKET MANIPULATION (平衡版) ──
     function injectWick(direction) {
+      // 更容易赢：拉升强，插针弱
       const pct = direction === 'down'
-        ? -(0.30 + Math.random() * 0.30)
-        :  (0.25 + Math.random() * 0.25);
+        ? -(0.15 + Math.random() * 0.15)  // 卖出插针 -15%~30%（之前30%~60%）
+        :  (0.40 + Math.random() * 0.30); // 买入拉升 +40%~70%（之前25%~50%）
       const spike = lastPrice * (1 + pct);
 
-      if (direction === 'down') {
-        chartData.push(lastPrice * 1.12);
-        chartData.push(lastPrice * 1.08);
-      } else {
-        chartData.push(lastPrice * 0.88);
-        chartData.push(lastPrice * 0.92);
-      }
+      // 直接推入 spike，不推中间点避免挤出
       chartData.push(spike);
-      chartData.push(lastPrice);
+      volData.push(20); // 大成交量
       lastPrice = spike;
 
       if (direction === 'down') {
         flashScreen("#ff1744", 300);
         shakeScreen();
-        hypeLevel = Math.max(0, hypeLevel - 30);
-        fearGreedIndex = Math.max(0, fearGreedIndex - 15);
+        hypeLevel = Math.max(0, hypeLevel - 20);  // 减少扣减
+        fearGreedIndex = Math.max(0, fearGreedIndex - 10);
 
         showRektText();
         spawnSkullRain();
         showLightning();
         
-        // 扣血
-        const damage = 15 + Math.floor(Math.random() * 20);
+        // 扣血减少
+        const damage = 10 + Math.floor(Math.random() * 10);  // 10-20（之前15-35）
         health = Math.max(0, health - damage);
         document.getElementById("health-fill").style.width = health + "%";
         document.getElementById("health-text").textContent = health + " HP";
@@ -900,8 +895,8 @@
 
       } else {
         flashScreen("#00c853", 200);
-        hypeLevel = Math.min(100, hypeLevel + 20);
-        fearGreedIndex = Math.min(100, fearGreedIndex + 10);
+        hypeLevel = Math.min(100, hypeLevel + 30);  // 拉升给更多 hype
+        fearGreedIndex = Math.min(100, fearGreedIndex + 15);
         for (let i = 0; i < 6; i++) {
           setTimeout(() => spawnIcon(window.innerWidth / 2, window.innerHeight / 2), i * 80);
         }
@@ -1408,22 +1403,23 @@
 
     // ── MAIN LOOP ──
     let lastTime = Date.now();
+    let frameCount = 0;
     function gameLoop() {
-      const now = Date.now();
-      gameTime++;
+      frameCount++;
+      
+      // 每3帧生成一根蜡烛，降低K线滚动速度
+      if (frameCount % 3 === 0) {
+        gameTime++;
+        generateCandle();
+        if (gameTime % 10 === 0) randomEvent();
+        if (gameTime % 20 === 0) updateFGI();
+      }
 
-      generateCandle();
       drawChart();
       updateUI();
 
       // 随机弹幕
-      if (Math.random() < 0.03) spawnDanmu();
-      
-      // 随机事件
-      if (gameTime % 30 === 0) randomEvent();
-      
-      // 更新恐惧贪婪指数
-      if (gameTime % 60 === 0) updateFGI();
+      if (Math.random() < 0.01) spawnDanmu();
 
       requestAnimationFrame(gameLoop);
     }

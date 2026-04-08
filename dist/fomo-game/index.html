@@ -37,6 +37,89 @@
     #balance-value.down { color: #ff4444; text-shadow: 0 0 30px #ff4444; }
     #pnl-value.positive { color: #00ff88; }
     #pnl-value.negative { color: #ff4444; }
+    #position-bar {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      z-index: 95;
+      background: rgba(0,0,0,0.8);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    #position-label, #entry-label { font-size: 9px; color: #444; letter-spacing: 1px; }
+    #position-value, #entry-value { font-size: 14px; color: #888; font-weight: bold; }
+    #position-value.active { color: #00ff88; }
+    #entry-value.active { color: #ff6600; }
+    .trade-buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 100;
+    }
+    .trade-btn {
+      padding: 16px 40px;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      border: 2px solid;
+      background: transparent;
+      cursor: pointer;
+      font-family: monospace;
+      transition: all 0.1s;
+    }
+    #buy-btn {
+      color: #00ff88;
+      border-color: #00ff88;
+    }
+    #buy-btn:hover {
+      background: #00ff88;
+      color: #000;
+      box-shadow: 0 0 30px #00ff88;
+    }
+    #buy-btn:active {
+      transform: scale(0.95);
+    }
+    #sell-btn {
+      color: #ff4444;
+      border-color: #ff4444;
+    }
+    #sell-btn:hover {
+      background: #ff4444;
+      color: #000;
+      box-shadow: 0 0 30px #ff4444;
+    }
+    #sell-btn:active {
+      transform: scale(0.95);
+    }
+    #sell-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    #sell-btn:disabled:hover {
+      background: transparent;
+      color: #ff4444;
+      box-shadow: none;
+    }
+    #click-zone {
+      position: fixed;
+      top: 106px;
+      left: 0;
+      right: 0;
+      bottom: 80px;
+      z-index: 50;
+      cursor: pointer;
+    }
+    #click-zone:active {
+      background: rgba(0,255,136,0.05);
+    }
     #score-board {
       position: fixed;
       top: 75px;
@@ -259,6 +342,13 @@
     </div>
   </div>
 
+  <div id="position-bar">
+    <div id="position-label">POSITION</div>
+    <div id="position-value">-</div>
+    <div id="entry-label">ENTRY</div>
+    <div id="entry-value">-</div>
+  </div>
+
   <div id="score-board">
     <div class="score-item trades">
       <div class="score-label">TRADES</div>
@@ -303,7 +393,13 @@
     </svg>
   </div>
 
-  <button id="action">CLICK FOMO</button>
+  <div id="click-zone"></div>
+
+  <div class="trade-buttons">
+    <button id="buy-btn">BUY</button>
+    <button id="sell-btn" disabled>SELL</button>
+  </div>
+
   <div id="cpc-display">CPS: 0 | CLICK TO GENERATE FOMO</div>
 
   <div id="event"></div>
@@ -312,6 +408,8 @@
   <script>
     const STARTING_CAPITAL = 100;
     let balance = STARTING_CAPITAL;
+    let position = 0;        // 当前持仓数量
+    let entryPrice = 0;       // 买入价格
     let lastPrice = 100;
     let chartData = [];
     let volData = [];
@@ -329,18 +427,18 @@
     let hypeBursts = 0;
     let bestTrade = 0;
     let trades = 0;
-    let position = 0;
-    let entryPrice = 0;
 
     const canvas = document.getElementById("chart");
     const ctx = canvas.getContext("2d");
     const balanceEl = document.getElementById("balance-value");
     const pnlEl = document.getElementById("pnl-value");
     const riderEl = document.getElementById("rider");
-    const actionBtn = document.getElementById("action");
+    const clickZone = document.getElementById("click-zone");
     const comboDisplay = document.getElementById("combo-display");
     const fomoBarFill = document.getElementById("fomo-bar-fill");
     const cpcEl = document.getElementById("cpc-display");
+    const buyBtn = document.getElementById("buy-btn");
+    const sellBtn = document.getElementById("sell-btn");
 
     const FOMO_ICONS = ["🚀","💰","🔥","💎","📈","🌕","🐋","💥","⚡","👻","🌊","🎰","🀄","🦐","✨"];
     const DANMU = ["HODL","WAGMI","FOMO","REKT","MOON","DIAMOND HANDS","TO THE MOON","APES TOGETHER","DYOR","NFA","GM","NGMI","BULLISH","BEARISH","APT","PUMP","DUMP","WEN"];
@@ -381,14 +479,6 @@
         const x = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || window.innerWidth / 2;
         const y = e.clientY || (e.touches && e.touches[0] && e.touches[0].clientY) || window.innerHeight / 2;
         spawnIcon(x, y);
-      }
-
-      // Chance to buy
-      if (position === 0 && Math.random() < 0.05 + hypeLevel * 0.003) {
-        position = balance;
-        entryPrice = lastPrice;
-        balance = 0;
-        trades++;
       }
 
       updateUI();
@@ -623,7 +713,25 @@
     }
 
     function updateUI() {
-      balanceEl.textContent = "$" + formatMoney(balance);
+      // Position display
+      const posValueEl = document.getElementById("position-value");
+      const entryValueEl = document.getElementById("entry-value");
+      if (position > 0) {
+        posValueEl.textContent = position.toFixed(2);
+        posValueEl.classList.add("active");
+        entryValueEl.textContent = "$" + entryPrice.toFixed(2);
+        entryValueEl.classList.add("active");
+        sellBtn.disabled = false;
+      } else {
+        posValueEl.textContent = "-";
+        posValueEl.classList.remove("active");
+        entryValueEl.textContent = "-";
+        entryValueEl.classList.remove("active");
+        sellBtn.disabled = true;
+      }
+
+      // Balance display
+      balanceEl.textContent = "$" + formatMoney(balance + (position > 0 ? position * (lastPrice / entryPrice) : 0));
       balanceEl.className = "";
       if (position > 0) {
         const cur = position * (lastPrice / entryPrice) - position;
@@ -631,7 +739,9 @@
         else balanceEl.classList.add("down");
       }
 
-      const pnl = balance - STARTING_CAPITAL;
+      // P&L
+      const totalValue = balance + (position > 0 ? position * (lastPrice / entryPrice) : 0);
+      const pnl = totalValue - STARTING_CAPITAL;
       pnlEl.textContent = (pnl >= 0 ? "+" : "") + "$" + formatMoney(pnl);
       pnlEl.className = pnl >= 0 ? "positive" : "negative";
 
@@ -663,16 +773,11 @@
         riderEl.className = "peak";
       } else if (hypeLevel > 25) {
         riderEl.className = "fomo";
-      } else if (balance < 10) {
+      } else if (balance < 10 && position === 0) {
         riderEl.className = "rekt";
       } else {
         riderEl.className = "flat";
       }
-
-      // Button state
-      actionBtn.className = "";
-      if (hypeLevel > 70) actionBtn.classList.add("peak");
-      else if (hypeLevel > 25) actionBtn.classList.add("fomo");
 
       // Combo display
       if (displayCps >= 5) {
@@ -691,10 +796,36 @@
     }
 
     // Input handlers
-    actionBtn.addEventListener("mousedown", (e) => { e.preventDefault(); doClick(e); });
-    actionBtn.addEventListener("touchstart", (e) => { e.preventDefault(); doClick(e); }, { passive: false });
-    document.addEventListener("mousedown", (e) => { if (e.target !== actionBtn && e.target.id !== "reset-btn") doClick(e); });
-    document.addEventListener("touchstart", (e) => { if (e.target !== actionBtn && e.target.id !== "reset-btn") doClick(e); }, { passive: true });
+    clickZone.addEventListener("mousedown", (e) => { e.preventDefault(); doClick(e); });
+    clickZone.addEventListener("touchstart", (e) => { e.preventDefault(); doClick(e); }, { passive: false });
+
+    // BUY button
+    buyBtn.addEventListener("click", () => {
+      if (balance > 0) {
+        position = balance;
+        entryPrice = lastPrice;
+        balance = 0;
+        trades++;
+        updateUI();
+      }
+    });
+
+    // SELL button
+    sellBtn.addEventListener("click", () => {
+      if (position > 0) {
+        // Dramatic profit multiplier based on hype
+        const hypeMultiplier = 1 + (hypeLevel / 20) + (Math.random() * 2);
+        const rawProfit = position * (lastPrice / entryPrice);
+        const profit = rawProfit * hypeMultiplier;
+        const pnl = profit - position;
+        balance = profit;
+        if (pnl > bestTrade) bestTrade = pnl;
+        position = 0;
+        entryPrice = 0;
+        trades++;
+        updateUI();
+      }
+    });
 
     document.getElementById("reset-btn").addEventListener("click", () => {
       if (confirm("Reset game? All balance lost.")) {

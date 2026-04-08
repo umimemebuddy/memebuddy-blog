@@ -421,7 +421,10 @@
 
     function sell() {
       if (position > 0) {
-        const profit = position * (lastPrice / entryPrice);
+        // Dramatic profit multiplier based on hype
+        const hypeMultiplier = 1 + (hypeLevel / 20) + (Math.random() * 2);
+        const rawProfit = position * (lastPrice / entryPrice);
+        const profit = rawProfit * hypeMultiplier;
         const pnl = profit - position;
         balance = profit;
         if (pnl > bestTrade) bestTrade = pnl;
@@ -433,14 +436,15 @@
 
     function randomEvent() {
       const events = [
-        { text: "🚀 ELON TWEET!", effect: () => { lastPrice *= 1.6; hypeLevel = Math.min(100, hypeLevel + 40); }, type: "fomo" },
-        { text: "💰 KOL PUMP!", effect: () => { lastPrice *= 1.4; hypeLevel = Math.min(100, hypeLevel + 25); }, type: "good" },
-        { text: "🔥 100X INCOMING!", effect: () => { lastPrice *= 2.5; hypeLevel = Math.min(100, hypeLevel + 50); }, type: "fomo" },
-        { text: "📉 CZ SELLING!", effect: () => { lastPrice *= 0.55; hypeLevel = Math.max(0, hypeLevel - 20); }, type: "bad" },
-        { text: "💀 RUG PULL!", effect: () => { lastPrice *= 0.1; hypeLevel = Math.max(0, hypeLevel - 30); }, type: "bad" },
-        { text: "⚡ EXCHANGE HALTS!", effect: () => { balance *= 0.6; position *= 0.6; hypeLevel = Math.max(0, hypeLevel - 25); }, type: "bad" },
-        { text: "🌕 PAMP IT!", effect: () => { lastPrice *= 1.8; hypeLevel = Math.min(100, hypeLevel + 35); }, type: "fomo" },
-        { text: "📉 LIQUIDATION WAVE!", effect: () => { lastPrice *= 0.6; hypeLevel = Math.max(0, hypeLevel - 15); }, type: "bad" },
+        { text: "🚀 ELON TWEET!", effect: () => { lastPrice *= 2.2; hypeLevel = Math.min(100, hypeLevel + 40); }, type: "fomo" },
+        { text: "💰 KOL PUMP!", effect: () => { lastPrice *= 1.8; hypeLevel = Math.min(100, hypeLevel + 25); }, type: "good" },
+        { text: "🔥 100X INCOMING!", effect: () => { lastPrice *= 4; hypeLevel = Math.min(100, hypeLevel + 50); }, type: "fomo" },
+        { text: "🌕 TO THE MOON!", effect: () => { lastPrice *= 3; hypeLevel = Math.min(100, hypeLevel + 45); }, type: "fomo" },
+        { text: "🐋 WHALE BUY!", effect: () => { lastPrice *= 2.5; hypeLevel = Math.min(100, hypeLevel + 35); }, type: "fomo" },
+        { text: "📉 CZ SELLING!", effect: () => { lastPrice *= 0.6; hypeLevel = Math.max(0, hypeLevel - 20); }, type: "bad" },
+        { text: "💀 RUG PULL!", effect: () => { lastPrice *= 0.3; hypeLevel = Math.max(0, hypeLevel - 30); }, type: "bad" },
+        { text: "⚡ EXCHANGE HALTS!", effect: () => { balance *= 0.7; position *= 0.7; hypeLevel = Math.max(0, hypeLevel - 25); }, type: "bad" },
+        { text: "📉 LIQUIDATION WAVE!", effect: () => { lastPrice *= 0.5; hypeLevel = Math.max(0, hypeLevel - 15); }, type: "bad" },
       ];
       // More likely at high hype
       const prob = 0.02 + hypeLevel * 0.001;
@@ -611,8 +615,15 @@
         `FOMO/USDT  1s  O:${lastPrice.toFixed(2)}  H:${maxP.toFixed(2)}  L:${minP.toFixed(2)}`;
     }
 
+    function formatMoney(amount) {
+      if (amount >= 1000000000) return (amount / 1000000000).toFixed(2) + "B";
+      if (amount >= 1000000) return (amount / 1000000).toFixed(2) + "M";
+      if (amount >= 10000) return (amount / 1000).toFixed(1) + "K";
+      return Math.floor(amount).toLocaleString();
+    }
+
     function updateUI() {
-      balanceEl.textContent = "$" + Math.floor(balance).toLocaleString();
+      balanceEl.textContent = "$" + formatMoney(balance);
       balanceEl.className = "";
       if (position > 0) {
         const cur = position * (lastPrice / entryPrice) - position;
@@ -621,11 +632,11 @@
       }
 
       const pnl = balance - STARTING_CAPITAL;
-      pnlEl.textContent = (pnl >= 0 ? "+" : "") + "$" + Math.floor(pnl).toLocaleString();
+      pnlEl.textContent = (pnl >= 0 ? "+" : "") + "$" + formatMoney(pnl);
       pnlEl.className = pnl >= 0 ? "positive" : "negative";
 
       document.getElementById("trades-count").textContent = trades;
-      document.getElementById("best-trade").textContent = "$" + Math.floor(bestTrade).toLocaleString();
+      document.getElementById("best-trade").textContent = "$" + formatMoney(bestTrade);
 
       // CPS display
       const displayCps = calculateCPS();

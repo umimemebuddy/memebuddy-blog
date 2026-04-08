@@ -476,8 +476,8 @@
       hypeLevel = Math.max(0, hypeLevel - hypeDecay);
 
       chartData.push(lastPrice);
-      const vol = Math.random() * 8 + hypeLevel * 0.1 + 1;
-      volData.push(vol);
+      const volBar = Math.random() * 8 + hypeLevel * 0.1 + 1;
+      volData.push(volBar);
       if (chartData.length > 120) { chartData.shift(); volData.shift(); }
     }
 
@@ -548,8 +548,8 @@
 
         // wick
         const wickX = x + bodyW / 2;
-        const wickTop = chartTop + chartH - ((Math.max(open, close) - minP) / rangeP) * chartH);
-        const wickBot = chartTop + chartH - ((Math.min(open, close) - minP) / rangeP) * chartH);
+        const wickTop = chartTop + chartH - ((Math.max(open, close) - minP) / rangeP) * chartH;
+        const wickBot = chartTop + chartH - ((Math.min(open, close) - minP) / rangeP) * chartH;
         ctx.strokeStyle = color;
         ctx.lineWidth = 1;
         ctx.shadowBlur = 2;

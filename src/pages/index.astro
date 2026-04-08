@@ -81,6 +81,34 @@ const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
   .p:last-child { border-right: none; }
   .p:hover { color: var(--tx); background: #0a0a0a; }
   .p.on { color: var(--ac); background: rgba(0,255,65,.05); }
+  .game-entrance {
+    display: block;
+    padding: 28px;
+    background: linear-gradient(135deg, #0a0a0a 0%, #151515 100%);
+    border-bottom: 1px solid var(--bd);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: background .2s;
+  }
+  .game-entrance:hover { background: linear-gradient(135deg, #111 0%, #1a1a1a 100%); }
+  .game-entrance::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(0,255,65,.03) 50%, transparent 100%);
+    animation: scanline 2s linear infinite;
+  }
+  @keyframes scanline {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .game-label { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--ac); letter-spacing: 3px; margin-bottom: 8px; }
+  .game-title { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 500; color: var(--tx); letter-spacing: -1px; margin-bottom: 6px; }
+  .game-title span { color: var(--ac); }
+  .game-desc { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--tx2); line-height: 1.4; }
+  .game-icon { position: absolute; right: 28px; top: 50%; transform: translateY(-50%); font-size: 48px; animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: translateY(-50%) scale(1); } 50% { opacity: .8; transform: translateY(-50%) scale(1.1); } }
   .q { border-bottom: 1px solid var(--bd); }
   .r { display: grid; grid-template-columns: 68px 48px 1fr; border-bottom: 1px solid var(--bd); text-decoration: none; transition: background .1s; }
   .r:last-child { border-bottom: none; }
@@ -153,6 +181,13 @@ const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
   </div>
 
   <div class="n"><CryptoPrices /></div>
+
+  <a href="/fomo-rider/" class="game-entrance">
+    <div class="game-label">▶ PLAY NOW</div>
+    <div class="game-title">FOMO <span>RIDER</span></div>
+    <div class="game-desc">点击速度驱动K线波动 · 体验加密市场的疯狂</div>
+    <div class="game-icon">🦐</div>
+  </a>
 
   <div class="o">
     <button class="p on" data-f="ALL">ALL</button>

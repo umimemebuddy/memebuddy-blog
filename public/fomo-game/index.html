@@ -57,47 +57,85 @@
     #entry-value.active { color: #ff6600; }
     .trade-buttons {
       position: fixed;
-      bottom: 20px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 20px;
+      gap: 0;
       z-index: 100;
     }
     .trade-btn {
-      padding: 16px 40px;
-      font-size: 16px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      border: 2px solid;
-      background: transparent;
+      padding: 20px 50px;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      border: 3px solid;
+      background: rgba(0,0,0,0.8);
       cursor: pointer;
-      font-family: monospace;
-      transition: all 0.1s;
+      font-family: 'Courier New', monospace;
+      transition: all 0.15s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    .trade-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .trade-btn:hover::before {
+      left: 100%;
     }
     #buy-btn {
       color: #00ff88;
       border-color: #00ff88;
+      border-radius: 8px 0 0 8px;
+      box-shadow: 0 0 20px rgba(0,255,136,0.3), inset 0 0 20px rgba(0,255,136,0.05);
     }
     #buy-btn:hover {
       background: #00ff88;
       color: #000;
-      box-shadow: 0 0 30px #00ff88;
+      box-shadow: 0 0 40px #00ff88, 0 0 60px rgba(0,255,136,0.5);
     }
     #buy-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.97);
+      box-shadow: 0 0 60px #00ff88;
+    }
+    #fomo-btn {
+      color: #ff00ff;
+      border-color: #ff00ff;
+      background: rgba(255,0,255,0.1);
+      box-shadow: 0 0 20px rgba(255,0,255,0.3), inset 0 0 20px rgba(255,0,255,0.05);
+      animation: fomo-glow 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes fomo-glow {
+      from { box-shadow: 0 0 20px rgba(255,0,255,0.3), inset 0 0 20px rgba(255,0,255,0.05); }
+      to { box-shadow: 0 0 40px rgba(255,0,255,0.6), inset 0 0 30px rgba(255,0,255,0.1); }
+    }
+    #fomo-btn:hover {
+      background: #ff00ff;
+      color: #000;
+      box-shadow: 0 0 50px #ff00ff, 0 0 80px rgba(255,0,255,0.6);
+    }
+    #fomo-btn:active {
+      transform: scale(0.97);
     }
     #sell-btn {
       color: #ff4444;
       border-color: #ff4444;
+      border-radius: 0 8px 8px 0;
+      box-shadow: 0 0 20px rgba(255,68,68,0.3), inset 0 0 20px rgba(255,68,68,0.05);
     }
     #sell-btn:hover {
       background: #ff4444;
       color: #000;
-      box-shadow: 0 0 30px #ff4444;
+      box-shadow: 0 0 40px #ff4444, 0 0 60px rgba(255,68,68,0.5);
     }
     #sell-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.97);
+      box-shadow: 0 0 60px #ff4444;
     }
     #sell-btn:disabled {
       opacity: 0.3;
@@ -397,6 +435,7 @@
 
   <div class="trade-buttons">
     <button id="buy-btn">BUY</button>
+    <button id="fomo-btn">⚡ FOMO ⚡</button>
     <button id="sell-btn" disabled>SELL</button>
   </div>
 
@@ -439,6 +478,7 @@
     const cpcEl = document.getElementById("cpc-display");
     const buyBtn = document.getElementById("buy-btn");
     const sellBtn = document.getElementById("sell-btn");
+    const fomoBtn = document.getElementById("fomo-btn");
 
     const FOMO_ICONS = ["🚀","💰","🔥","💎","📈","🌕","🐋","💥","⚡","👻","🌊","🎰","🀄","🦐","✨"];
     const DANMU = ["HODL","WAGMI","FOMO","REKT","MOON","DIAMOND HANDS","TO THE MOON","APES TOGETHER","DYOR","NFA","GM","NGMI","BULLISH","BEARISH","APT","PUMP","DUMP","WEN"];
@@ -808,6 +848,13 @@
         trades++;
         updateUI();
       }
+    });
+
+    // FOMO button - same as clicking on chart
+    fomoBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      doClick(e);
     });
 
     // SELL button

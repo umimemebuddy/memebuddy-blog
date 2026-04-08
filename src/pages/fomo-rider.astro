@@ -2,10 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="FOMO Rider">
-<style>
-  body { background: #000; overflow: hidden; }
-  .w { position: fixed; inset: 0; }
-  iframe { width: 100%; height: 100%; border: none; display: block; }
-</style>
-<div class="w"><iframe src="/fomo-game/index.html" title="FOMO Rider"></iframe></div>
+  <meta name="build" content="202604081738">
+  <style>
+    body { background: #000; overflow: hidden; }
+    .w { position: fixed; inset: 0; }
+    iframe { width: 100%; height: 100%; border: none; display: block; }
+  </style>
+  <div class="w"><iframe src="/fomo-game/index.html?v=202604081738" title="FOMO Rider"></iframe></div>
 </Layout>

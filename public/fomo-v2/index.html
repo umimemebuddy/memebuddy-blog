@@ -64,7 +64,7 @@
       gap: 0;
       z-index: 100;
     }
-    /* BUILD: 20260408183722 */
+    /* BUILD: 20260408185710 */
     .trade-btn {
       padding: 32px 70px;
       font-size: 32px;
@@ -317,6 +317,49 @@
       0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
       50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
       100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+    }
+    @keyframes screen-shake {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      10%  { transform: translate(-12px, -8px) rotate(-1.5deg); }
+      20%  { transform: translate(10px, 6px) rotate(1.2deg); }
+      30%  { transform: translate(-8px, 4px) rotate(-1deg); }
+      40%  { transform: translate(6px, -6px) rotate(0.8deg); }
+      50%  { transform: translate(-5px, 3px) rotate(-0.5deg); }
+      60%  { transform: translate(4px, -3px) rotate(0.4deg); }
+      70%  { transform: translate(-3px, 2px) rotate(-0.3deg); }
+      80%  { transform: translate(2px, -1px) rotate(0.2deg); }
+      90%  { transform: translate(-1px, 1px) rotate(0deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+    @keyframes skull-fall {
+      0%   { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+      30%  { opacity: 1; transform: translateY(30vh) rotate(180deg) scale(1.3); }
+      100% { opacity: 0; transform: translateY(120vh) rotate(360deg) scale(0.5); }
+    }
+    @keyframes loss-float {
+      0%   { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+      40%  { opacity: 1; transform: translateY(-30px) translateX(10px) scale(1.3); color: #ff1744; }
+      100% { opacity: 0; transform: translateY(-80px) translateX(-20px) scale(0.8); }
+    }
+    @keyframes profit-pop {
+      0%   { opacity: 0; transform: translateY(20px) scale(0.5); }
+      30%  { opacity: 1; transform: translateY(-20px) scale(1.5); }
+      100% { opacity: 0; transform: translateY(-60px) scale(0.8); }
+    }
+    @keyframes balance-pulse-red {
+      0%, 100% { text-shadow: none; }
+      50% { text-shadow: 0 0 40px #ff1744, 0 0 80px #ff1744; color: #ff1744; }
+    }
+    @keyframes balance-pulse-green {
+      0%, 100% { text-shadow: none; }
+      50% { text-shadow: 0 0 40px #00ff88, 0 0 80px #00ff88; color: #00ff88; }
+    }
+    @keyframes rekt-text {
+      0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.2) rotate(-10deg); }
+      20%  { opacity: 1; transform: translate(-50%, -50%) scale(1.4) rotate(2deg); }
+      60%  { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-1deg); }
+      80%  { opacity: 0.8; transform: translate(-50%, -50%) scale(0.9) rotate(0deg); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.7) rotate(0deg); }
     }
     .icon {
       position: fixed;
@@ -863,34 +906,192 @@
 
     // ── Market manipulation helpers ──
     function injectWick(direction) {
-      // direction: 'down' = squeeze retail longs, 'up' = squeeze retail shorts
+      // direction: 'down' = squeeze retail longs (散户做多被埋), 'up' = squeeze shorts (空头被轧)
       const pct = direction === 'down'
-        ? -(0.30 + Math.random() * 0.30)   // -30% to -60%
-        :  (0.25 + Math.random() * 0.25);  // +25% to +50%
+        ? -(0.30 + Math.random() * 0.30)
+        :  (0.25 + Math.random() * 0.25);
       const spike = lastPrice * (1 + pct);
 
       if (direction === 'down') {
-        // Pump into fake breakout, then crush
-        chartData.push(lastPrice * 1.12); chartData.push(lastPrice * 1.08);
+        // 先假突破把多头扫了, 再砸下来
+        chartData.push(lastPrice * 1.12);
+        chartData.push(lastPrice * 1.08);
       } else {
-        // Dump into fake breakdown, then pump
-        chartData.push(lastPrice * 0.88); chartData.push(lastPrice * 0.92);
+        // 先假跌破把空头扫了, 再拉上去
+        chartData.push(lastPrice * 0.88);
+        chartData.push(lastPrice * 0.92);
       }
-      chartData.push(spike);  // the wick tip
-      chartData.push(lastPrice); // close back at current level
+      chartData.push(spike);
+      chartData.push(lastPrice);
       lastPrice = spike;
 
       const label = direction === 'down'
-        ? "⚰️ WICKED! STOP HUNTED"
-        : "🔪 WICKED! SHORT SQUEEZE";
+        ? "⚰️ STOP HUNTED! RETAIL REKT"
+        : "🔪 SHORT SQUEEZE! WICKED";
       showMarketEvent(label, direction === 'down' ? "#ff1744" : "#00c853");
+
       if (direction === 'down') {
-        flashScreen("#ff1744", 150);
+        // ── 爆仓大套餐 ──
+        flashScreen("#ff1744", 300);
+        shakeScreen();
         hypeLevel = Math.max(0, hypeLevel - 30);
+
+        // 爆仓文字炸屏
+        showRektText();
+        // 💀头像雨
+        spawnSkullRain();
+        // 亏损数字飘走
+        const pos = (position > 0) ? position * (1 - (lastPrice / entryPrice)) : 0;
+        if (pos > 0) spawnLossText(-pos);
+        // 龙虾变REKT
+        riderEl.className = "rekt";
+        // 余额变红脉冲
+        setTimeout(() => balanceEl.style.animation = "balance-pulse-red 0.4s ease-in-out 4", 100);
+
+        // 小图标爆炸
+        for (let i = 0; i < 12; i++) {
+          setTimeout(() => spawnIcon(
+            100 + Math.random() * (window.innerWidth - 200),
+            200 + Math.random() * (window.innerHeight - 400)
+          ), i * 60);
+        }
+
+        // 弹幕变成爆仓内容
+        spawnDanmuBurst([
+          "REKT", "NGMI", "YOU ARE THE EXIT LIQUIDITY", "WAGMI?",
+          "LIQUIDATED", "TO THE ZERO", "DIAMOND HANDS", "💀💀💀",
+          "YOUR STOP LOSS IS MY LUNCH", "韭菜收割完毕", "止损止损止损"
+        ]);
+
       } else {
-        flashScreen("#00c853", 150);
+        // ── 轧空小套餐 ──
+        flashScreen("#00c853", 200);
         hypeLevel = Math.min(100, hypeLevel + 20);
+        // 小图标庆祝
+        for (let i = 0; i < 6; i++) {
+          setTimeout(() => spawnIcon(window.innerWidth / 2, window.innerHeight / 2), i * 80);
+        }
+        spawnProfitText("+SQUEEZE!");
+        spawnDanmuBurst(["SHORTS REKT", "BEAR TRAP", "GAMMA SQUEEZE"]);
       }
+    }
+
+    function showRektText() {
+      const el = document.createElement("div");
+      el.textContent = "REKT";
+      el.style.cssText = `
+        position:fixed;top:50%;left:50%;
+        transform:translate(-50%,-50%);
+        font-size:100px;font-weight:900;
+        font-family:'Courier New',monospace;
+        color:#ff1744;
+        text-shadow:0 0 30px #ff1744, 0 0 60px #ff1744;
+        z-index:300;pointer-events:none;
+        animation:rekt-text 2.5s ease-out forwards;
+        letter-spacing:10px;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2600);
+
+      // SECOND WAVE
+      setTimeout(() => {
+        const el2 = document.createElement("div");
+        el2.textContent = ["LIQUIDATED","韭菜被割","被套了","爆仓！","GAME OVER"][Math.floor(Math.random()*5)];
+        el2.style.cssText = `
+          position:fixed;top:35%;left:50%;
+          transform:translateX(-50%);
+          font-size:48px;font-weight:bold;
+          font-family:'Courier New',monospace;
+          color:#ff4444;text-shadow:0 0 20px #ff4444;
+          z-index:300;pointer-events:none;
+          animation:rekt-text 2s ease-out forwards;
+        `;
+        document.body.appendChild(el2);
+        setTimeout(() => el2.remove(), 2100);
+      }, 300);
+    }
+
+    function spawnSkullRain() {
+      for (let i = 0; i < 25; i++) {
+        setTimeout(() => {
+          const skull = document.createElement("div");
+          skull.textContent = ["💀","⚰️","☠️","🔥","💸","📉"][Math.floor(Math.random()*6)];
+          skull.style.cssText = `
+            position:fixed;
+            left:${5 + Math.random() * 90}%;
+            top:-40px;
+            font-size:${28 + Math.random()*40}px;
+            z-index:250;pointer-events:none;
+            animation:skull-fall ${1.5 + Math.random()*1.5}s ease-in forwards;
+            animation-delay:${Math.random()*0.3}s;
+          `;
+          document.body.appendChild(skull);
+          setTimeout(() => skull.remove(), 3000);
+        }, i * 60);
+      }
+    }
+
+    function spawnLossText(loss) {
+      const el = document.createElement("div");
+      el.textContent = (loss >= 0 ? "-" : "+") + "$" + Math.abs(loss).toFixed(2);
+      el.style.cssText = `
+        position:fixed;
+        bottom:30%;left:50%;
+        transform:translateX(-50%);
+        font-size:56px;font-weight:900;
+        font-family:'Courier New',monospace;
+        color:#ff1744;
+        text-shadow:0 0 20px #ff1744, 0 0 40px #ff1744;
+        z-index:260;pointer-events:none;
+        animation:loss-float 2s ease-out forwards;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2100);
+    }
+
+    function spawnProfitText(text) {
+      const el = document.createElement("div");
+      el.textContent = text;
+      el.style.cssText = `
+        position:fixed;
+        bottom:30%;left:50%;
+        transform:translateX(-50%);
+        font-size:48px;font-weight:900;
+        font-family:'Courier New',monospace;
+        color:#00ff88;
+        text-shadow:0 0 20px #00ff88, 0 0 40px #00ff88;
+        z-index:260;pointer-events:none;
+        animation:profit-pop 2s ease-out forwards;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2100);
+    }
+
+    function spawnDanmuBurst(texts) {
+      for (let i = 0; i < texts.length; i++) {
+        setTimeout(() => {
+          const el = document.createElement("div");
+          el.className = "danmu";
+          el.textContent = texts[i];
+          el.style.top = (200 + Math.random() * (window.innerHeight - 400)) + "px";
+          el.style.color = "#ff1744";
+          el.style.fontSize = "18px";
+          el.style.animationDuration = (4 + Math.random()*3) + "s";
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 7000);
+        }, i * 150);
+      }
+    }
+
+    let shakeTimer = null;
+    function shakeScreen() {
+      document.body.style.animation = "none";
+      void document.body.offsetWidth;
+      document.body.style.animation = "screen-shake 0.8s ease-out";
+      clearTimeout(shakeTimer);
+      shakeTimer = setTimeout(() => {
+        document.body.style.animation = "none";
+      }, 850);
     }
 
     let screenFlashTimer = null;
@@ -898,12 +1099,12 @@
       const overlay = document.getElementById("screen-flash") || (() => {
         const el = document.createElement("div");
         el.id = "screen-flash";
-        el.style.cssText = "position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9999;opacity:0";
+        el.style.cssText = "position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9999;opacity:0;transition:opacity 0.1s";
         document.body.appendChild(el);
         return el;
       })();
       overlay.style.background = color;
-      overlay.style.opacity = "0.25";
+      overlay.style.opacity = "0.35";
       clearTimeout(screenFlashTimer);
       screenFlashTimer = setTimeout(() => overlay.style.opacity = "0", duration);
     }
@@ -912,7 +1113,7 @@
       const el = document.getElementById("market-event");
       el.textContent = text;
       el.style.color = color;
-      el.style.textShadow = `0 0 20px ${color}`;
+      el.style.textShadow = `0 0 30px ${color}`;
       el.style.display = "block";
       setTimeout(() => el.style.display = "none", 3000);
     }

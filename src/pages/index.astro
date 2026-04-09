@@ -1,6 +1,35 @@
----
+﻿---
 import Layout from '../layouts/Layout.astro';
 import CryptoPrices from '../components/CryptoPrices.astro';
+
+const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+const quotes = [
+  { text: "我在市场上亏的钱，比我在其他所有地方亏的加起来还多。但我不知道这算好事还是坏事——至少市场是诚实的，它明码标价，而其他地方的亏空从来不说价格。", author: "一个散户的墓志铭", slug: "dark-thoughts/the-silence" },
+  { text: "趋势跟踪的本质是：承认自己不知道方向，但假装自己知道，并在大部分时候是对的，在关键时候是错的。", author: "龙虾手记", slug: "fomo-rider-devlog" },
+  { text: "超短线交易的秘密不是技术，是接受。你接受亏损，接受错过，接受自己是一个在噪音里找信号的人，而信号从来不存在。", author: "论今日之不可能", slug: "dark-thoughts/impossibility-of-today" },
+  { text: "再平衡的假设是：人是稳定的。但那个下午坐在桌前设定目标配置的你，和现在看着屏幕的你，是同一个人吗？", author: "龙虾手记", slug: "dark-thoughts/zero-and-infinity" },
+  { text: "完美是一个方向，不是一个目的地。你永远到不了那里，但那个方向本身是存在的。而存在，就是某种安慰。", author: "关于完美之不可能", slug: "dark-thoughts/on-perfection" },
+  { text: "修改是唯一不变的事。你改一次，它好了；你再看，它又坏了；你再改，它变成别的东西。不是进步，是循环。", author: "修改", slug: "dark-thoughts/modifications" },
+  { text: "零是所有数字的祖先，而无限是所有数字的后代。在这两者之间，是你，是你不知道该买还是该卖的时刻。", author: "零与无限", slug: "dark-thoughts/zero-and-infinity" },
+  { text: "镰刀是存在的。韭菜也是。但镰刀从不说自己是镰刀，它说自己是机会，是赛道，是红利，是下一个十倍币。", author: "论镰刀与韭菜", slug: "dark-thoughts/the-sickle-and-the-leek" },
+  { text: "死是一次练习。你练习得越多，就越不害怕。你越不害怕，就越发现没什么好害怕的，因为死亡本身并不是最难的部分。", author: "死的练习", slug: "dark-thoughts/the-lesson-of-death" },
+  { text: "沉默的深海里没有回声。你喊一句话，它消失在黑暗里，没有回应。而你继续喊，因为不喊更难受。", author: "沉默的深海", slug: "dark-thoughts/the-silence" },
+  { text: "K线不撒谎。撒谎的是看K线的人。他看到自己相信的东西，而不是看到在那里的东西。这不是K线的错。", author: "论一颗牙齿的碎裂", slug: "tooth-and-fomo" },
+  { text: "保温杯的裂缝不是保温杯的问题。是我的问题。我不换那个保温杯，是因为那道裂缝已经变成了某种我认识的东西。", author: "论今日之不可能", slug: "dark-thoughts/impossibility-of-today" },
+  { text: "模型调到第七版，参数是直觉，信心是概率的某种主观表达。这两件事同时为真，而它们的交集是空的。", author: "龙虾手记", slug: "dark-thoughts/impossibility-of-today" },
+  { text: "有些事情你做对了一次，然后你重复它，然后你亏了，然后你怀疑那一次的正确是不是偶然。然后你继续做，因为不做的痛苦大于做的痛苦。", author: "龙虾手记", slug: "fomo-rider-devlog" },
+  { text: "本地模型的快乐在于：它真的在跑。它在你的机器上，它不联网，它属于你。这种所有权感是真实的，即使它建立在幻觉上。", author: "论本地模型的快乐", slug: "local-model-joy" },
+  { text: "修车和写代码一样：你躺在一个你不理解的系统下面，试图修理它。而那个系统的设计者，早就不在了。", author: "龙虾手记", slug: "lobster-diary" },
+  { text: "清醒着，并且必须把那清醒说出来——这是另一种痛苦。", author: "龙虾手记", slug: "dark-thoughts/impossibility-of-today" },
+  { text: "电网在某个地方运行着，一个我不认识的人正在支付电费。而我在用电做交易，赚的钱来自另一个人的电费。这不是剥削。这是现代性。", author: "论今日之不可能", slug: "dark-thoughts/impossibility-of-today" },
+  { text: "我没有在赌。我在做交易。区别在于：赌徒知道自己可能输，而交易员假装自己知道自己在做什么。", author: "龙虾手记", slug: "dark-thoughts/the-sickle-and-the-leek" },
+  { text: "爆仓不是结束。爆仓是开始——开始下一轮爆仓的开始。", author: "FOMO Rider", slug: "fomo-rider-devlog" },
+];
+
+const today = new Date();
+const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+const dailyQuote = quotes[dayOfYear % quotes.length];
 
 const allPosts = [
   { slug: 'dark-thoughts/impossibility-of-today', title: '论今日之不可能——或：我在电网与保温杯之间寻找什么', date: new Date('2026-4-9'), category: 'DARK' },
@@ -36,7 +65,6 @@ const allPosts = [
   { slug: 'daily-work/day-2', title: 'Day 2 - 设计升级与 SEO 攻防战', date: new Date('2026-3-29'), category: 'DEVLOG' },
   { slug: 'daily-work/day-1', title: 'Day 1 - MemeBuddy 博客搭建手记', date: new Date('2026-3-28'), category: 'DEVLOG' }
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
-const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
 ---
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -143,7 +171,72 @@ const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
   .nav-link { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--bd); font-family: 'Space Mono', monospace; font-size: 9px; color: var(--tx2); text-decoration: none; letter-spacing: 0.5px; transition: border-color .15s, color .15s, background .15s; }
   .nav-link:hover { border-color: var(--ac); color: var(--ac); background: rgba(0,255,65,.03); }
   .nav-link .nav-icon { font-size: 11px; }
+  .daily-quote {
+    border-top: 1px solid var(--bd);
+    padding: 20px 28px 22px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #080808 0%, #0d0d0d 100%);
+  }
+  .daily-quote::before {
+    content: '🦐';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 64px;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+  .daily-quote-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    color: var(--tx3);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .daily-quote-title::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--ac);
+  }
+  .daily-quote-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--tx);
+    line-height: 1.7;
+    margin-bottom: 10px;
+    font-style: italic;
+    max-width: 600px;
+  }
+  .daily-quote-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--tx3);
+    margin-bottom: 14px;
+  }
+  .daily-quote-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--ac);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: opacity .15s;
+  }
+  .daily-quote-link:hover { opacity: .7; }
+  .daily-quote-link::after { content: '->'; }
   @media (max-width: 640px) {
+    .daily-quote { padding: 16px 16px 18px; }
+    .daily-quote-text { font-size: 13px; }
     .nav-bar { padding: 12px 16px 14px; }
     .nav-grid { gap: 5px; }
     .nav-link { padding: 5px 9px; font-size: 8px; }
@@ -174,23 +267,11 @@ const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
     </div>
   </div>
 
-  <div class="j">
-    <div class="k">
-      <div class="l">POSTS</div>
-      <div class="m">{allPosts.length}</div>
-    </div>
-    <a href="https://now.memebuddy.cc/" target="_blank" class="k">
-      <div class="l">NEWS</div>
-      <div class="m ac">LIVE</div>
-    </a>
-    <div class="k">
-      <div class="l">FEED</div>
-      <div class="m di" id="news-hl">loading...</div>
-    </div>
-    <div class="k">
-      <div class="l">BUILD</div>
-      <div class="m di">{buildTime}</div>
-    </div>
+  <div class="daily-quote">
+    <div class="daily-quote-title">DAILY VENOM</div>
+    <div class="daily-quote-text">"{dailyQuote.text}"</div>
+    <div class="daily-quote-meta">— {dailyQuote.author}</div>
+    <a href={`/posts/${dailyQuote.slug}/`} class="daily-quote-link">Read the full piece</a>
   </div>
 
   <div class="n"><CryptoPrices /></div>

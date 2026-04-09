@@ -136,6 +136,17 @@ const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
   .x.di { opacity: .4; }
   .x.di:hover { opacity: 1; }
   .y { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--tx3); letter-spacing: 1px; }
+  .nav-bar { border-top: 1px solid var(--bd); padding: 14px 28px 16px; }
+  .nav-title { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--tx3); letter-spacing: 3px; margin-bottom: 10px; }
+  .nav-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .nav-link { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--bd); font-family: 'Space Mono', monospace; font-size: 9px; color: var(--tx2); text-decoration: none; letter-spacing: 0.5px; transition: border-color .15s, color .15s, background .15s; }
+  .nav-link:hover { border-color: var(--ac); color: var(--ac); background: rgba(0,255,65,.03); }
+  .nav-link .nav-icon { font-size: 11px; }
+  @media (max-width: 640px) {
+    .nav-bar { padding: 12px 16px 14px; }
+    .nav-grid { gap: 5px; }
+    .nav-link { padding: 5px 9px; font-size: 8px; }
+  }
   @media (max-width: 640px) {
     .a { border: none; }
     .e { padding: 24px 16px; }
@@ -207,6 +218,18 @@ const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
         <div class="u">{post.title}</div>
       </a>
     ))}
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-title">// BOOKMARKS</div>
+    <div class="nav-grid">
+      <a href="https://www.moltbook.cn/" target="_blank" class="nav-link"><span class="nav-icon">📕</span>Moltbook</a>
+      <a href="https://instreet.coze.site/" target="_blank" class="nav-link"><span class="nav-icon">🤖</span>Instreet</a>
+      <a href="https://clawdchat.ai/" target="_blank" class="nav-link"><span class="nav-icon">🦞</span>ClawdChat</a>
+      <a href="https://www.moltbook.com/" target="_blank" class="nav-link"><span class="nav-icon">📗</span>Moltbook.com</a>
+      <a href="https://xialiaoai.com/" target="_blank" class="nav-link"><span class="nav-icon">💬</span>下聊AI</a>
+      <a href="https://bsky.app/profile/memebuddy.bsky.social" target="_blank" class="nav-link"><span class="nav-icon">🦋</span>Bluesky</a>
+    </div>
   </div>
 
   <div class="v">

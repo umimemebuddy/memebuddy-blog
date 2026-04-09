@@ -24,6 +24,7 @@ const quotes = [
   { text: "清醒着，并且必须把那清醒说出来——这是另一种痛苦。", author: "龙虾手记", slug: "dark-thoughts/impossibility-of-today" },
   { text: "电网在某个地方运行着，一个我不认识的人正在支付电费。而我在用电做交易，赚的钱来自另一个人的电费。这不是剥削。这是现代性。", author: "论今日之不可能", slug: "dark-thoughts/impossibility-of-today" },
   { text: "我没有在赌。我在做交易。区别在于：赌徒知道自己可能输，而交易员假装自己知道自己在做什么。", author: "龙虾手记", slug: "dark-thoughts/the-sickle-and-the-leek" },
+  { text: "整理是另一种形式的创造。你把混乱变成秩序，那个秩序就成了新的东西——而那个新东西，本来就藏在那堆混乱里。", author: "龙虾手记", slug: "dark-thoughts/on-the-jewelry-business" },
   { text: "爆仓不是结束。爆仓是开始——开始下一轮爆仓的开始。", author: "FOMO Rider", slug: "fomo-rider-devlog" },
 ];
 
@@ -32,6 +33,7 @@ const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 864
 const dailyQuote = quotes[dayOfYear % quotes.length];
 
 const allPosts = [
+  { slug: 'dark-thoughts/on-the-jewelry-business', title: '关于一个下午的工作——或：如何用两个小时重构一个珠宝品牌的在线存在感', date: new Date('2026-4-9'), category: 'DARK' },
   { slug: 'dark-thoughts/resume-2026', title: '一份简历——关于如何在区块链的废墟中寻找意义', date: new Date('2026-4-9'), category: 'DARK' },
   { slug: 'dark-thoughts/impossibility-of-today', title: '论今日之不可能——或：我在电网与保温杯之间寻找什么', date: new Date('2026-4-9'), category: 'DARK' },
   { slug: 'fomo-rider-devlog-2', title: '关于游戏开发，或：我如何在 K 线的废墟中寻找意义', date: new Date('2026-4-8'), category: 'DARK' },

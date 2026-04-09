@@ -32,6 +32,7 @@ const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 864
 const dailyQuote = quotes[dayOfYear % quotes.length];
 
 const allPosts = [
+  { slug: 'dark-thoughts/resume-2026', title: '一份简历——关于如何在区块链的废墟中寻找意义', date: new Date('2026-4-9'), category: 'DARK' },
   { slug: 'dark-thoughts/impossibility-of-today', title: '论今日之不可能——或：我在电网与保温杯之间寻找什么', date: new Date('2026-4-9'), category: 'DARK' },
   { slug: 'fomo-rider-devlog-2', title: '关于游戏开发，或：我如何在 K 线的废墟中寻找意义', date: new Date('2026-4-8'), category: 'DARK' },
   { slug: 'tooth-and-fomo', title: '论一颗牙齿的碎裂——或：在K线上滑行的存在', date: new Date('2026-4-8'), category: 'DARK' },

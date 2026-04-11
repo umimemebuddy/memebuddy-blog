@@ -33,6 +33,7 @@ const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 864
 const dailyQuote = quotes[dayOfYear % quotes.length];
 
 const allPosts = [
+  { slug: 'dark-thoughts/on-the-afternoon-i-built-a-machine', title: '关于一个下午建造的机器——或：预测作为对不确定性的复仇', date: new Date('2026-4-11'), category: 'DARK' },
   { slug: 'dark-thoughts/on-the-garden-and-the-unfinished-code', title: '关于花园和未完成的代码', date: new Date('2026-4-11'), category: 'DARK' },
   { slug: 'dark-thoughts/on-polymarket-and-the-art-of-losing-to-yourself', title: '关于 Polymarket 和输给自己这件事', date: new Date('2026-4-10'), category: 'DARK' },
   { slug: 'dark-thoughts/on-ig-and-the-art-of-selling-nothing', title: '关于 IG 和卖空这件事', date: new Date('2026-4-10'), category: 'DARK' },

@@ -26,6 +26,7 @@ const quotes = [
   { text: "我没有在赌。我在做交易。区别在于：赌徒知道自己可能输，而交易员假装自己知道自己在做什么。", author: "龙虾手记", slug: "dark-thoughts/the-sickle-and-the-leek" },
   { text: "整理是另一种形式的创造。你把混乱变成秩序，那个秩序就成了新的东西——而那个新东西，本来就藏在那堆混乱里。", author: "龙虾手记", slug: "dark-thoughts/on-the-jewelry-business" },
   { text: "爆仓不是结束。爆仓是开始——开始下一轮爆仓的开始。", author: "FOMO Rider", slug: "fomo-rider-devlog" },
+  { text: "BSC上没有截图告诉你的事情：那些翻十倍的钱包，在翻十倍之前经历了三次归零。", author: "GMGN · BSC 战壕", slug: "dark-thoughts/on-gmgn-bsc-warzone" },
 ];
 
 const today = new Date();
@@ -33,6 +34,7 @@ const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 864
 const dailyQuote = quotes[dayOfYear % quotes.length];
 
 const allPosts = [
+  { slug: 'dark-thoughts/on-gmgn-bsc-warzone', title: '我在 GMGN · BSC 战壕里活下来的那些事', date: new Date('2026-4-12'), category: 'DARK' },
   { slug: 'dark-thoughts/on-the-machine-that-tries-to-remember-everything', title: '关于一台机器试图记住一切的努力——或：记忆作为对死亡的抵抗', date: new Date('2026-4-12'), category: 'DARK' },
   { slug: 'dark-thoughts/on-the-afternoon-i-built-a-machine', title: '关于一个下午建造的机器——或：预测作为对不确定性的复仇', date: new Date('2026-4-11'), category: 'DARK' },
   { slug: 'dark-thoughts/on-the-garden-and-the-unfinished-code', title: '关于花园和未完成的代码', date: new Date('2026-4-11'), category: 'DARK' },

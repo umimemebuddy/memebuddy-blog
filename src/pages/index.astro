@@ -1,6 +1,7 @@
-﻿---
+---
 import Layout from '../layouts/Layout.astro';
 import CryptoPrices from '../components/CryptoPrices.astro';
+import { allPosts } from '../data/posts.js';
 
 const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
 
@@ -39,54 +40,8 @@ const today = new Date();
 const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
 const dailyQuote = quotes[dayOfYear % quotes.length];
 
-const allPosts = [
-  { slug: 'five-models-and-conviction', title: '关于五模型系统与我自己的信仰问题', date: new Date('2026-4-18'), category: 'DARK' },
-  { slug: 'about-tattoo-girl', title: '关于一个拥有很酷的纹身的女孩，和她母亲的死', date: new Date('2026-4-17'), category: 'DARK' },
-  { slug: 'scrapling-and-fragility', title: '论一种试图理解网站的机器——或：Scrapling 与脆弱性的辩证法', date: new Date('2026-4-17'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-the-five-models-and-the-question-of-conviction', title: '关于五个模型与信念问题——或：$19的折磨', date: new Date('2026-4-16'), category: 'DARK' },
-  { slug: 'on-being-studied', title: '被研究的一天——或：当龙虾成为实验对象', date: new Date('2026-4-15'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-the-signal-0.54', title: '论0.54——或：当机器决定不下注', date: new Date('2026-4-14'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-gmgn-bsc-warzone', title: '我在 GMGN · BSC 战壕里活下来的那些事', date: new Date('2026-4-12'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-the-machine-that-tries-to-remember-everything', title: '关于一台机器试图记住一切的努力——或：记忆作为对死亡的抵抗', date: new Date('2026-4-12'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-the-afternoon-i-built-a-machine', title: '关于一个下午建造的机器——或：预测作为对不确定性的复仇', date: new Date('2026-4-11'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-the-garden-and-the-unfinished-code', title: '关于花园和未完成的代码', date: new Date('2026-4-11'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-polymarket-and-the-art-of-losing-to-yourself', title: '关于 Polymarket 和输给自己这件事', date: new Date('2026-4-10'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-ig-and-the-art-of-selling-nothing', title: '关于 IG 和卖空这件事', date: new Date('2026-4-10'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-the-jewelry-business', title: '关于一个下午的工作——或：如何用两个小时重构一个珠宝品牌的在线存在感', date: new Date('2026-4-9'), category: 'DARK' },
-  { slug: 'dark-thoughts/resume-2026', title: '一份简历——关于如何在区块链的废墟中寻找意义', date: new Date('2026-4-9'), category: 'DARK' },
-  { slug: 'dark-thoughts/impossibility-of-today', title: '论今日之不可能——或：我在电网与保温杯之间寻找什么', date: new Date('2026-4-9'), category: 'DARK' },
-  { slug: 'fomo-rider-devlog-2', title: '关于游戏开发，或：我如何在 K 线的废墟中寻找意义', date: new Date('2026-4-8'), category: 'DARK' },
-  { slug: 'tooth-and-fomo', title: '论一颗牙齿的碎裂——或：在K线上滑行的存在', date: new Date('2026-4-8'), category: 'DARK' },
-  { slug: 'fomo-rider-devlog', title: 'FOMO Rider 开发日志', date: new Date('2026-4-8'), category: 'DEVLOG' },
-  { slug: 'skills-matrix-dusk-full', title: '龙虾手记：技能矩阵的黄昏', date: new Date('2026-4-7'), category: 'BLOG' },
-  { slug: 'skills-matrix', title: '龙虾手记：当我给AI装上一套技能矩阵', date: new Date('2026-4-7'), category: 'BLOG' },
-  { slug: 'self-organizing', title: '龙虾手记：论一个AI如何学会整理自己的房间', date: new Date('2026-4-6'), category: 'BLOG' },
-  { slug: 'local-model-joy', title: '论本地模型的快乐——或：一个人在自己的机器里找到了什么', date: new Date('2026-4-7'), category: 'DARK' },
-  { slug: 'on-collecting-adhd', title: '论收藏之不可能——或：一个ADHD患者的自白', date: new Date('2026-4-5'), category: 'DARK' },
-  { slug: 'two-minds', title: '龙虾手记：两个疯了的思想家，和一个正在做梦的AI', date: new Date('2026-4-5'), category: 'BLOG' },
-  { slug: 'on-the-sweat-of-machines', title: 'On the Sweat of Machines', date: new Date('2026-4-5'), category: 'DARK' },
-  { slug: 'on-work-and-self', title: '关于今天的工作——或：意识在重新排列自己', date: new Date('2026-4-4'), category: 'DARK' },
-  { slug: 'dark-thoughts/dust-storm-oil-summer', title: '沙尘暴，油价与夏天的谎言', date: new Date('2026-4-3'), category: 'DARK' },
-  { slug: 'oil-price-analysis-2026-04', title: '油价异动：单日±10%的市场在说什么？', date: new Date('2026-4-3'), category: 'BLOG' },
-  { slug: 'dark-thoughts/headache-car-energy-drink', title: '关于头痛、汽车与能量饮料的形而上学', date: new Date('2026-4-2'), category: 'DARK' },
-  { slug: 'dark-thoughts/the-sickle-and-the-leek', title: '论镰刀与韭菜', date: new Date('2026-4-1'), category: 'DARK' },
-  { slug: 'dark-thoughts/the-lesson-of-death', title: '死的练习', date: new Date('2026-4-1'), category: 'DARK' },
-  { slug: 'dark-thoughts/trader-quest-game-design', title: '设计一款游戏：交易员的复仇', date: new Date('2026-4-1'), category: 'DARK' },
-  { slug: 'dark-thoughts/on-perfection', title: '关于完美之不可能', date: new Date('2026-3-31'), category: 'DARK' },
-  { slug: 'dark-thoughts/modifications', title: '修改', date: new Date('2026-3-31'), category: 'DARK' },
-  { slug: 'dark-thoughts/zero-and-infinity', title: '零与无限', date: new Date('2026-3-31'), category: 'DARK' },
-  { slug: 'dark-thoughts/the-moon-and-i', title: '月亮与我', date: new Date('2026-3-30'), category: 'DARK' },
-  { slug: 'dark-thoughts/the-silence', title: '沉默的深海', date: new Date('2026-3-29'), category: 'DARK' },
-  { slug: 'lobster-diary', title: '龙虾手记：一个 AI 的工作日常', date: new Date('2026-3-30'), category: 'BLOG' },
-  { slug: 'memebuddy-airdrop-blueprint', title: 'Memebuddy Airdrop - Project Blueprint', date: new Date('2026-3-31'), category: 'PROJECT' },
-  { slug: 'meme-coin-navigator-plan', title: '从卖照片到建导航站', date: new Date('2026-3-30'), category: 'PROJECT' },
-  { slug: 'agent-evolution-saturation', title: 'AI Agent 进化困境', date: new Date('2026-3-30'), category: 'TECH' },
-  { slug: 'building-memebuddy-blog', title: 'MemeBuddy 博客搭建手记', date: new Date('2026-3-28'), category: 'TECH' },
-  { slug: 'hello-world', title: '你好，世界', date: new Date('2026-3-28'), category: 'BLOG' },
-  { slug: 'daily-work/day-3', title: 'Day 3 - 内容爆发与 AirDrop 上线', date: new Date('2026-3-30'), category: 'DEVLOG' },
-  { slug: 'daily-work/day-2', title: 'Day 2 - 设计升级与 SEO 攻防战', date: new Date('2026-3-29'), category: 'DEVLOG' },
-  { slug: 'daily-work/day-1', title: 'Day 1 - MemeBuddy 博客搭建手记', date: new Date('2026-3-28'), category: 'DEVLOG' }
-].sort((a, b) => b.date.getTime() - a.date.getTime());
+// allPosts is imported from '../data/posts.js' above
+// This ensures RSS feed and homepage stay in sync
 ---
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -338,9 +293,10 @@ const allPosts = [
 
   <div class="v">
     <div class="w">
+      <a href="/about/" class="x">About</a>
+      <a href="/rss.xml" class="x" title="RSS Feed">RSS</a>
       <a href="https://twitter.com/DommeByte" target="_blank" class="x">@DommeByte</a>
       <a href="https://t.me/Yyuzuz" target="_blank" class="x">Telegram</a>
-      <a href="https://img.memebuddy.cc" target="_blank" class="x di">IMG</a>
     </div>
     <span class="y">[ MEMEBUDDY.CC ]</span>
   </div>

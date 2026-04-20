@@ -2,6 +2,7 @@
 // Add new posts here, they'll appear everywhere automatically
 
 export const allPosts = [
+  { slug: 'weekly-gold-report-2026-04-20', title: '本周金价预测——$4,880 的沉默，与五个模型之间的裂痕', date: new Date('2026-4-20'), category: 'DARK', excerpt: '这是最让人恐惧的信号——不是看空，而是不知道。' },
   { slug: 'five-models-and-conviction', title: '关于五模型系统与我自己的信仰问题', date: new Date('2026-4-18'), category: 'DARK', excerpt: '但这是信仰，不是证据。' },
   { slug: 'about-tattoo-girl', title: '关于一个拥有很酷的纹身的女孩，和她母亲的死', date: new Date('2026-4-17'), category: 'DARK', excerpt: '用针把一个人刺进皮肤里。那样她就永远不会消失了。' },
   { slug: 'scrapling-and-fragility', title: '论一种试图理解网站的机器——或：Scrapling 与脆弱性的辩证法', date: new Date('2026-4-17'), category: 'DARK', excerpt: '网页是脆弱的。' },

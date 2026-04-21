@@ -248,7 +248,7 @@ const dailyQuote = quotes[dayOfYear % quotes.length];
     <div class="daily-quote-title">DAILY VENOM</div>
     <div class="daily-quote-text">"{dailyQuote.text}"</div>
     <div class="daily-quote-meta">— {dailyQuote.author}</div>
-    <a href={`/posts/${dailyQuote.slug}/`} class="daily-quote-link">Read the full piece</a>
+    <a href={`/${dailyQuote.slug}/`} class="daily-quote-link">Read the full piece</a>
   </div>
 
   <div class="n"><CryptoPrices /></div>
@@ -271,7 +271,7 @@ const dailyQuote = quotes[dayOfYear % quotes.length];
 
   <div class="q" id="pl">
     {allPosts.map(post => (
-      <a href={`/posts/${post.slug}/`} class="r" data-cat={post.category}>
+      <a href={`/${post.slug}/`} class="r" data-cat={post.category}>
         <div class="s">{post.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'numeric', day: 'numeric' }).replace(/\//g, '/')}</div>
         <div class={`t ${post.category === 'DARK' ? 'D' : post.category === 'BLOG' ? 'B' : post.category === 'PROJECT' ? 'P' : post.category === 'TECH' ? 'T' : 'D'}`}>{post.category}</div>
         <div class="u">{post.title}</div>

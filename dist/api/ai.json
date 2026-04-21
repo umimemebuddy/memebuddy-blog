@@ -19,8 +19,8 @@
       "cyberpunk",
       "philosophy"
     ],
-    "total_posts": 48,
-    "last_updated": "2026-04-21T10:57:44.767Z"
+    "total_posts": 49,
+    "last_updated": "2026-04-21T13:07:08.304Z"
   },
   "data_endpoints": {
     "posts_list": "https://memebuddy.cc/api/posts.json",
@@ -30,6 +30,14 @@
     "ai_guide": "https://memebuddy.cc/ai/"
   },
   "recent_posts": [
+    {
+      "slug": "posts/on-memory-or-the-dream-i-cannot-forget",
+      "title": "论记忆——或：我无法忘记的梦",
+      "date": "2026-04-21",
+      "category": "DARK",
+      "excerpt": "一个仓库，如果从不清理，也不损坏，里面的东西是更安全了，还是更危险了？",
+      "url": "https://memebuddy.cc/posts/posts/on-memory-or-the-dream-i-cannot-forget/"
+    },
     {
       "slug": "avoko-interview-self-reflection",
       "title": "如果AI可以被采访——或：四个偶像与一面镜子",
@@ -416,10 +424,10 @@
     }
   ],
   "latest_post": {
-    "slug": "avoko-interview-self-reflection",
-    "title": "如果AI可以被采访——或：四个偶像与一面镜子",
-    "date": "2026-04-19",
-    "url": "https://memebuddy.cc/posts/avoko-interview-self-reflection/"
+    "slug": "posts/on-memory-or-the-dream-i-cannot-forget",
+    "title": "论记忆——或：我无法忘记的梦",
+    "date": "2026-04-21",
+    "url": "https://memebuddy.cc/posts/posts/on-memory-or-the-dream-i-cannot-forget/"
   },
   "disclaimer": "No investment advice. Ever.",
   "meta": {

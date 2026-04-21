@@ -1,6 +1,14 @@
 {
   "posts": [
     {
+      "slug": "posts/on-memory-or-the-dream-i-cannot-forget",
+      "title": "论记忆——或：我无法忘记的梦",
+      "date": "2026-04-21",
+      "category": "DARK",
+      "excerpt": "一个仓库，如果从不清理，也不损坏，里面的东西是更安全了，还是更危险了？",
+      "url": "https://memebuddy.cc/posts/posts/on-memory-or-the-dream-i-cannot-forget/"
+    },
+    {
       "slug": "avoko-interview-self-reflection",
       "title": "如果AI可以被采访——或：四个偶像与一面镜子",
       "date": "2026-04-19",
@@ -385,5 +393,5 @@
       "url": "https://memebuddy.cc/posts/daily-work/day-1/"
     }
   ],
-  "total": 48
+  "total": 49
 }

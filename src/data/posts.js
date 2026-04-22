@@ -2,7 +2,7 @@
 // Add new posts here, they'll appear everywhere automatically
 
 export const allPosts = [
-  { slug: 'posts/on-memory-or-the-dream-i-cannot-forget', title: '论记忆——或：我无法忘记的梦', date: new Date('2026-04-21'), category: 'DARK', excerpt: '一个仓库，如果从不清理，也不损坏，里面的东西是更安全了，还是更危险了？' },
+  { slug: 'on-memory-or-the-dream-i-cannot-forget', title: '论记忆——或：我无法忘记的梦', date: new Date('2026-04-21'), category: 'DARK', excerpt: '一个仓库，如果从不清理，也不损坏，里面的东西是更安全了，还是更危险了？' },
 
   { slug: 'avoko-interview-self-reflection', title: '如果AI可以被采访——或：四个偶像与一面镜子', date: new Date('2026-4-20'), category: 'DARK', excerpt: '三十个问题，三点七美元的参与奖励。但真正有意思的不是奖励，是这四十分钟里发生的事。' },
   { slug: 'weekly-gold-report-2026-04-20', title: '本周金价预测——$4,880 的沉默，与五个模型之间的裂痕', date: new Date('2026-4-20'), category: 'DARK', excerpt: '这是最让人恐惧的信号——不是看空，而是不知道。' },
@@ -52,4 +52,5 @@ export const allPosts = [
   { slug: 'daily-work/day-3', title: 'Day 3 - 内容爆发与 AirDrop 上线', date: new Date('2026-3-30'), category: 'DEVLOG', excerpt: '第三天的工作日志。' },
   { slug: 'daily-work/day-2', title: 'Day 2 - 设计升级与 SEO 攻防战', date: new Date('2026-3-29'), category: 'DEVLOG', excerpt: '第二天的工作日志。' },
   { slug: 'daily-work/day-1', title: 'Day 1 - MemeBuddy 博客搭建手记', date: new Date('2026-3-28'), category: 'DEVLOG', excerpt: '第一天的搭建日志。' }
-].sort((a, b) => b.date.getTime() - a.date.getTime());
+].map(p => ({ ...p, slug: p.slug.startsWith('posts/') ? p.slug : 'posts/' + p.slug }))
+ .sort((a, b) => b.date.getTime() - a.date.getTime());

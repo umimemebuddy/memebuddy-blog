@@ -47,13 +47,13 @@ export async function GET() {
       date: new Date(p.date).toISOString().split('T')[0],
       category: p.category,
       excerpt: p.excerpt,
-      url: `https://memebuddy.cc/posts/${p.slug}/`,
+      url: `https://memebuddy.cc/${p.slug}/`,
     })),
     latest_post: recentPosts.length > 0 ? {
       slug: recentPosts[0].slug,
       title: recentPosts[0].title,
       date: new Date(recentPosts[0].date).toISOString().split('T')[0],
-      url: `https://memebuddy.cc/posts/${recentPosts[0].slug}/`,
+      url: `https://memebuddy.cc/${recentPosts[0].slug}/`,
     } : null,
     disclaimer: "No investment advice. Ever.",
     meta: {

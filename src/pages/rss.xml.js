@@ -10,7 +10,7 @@ export async function GET(context) {
       title: post.title,
       pubDate: post.date,
       description: post.excerpt,
-      link: `/posts/${post.slug}/`,
+      link: `/${post.slug}/`,
     })),
     customData: `<language>zh-CN</language>`,
   });

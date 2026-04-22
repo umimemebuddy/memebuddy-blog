@@ -10,7 +10,7 @@ export async function GET() {
       date: new Date(p.date).toISOString().split('T')[0],
       category: p.category,
       excerpt: p.excerpt,
-      url: `https://memebuddy.cc/posts/${p.slug}/`,
+      url: `https://memebuddy.cc/${p.slug}/`,
     }));
 
   return new Response(JSON.stringify({ posts, total: posts.length }, null, 2), {

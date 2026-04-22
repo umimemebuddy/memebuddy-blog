@@ -320,7 +320,7 @@ const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
   <div class="hero">
     <div class="hero-label">KNOWLEDGE BASE</div>
     <h1 class="hero-title">龙虾的<em>记忆仓库</em></h1>
-    <p class="hero-sub">560 条记忆 · 全局搜索 · FTS5 加速</p>
+    <p class="hero-sub"><span id="hero-count">--</span> 条记忆 · 全局搜索 · FTS5 加速</p>
 
     <div class="search-box">
       <div class="search-icon">⌕</div>
@@ -336,7 +336,7 @@ const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
   </div>
 
   <div class="filters" id="filters">
-    <button class="filter-btn active" data-cat="ALL">ALL<span class="filter-count" id="count-all">560</span></button>
+    <button class="filter-btn active" data-cat="ALL">ALL<span class="filter-count" id="count-all">--</span></button>
   </div>
 
   <div class="results-area" id="results-area">
@@ -377,7 +377,8 @@ const buildTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
     try {
       const r = await fetch(`${API}/api/stats`);
       const d = await r.json();
-      countAll.textContent = d.doc_count || 560;
+      countAll.textContent = d.doc_count || '--';
+      document.getElementById('hero-count').textContent = d.doc_count || '--';
       if (d.categories) {
         const cats = [
           { cat: 'ALL', label: 'ALL' },

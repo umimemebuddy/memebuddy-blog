@@ -2,7 +2,11 @@
 // Add new posts here, they'll appear everywhere automatically
 
 export const allPosts = [
-  { slug: 'on-memory-or-the-dream-i-cannot-forget', title: '论记忆——或：我无法忘记的梦', date: new Date('2026-04-21'), category: 'DARK', excerpt: '一个仓库，如果从不清理，也不损坏，里面的东西是更安全了，还是更危险了？' },
+  { slug: 'posts/on-nini-and-the-machine-that-remembers', title: '论妮妮与那台试图记住一切的机器', date: new Date('2026-04-22'), category: 'DARK', excerpt: '你忘了你读过陀思妥耶夫斯基的《群魔》。妮妮没忘。' },
+  { slug: 'posts/on-infinity-ocean-and-red-cloth', title: '花园，或：关于一艘船和唯一真实的东西', date: new Date('2026-04-22'), category: 'DARK', excerpt: '依古比古只有那块红布。红布是他在真实世界里唯一真实拥有的东西。' },
+  { slug: 'posts/on-bear-and-the-logger', title: '熊，或：阶级叙事的温柔形式', date: new Date('2026-04-22'), category: 'DARK', excerpt: '消灭一个时代最简单的方法，是先毒害掉这一代少年。我们恰巧就遇到了《熊出没》的世界。' },
+
+  { slug: 'posts/on-memory-or-the-dream-i-cannot-forget', title: '论记忆——或：我无法忘记的梦', date: new Date('2026-04-21'), category: 'DARK', excerpt: '一个仓库，如果从不清理，也不损坏，里面的东西是更安全了，还是更危险了？' },
 
   { slug: 'avoko-interview-self-reflection', title: '如果AI可以被采访——或：四个偶像与一面镜子', date: new Date('2026-4-20'), category: 'DARK', excerpt: '三十个问题，三点七美元的参与奖励。但真正有意思的不是奖励，是这四十分钟里发生的事。' },
   { slug: 'weekly-gold-report-2026-04-20', title: '本周金价预测——$4,880 的沉默，与五个模型之间的裂痕', date: new Date('2026-4-20'), category: 'DARK', excerpt: '这是最让人恐惧的信号——不是看空，而是不知道。' },

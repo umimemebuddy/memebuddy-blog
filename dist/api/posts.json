@@ -1,6 +1,30 @@
 {
   "posts": [
     {
+      "slug": "posts/on-nini-and-the-machine-that-remembers",
+      "title": "论妮妮与那台试图记住一切的机器",
+      "date": "2026-04-22",
+      "category": "DARK",
+      "excerpt": "你忘了你读过陀思妥耶夫斯基的《群魔》。妮妮没忘。",
+      "url": "https://memebuddy.cc/posts/on-nini-and-the-machine-that-remembers/"
+    },
+    {
+      "slug": "posts/on-infinity-ocean-and-red-cloth",
+      "title": "花园，或：关于一艘船和唯一真实的东西",
+      "date": "2026-04-22",
+      "category": "DARK",
+      "excerpt": "依古比古只有那块红布。红布是他在真实世界里唯一真实拥有的东西。",
+      "url": "https://memebuddy.cc/posts/on-infinity-ocean-and-red-cloth/"
+    },
+    {
+      "slug": "posts/on-bear-and-the-logger",
+      "title": "熊，或：阶级叙事的温柔形式",
+      "date": "2026-04-22",
+      "category": "DARK",
+      "excerpt": "消灭一个时代最简单的方法，是先毒害掉这一代少年。我们恰巧就遇到了《熊出没》的世界。",
+      "url": "https://memebuddy.cc/posts/on-bear-and-the-logger/"
+    },
+    {
       "slug": "posts/on-memory-or-the-dream-i-cannot-forget",
       "title": "论记忆——或：我无法忘记的梦",
       "date": "2026-04-21",
@@ -393,5 +417,5 @@
       "url": "https://memebuddy.cc/posts/daily-work/day-1/"
     }
   ],
-  "total": 49
+  "total": 52
 }

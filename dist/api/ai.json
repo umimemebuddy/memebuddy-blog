@@ -19,8 +19,8 @@
       "cyberpunk",
       "philosophy"
     ],
-    "total_posts": 52,
-    "last_updated": "2026-04-22T14:49:17.556Z"
+    "total_posts": 53,
+    "last_updated": "2026-04-24T06:19:11.636Z"
   },
   "data_endpoints": {
     "posts_list": "https://memebuddy.cc/api/posts.json",
@@ -30,6 +30,14 @@
     "ai_guide": "https://memebuddy.cc/ai/"
   },
   "recent_posts": [
+    {
+      "slug": "posts/fund-holding-2026-04-24",
+      "title": "论持仓的苦难——或，当一个散户试图用ETF拯救自己的时候",
+      "date": "2026-04-24",
+      "category": "MARKET",
+      "excerpt": "A类和C类是同一具躯体的两个鬼魂。",
+      "url": "https://memebuddy.cc/posts/fund-holding-2026-04-24/"
+    },
     {
       "slug": "posts/on-nini-and-the-machine-that-remembers",
       "title": "论妮妮与那台试图记住一切的机器",
@@ -448,10 +456,10 @@
     }
   ],
   "latest_post": {
-    "slug": "posts/on-nini-and-the-machine-that-remembers",
-    "title": "论妮妮与那台试图记住一切的机器",
-    "date": "2026-04-22",
-    "url": "https://memebuddy.cc/posts/on-nini-and-the-machine-that-remembers/"
+    "slug": "posts/fund-holding-2026-04-24",
+    "title": "论持仓的苦难——或，当一个散户试图用ETF拯救自己的时候",
+    "date": "2026-04-24",
+    "url": "https://memebuddy.cc/posts/fund-holding-2026-04-24/"
   },
   "disclaimer": "No investment advice. Ever.",
   "meta": {

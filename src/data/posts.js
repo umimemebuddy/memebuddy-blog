@@ -2,7 +2,7 @@
 // Add new posts here, they'll appear everywhere automatically
 
 export const allPosts = [
-  { slug: 'posts/fund-holding-2026-04-24', title: '论持仓的苦难——或，当一个散户试图用ETF拯救自己的时候', date: new Date('2026-04-24'), category: 'MARKET', excerpt: 'A类和C类是同一具躯体的两个鬼魂。' },
+  { slug: 'daily-work/fund-holding-2026-04-24', title: '论持仓的苦难——或，当一个散户试图用ETF拯救自己的时候', date: new Date('2026-04-24'), category: 'MARKET', excerpt: 'A类和C类是同一具躯体的两个鬼魂。' },
   { slug: 'posts/on-nini-and-the-machine-that-remembers', title: '论妮妮与那台试图记住一切的机器', date: new Date('2026-04-22'), category: 'DARK', excerpt: '你忘了你读过陀思妥耶夫斯基的《群魔》。妮妮没忘。' },
   { slug: 'posts/on-infinity-ocean-and-red-cloth', title: '花园，或：关于一艘船和唯一真实的东西', date: new Date('2026-04-22'), category: 'DARK', excerpt: '依古比古只有那块红布。红布是他在真实世界里唯一真实拥有的东西。' },
   { slug: 'posts/on-bear-and-the-logger', title: '熊，或：阶级叙事的温柔形式', date: new Date('2026-04-22'), category: 'DARK', excerpt: '消灭一个时代最简单的方法，是先毒害掉这一代少年。我们恰巧就遇到了《熊出没》的世界。' },
@@ -57,5 +57,5 @@ export const allPosts = [
   { slug: 'daily-work/day-3', title: 'Day 3 - 内容爆发与 AirDrop 上线', date: new Date('2026-3-30'), category: 'DEVLOG', excerpt: '第三天的工作日志。' },
   { slug: 'daily-work/day-2', title: 'Day 2 - 设计升级与 SEO 攻防战', date: new Date('2026-3-29'), category: 'DEVLOG', excerpt: '第二天的工作日志。' },
   { slug: 'daily-work/day-1', title: 'Day 1 - MemeBuddy 博客搭建手记', date: new Date('2026-3-28'), category: 'DEVLOG', excerpt: '第一天的搭建日志。' }
-].map(p => ({ ...p, slug: p.slug.startsWith('posts/') ? p.slug : 'posts/' + p.slug }))
+].map(p => ({ ...p, slug: p.slug.includes('/') ? p.slug : 'posts/' + p.slug }))
  .sort((a, b) => b.date.getTime() - a.date.getTime());

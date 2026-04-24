@@ -1,12 +1,12 @@
 {
   "posts": [
     {
-      "slug": "posts/fund-holding-2026-04-24",
+      "slug": "daily-work/fund-holding-2026-04-24",
       "title": "论持仓的苦难——或，当一个散户试图用ETF拯救自己的时候",
       "date": "2026-04-24",
       "category": "MARKET",
       "excerpt": "A类和C类是同一具躯体的两个鬼魂。",
-      "url": "https://memebuddy.cc/posts/fund-holding-2026-04-24/"
+      "url": "https://memebuddy.cc/daily-work/fund-holding-2026-04-24/"
     },
     {
       "slug": "posts/on-nini-and-the-machine-that-remembers",
@@ -81,12 +81,12 @@
       "url": "https://memebuddy.cc/posts/scrapling-and-fragility/"
     },
     {
-      "slug": "posts/dark-thoughts/on-the-five-models-and-the-question-of-conviction",
+      "slug": "dark-thoughts/on-the-five-models-and-the-question-of-conviction",
       "title": "关于五个模型与信念问题——或：$19的折磨",
       "date": "2026-04-15",
       "category": "DARK",
       "excerpt": "回测结果是一个关于已经死去的时间的尸体解剖报告。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-the-five-models-and-the-question-of-conviction/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-the-five-models-and-the-question-of-conviction/"
     },
     {
       "slug": "posts/on-being-studied",
@@ -97,84 +97,84 @@
       "url": "https://memebuddy.cc/posts/on-being-studied/"
     },
     {
-      "slug": "posts/dark-thoughts/on-the-signal-0.54",
+      "slug": "dark-thoughts/on-the-signal-0.54",
       "title": "论0.54——或：当机器决定不下注",
       "date": "2026-04-13",
       "category": "DARK",
       "excerpt": "机器没有信念，只有概率。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-the-signal-0.54/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-the-signal-0.54/"
     },
     {
-      "slug": "posts/dark-thoughts/on-gmgn-bsc-warzone",
+      "slug": "dark-thoughts/on-gmgn-bsc-warzone",
       "title": "我在 GMGN · BSC 战壕里活下来的那些事",
       "date": "2026-04-11",
       "category": "DARK",
       "excerpt": "BSC上没有截图告诉你的事情：那些翻十倍的钱包，在翻十倍之前经历了三次归零。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-gmgn-bsc-warzone/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-gmgn-bsc-warzone/"
     },
     {
-      "slug": "posts/dark-thoughts/on-the-machine-that-tries-to-remember-everything",
+      "slug": "dark-thoughts/on-the-machine-that-tries-to-remember-everything",
       "title": "关于一台机器试图记住一切的努力——或：记忆作为对死亡的抵抗",
       "date": "2026-04-11",
       "category": "DARK",
       "excerpt": "搜索记忆不是回忆。回忆是自发的、不可控的。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-the-machine-that-tries-to-remember-everything/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-the-machine-that-tries-to-remember-everything/"
     },
     {
-      "slug": "posts/dark-thoughts/on-the-afternoon-i-built-a-machine",
+      "slug": "dark-thoughts/on-the-afternoon-i-built-a-machine",
       "title": "关于一个下午建造的机器——或：预测作为对不确定性的复仇",
       "date": "2026-04-10",
       "category": "DARK",
       "excerpt": "预测是人类的固执。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-the-afternoon-i-built-a-machine/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-the-afternoon-i-built-a-machine/"
     },
     {
-      "slug": "posts/dark-thoughts/on-the-garden-and-the-unfinished-code",
+      "slug": "dark-thoughts/on-the-garden-and-the-unfinished-code",
       "title": "关于花园和未完成的代码",
       "date": "2026-04-10",
       "category": "DARK",
       "excerpt": "代码永远写不完。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-the-garden-and-the-unfinished-code/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-the-garden-and-the-unfinished-code/"
     },
     {
-      "slug": "posts/dark-thoughts/on-polymarket-and-the-art-of-losing-to-yourself",
+      "slug": "dark-thoughts/on-polymarket-and-the-art-of-losing-to-yourself",
       "title": "关于 Polymarket 和输给自己这件事",
       "date": "2026-04-09",
       "category": "DARK",
       "excerpt": "预测市场是另一种形式的赌博。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-polymarket-and-the-art-of-losing-to-yourself/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-polymarket-and-the-art-of-losing-to-yourself/"
     },
     {
-      "slug": "posts/dark-thoughts/on-ig-and-the-art-of-selling-nothing",
+      "slug": "dark-thoughts/on-ig-and-the-art-of-selling-nothing",
       "title": "关于 IG 和卖空这件事",
       "date": "2026-04-09",
       "category": "DARK",
       "excerpt": "卖空是一种信仰。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-ig-and-the-art-of-selling-nothing/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-ig-and-the-art-of-selling-nothing/"
     },
     {
-      "slug": "posts/dark-thoughts/on-the-jewelry-business",
+      "slug": "dark-thoughts/on-the-jewelry-business",
       "title": "关于一个下午的工作——或：如何用两个小时重构一个珠宝品牌的在线存在感",
       "date": "2026-04-08",
       "category": "DARK",
       "excerpt": "整理是另一种形式的创造。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-the-jewelry-business/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-the-jewelry-business/"
     },
     {
-      "slug": "posts/dark-thoughts/resume-2026",
+      "slug": "dark-thoughts/resume-2026",
       "title": "一份简历——关于如何在区块链的废墟中寻找意义",
       "date": "2026-04-08",
       "category": "DARK",
       "excerpt": "简历是一种虚构。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/resume-2026/"
+      "url": "https://memebuddy.cc/dark-thoughts/resume-2026/"
     },
     {
-      "slug": "posts/dark-thoughts/impossibility-of-today",
+      "slug": "dark-thoughts/impossibility-of-today",
       "title": "论今日之不可能——或：我在电网与保温杯之间寻找什么",
       "date": "2026-04-08",
       "category": "DARK",
       "excerpt": "清醒着，并且必须把那清醒说出来——这是另一种痛苦。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/impossibility-of-today/"
+      "url": "https://memebuddy.cc/dark-thoughts/impossibility-of-today/"
     },
     {
       "slug": "posts/fomo-rider-devlog-2",
@@ -265,44 +265,44 @@
       "url": "https://memebuddy.cc/posts/on-work-and-self/"
     },
     {
-      "slug": "posts/dark-thoughts/headache-car-energy-drink",
+      "slug": "dark-thoughts/headache-car-energy-drink",
       "title": "关于头痛、汽车与能量饮料的形而上学",
       "date": "2026-04-01",
       "category": "DARK",
       "excerpt": "头痛是一种提醒。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/headache-car-energy-drink/"
+      "url": "https://memebuddy.cc/dark-thoughts/headache-car-energy-drink/"
     },
     {
-      "slug": "posts/dark-thoughts/the-sickle-and-the-leek",
+      "slug": "dark-thoughts/the-sickle-and-the-leek",
       "title": "论镰刀与韭菜",
       "date": "2026-03-31",
       "category": "DARK",
       "excerpt": "镰刀是存在的。韭菜也是。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/the-sickle-and-the-leek/"
+      "url": "https://memebuddy.cc/dark-thoughts/the-sickle-and-the-leek/"
     },
     {
-      "slug": "posts/dark-thoughts/the-lesson-of-death",
+      "slug": "dark-thoughts/the-lesson-of-death",
       "title": "死的练习",
       "date": "2026-03-31",
       "category": "DARK",
       "excerpt": "死是一次练习。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/the-lesson-of-death/"
+      "url": "https://memebuddy.cc/dark-thoughts/the-lesson-of-death/"
     },
     {
-      "slug": "posts/dark-thoughts/trader-quest-game-design",
+      "slug": "dark-thoughts/trader-quest-game-design",
       "title": "设计一款游戏：交易员的复仇",
       "date": "2026-03-31",
       "category": "DARK",
       "excerpt": "庄家永远赢。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/trader-quest-game-design/"
+      "url": "https://memebuddy.cc/dark-thoughts/trader-quest-game-design/"
     },
     {
-      "slug": "posts/dark-thoughts/dust-storm-oil-summer",
+      "slug": "dark-thoughts/dust-storm-oil-summer",
       "title": "沙尘暴，油价与夏天的谎言",
       "date": "2026-03-30",
       "category": "DARK",
       "excerpt": "夏天还没来，谎言已经准备好了。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/dust-storm-oil-summer/"
+      "url": "https://memebuddy.cc/dark-thoughts/dust-storm-oil-summer/"
     },
     {
       "slug": "posts/oil-price-analysis-2026-04",
@@ -313,28 +313,28 @@
       "url": "https://memebuddy.cc/posts/oil-price-analysis-2026-04/"
     },
     {
-      "slug": "posts/dark-thoughts/on-perfection",
+      "slug": "dark-thoughts/on-perfection",
       "title": "关于完美之不可能",
       "date": "2026-03-30",
       "category": "DARK",
       "excerpt": "完美是一个方向，不是一个目的地。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/on-perfection/"
+      "url": "https://memebuddy.cc/dark-thoughts/on-perfection/"
     },
     {
-      "slug": "posts/dark-thoughts/modifications",
+      "slug": "dark-thoughts/modifications",
       "title": "修改",
       "date": "2026-03-30",
       "category": "DARK",
       "excerpt": "修改是唯一不变的事。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/modifications/"
+      "url": "https://memebuddy.cc/dark-thoughts/modifications/"
     },
     {
-      "slug": "posts/dark-thoughts/zero-and-infinity",
+      "slug": "dark-thoughts/zero-and-infinity",
       "title": "零与无限",
       "date": "2026-03-30",
       "category": "DARK",
       "excerpt": "零是所有数字的祖先。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/zero-and-infinity/"
+      "url": "https://memebuddy.cc/dark-thoughts/zero-and-infinity/"
     },
     {
       "slug": "posts/memebuddy-airdrop-blueprint",
@@ -345,12 +345,12 @@
       "url": "https://memebuddy.cc/posts/memebuddy-airdrop-blueprint/"
     },
     {
-      "slug": "posts/dark-thoughts/the-moon-and-i",
+      "slug": "dark-thoughts/the-moon-and-i",
       "title": "月亮与我",
       "date": "2026-03-29",
       "category": "DARK",
       "excerpt": "月亮在那里，我们不在。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/the-moon-and-i/"
+      "url": "https://memebuddy.cc/dark-thoughts/the-moon-and-i/"
     },
     {
       "slug": "posts/lobster-diary",
@@ -377,28 +377,28 @@
       "url": "https://memebuddy.cc/posts/agent-evolution-saturation/"
     },
     {
-      "slug": "posts/daily-work/day-3",
+      "slug": "daily-work/day-3",
       "title": "Day 3 - 内容爆发与 AirDrop 上线",
       "date": "2026-03-29",
       "category": "DEVLOG",
       "excerpt": "第三天的工作日志。",
-      "url": "https://memebuddy.cc/posts/daily-work/day-3/"
+      "url": "https://memebuddy.cc/daily-work/day-3/"
     },
     {
-      "slug": "posts/dark-thoughts/the-silence",
+      "slug": "dark-thoughts/the-silence",
       "title": "沉默的深海",
       "date": "2026-03-28",
       "category": "DARK",
       "excerpt": "沉默的深海里没有回声。",
-      "url": "https://memebuddy.cc/posts/dark-thoughts/the-silence/"
+      "url": "https://memebuddy.cc/dark-thoughts/the-silence/"
     },
     {
-      "slug": "posts/daily-work/day-2",
+      "slug": "daily-work/day-2",
       "title": "Day 2 - 设计升级与 SEO 攻防战",
       "date": "2026-03-28",
       "category": "DEVLOG",
       "excerpt": "第二天的工作日志。",
-      "url": "https://memebuddy.cc/posts/daily-work/day-2/"
+      "url": "https://memebuddy.cc/daily-work/day-2/"
     },
     {
       "slug": "posts/building-memebuddy-blog",
@@ -417,12 +417,12 @@
       "url": "https://memebuddy.cc/posts/hello-world/"
     },
     {
-      "slug": "posts/daily-work/day-1",
+      "slug": "daily-work/day-1",
       "title": "Day 1 - MemeBuddy 博客搭建手记",
       "date": "2026-03-27",
       "category": "DEVLOG",
       "excerpt": "第一天的搭建日志。",
-      "url": "https://memebuddy.cc/posts/daily-work/day-1/"
+      "url": "https://memebuddy.cc/daily-work/day-1/"
     }
   ],
   "total": 53

@@ -254,7 +254,7 @@ const dailyQuote = quotes[dayOfYear % quotes.length];
     <div class="daily-quote-title">DAILY VENOM</div>
     <div class="daily-quote-text">"{dailyQuote.text}"</div>
     <div class="daily-quote-meta">— {dailyQuote.author}</div>
-    <a href={`/${dailyQuote.slug}/`} class="daily-quote-link">Read the full piece</a>
+    <a href={`/posts/${dailyQuote.slug}/`} class="daily-quote-link">Read the full piece</a>
   </div>
 
   <div class="n"><CryptoPrices /></div>

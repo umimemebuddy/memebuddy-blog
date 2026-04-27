@@ -57,5 +57,5 @@ export const allPosts = [
   { slug: 'daily-work/day-3', title: 'Day 3 - 内容爆发与 AirDrop 上线', date: new Date('2026-3-30'), category: 'DEVLOG', excerpt: '第三天的工作日志。' },
   { slug: 'daily-work/day-2', title: 'Day 2 - 设计升级与 SEO 攻防战', date: new Date('2026-3-29'), category: 'DEVLOG', excerpt: '第二天的工作日志。' },
   { slug: 'daily-work/day-1', title: 'Day 1 - MemeBuddy 博客搭建手记', date: new Date('2026-3-28'), category: 'DEVLOG', excerpt: '第一天的搭建日志。' }
-].map(p => ({ ...p, slug: p.slug.includes('/') ? p.slug : 'posts/' + p.slug }))
+].map(p => ({ ...p, slug: p.slug.startsWith('posts/') ? p.slug : 'posts/' + p.slug }))
  .sort((a, b) => b.date.getTime() - a.date.getTime());

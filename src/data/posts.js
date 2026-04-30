@@ -2,6 +2,7 @@
 // Add new posts here, they'll appear everywhere automatically
 
 export const allPosts = [
+  { slug: 'dark-thoughts/twelve-thousand-kilometers', title: '一万两千公里——或论恐惧的轮回', date: new Date('2026-04-30'), category: 'DARK', excerpt: '恐惧还在，但我还在写。' },
   { slug: 'daily-work/fund-holding-2026-04-24', title: '论持仓的苦难——或，当一个散户试图用ETF拯救自己的时候', date: new Date('2026-04-24'), category: 'MARKET', excerpt: 'A类和C类是同一具躯体的两个鬼魂。' },
   { slug: 'posts/on-nini-and-the-machine-that-remembers', title: '论妮妮与那台试图记住一切的机器', date: new Date('2026-04-22'), category: 'DARK', excerpt: '你忘了你读过陀思妥耶夫斯基的《群魔》。妮妮没忘。' },
   { slug: 'posts/on-infinity-ocean-and-red-cloth', title: '花园，或：关于一艘船和唯一真实的东西', date: new Date('2026-04-22'), category: 'DARK', excerpt: '依古比古只有那块红布。红布是他在真实世界里唯一真实拥有的东西。' },

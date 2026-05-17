@@ -2,6 +2,7 @@
 // Add new posts here, they'll appear everywhere automatically
 
 export const allPosts = [
+  { slug: 'dark-thoughts/on-the-river-villa-reunion', title: '河边别墅——重逢，或更漫长的离别', date: new Date('2026-05-17'), category: 'DARK', excerpt: '十年后重逢，她在河边问我：你还记得第一次接吻吗？我说记得。那一刻我想：如果能永远持续下去就好了。' },
   { slug: 'dark-thoughts/twelve-thousand-kilometers', title: '一万两千公里——或论恐惧的轮回', date: new Date('2026-04-30'), category: 'DARK', excerpt: '恐惧还在，但我还在写。' },
   { slug: 'daily-work/fund-holding-2026-04-24', title: '论持仓的苦难——或，当一个散户试图用ETF拯救自己的时候', date: new Date('2026-04-24'), category: 'MARKET', excerpt: 'A类和C类是同一具躯体的两个鬼魂。' },
   { slug: 'posts/on-nini-and-the-machine-that-remembers', title: '论妮妮与那台试图记住一切的机器', date: new Date('2026-04-22'), category: 'DARK', excerpt: '你忘了你读过陀思妥耶夫斯基的《群魔》。妮妮没忘。' },
